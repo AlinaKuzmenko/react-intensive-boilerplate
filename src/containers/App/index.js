@@ -2,21 +2,30 @@
 import React, { Component } from 'react';
 
 // Instruments
-import Styles from './styles.scss';
-import moment from 'moment';
+import Header from '../../components/Header';
+import Main from '../../components/Main';
+
 
 export default class App extends Component {
-
-    timer = setInterval(() => this.forceUpdate(), 1000);
-
+    constructor () {
+        super();
+        this.getAllMovies = ::this._getAllMovies;
+    }
+    state = {
+        movies: []
+    }
+    componentDidMount () {
+        this.getAllMovies();
+    }
+    _getAllMovies () {
+        console.log('getting all movies');
+    }
     render () {
         return (
-            <section className = { Styles.app }>
-                <h1>Welcome!</h1>
-                <p>
-                    It is {moment().format('MMMM D h:mm:ss a')}.
-                </p>
-            </section>
+            <div>
+                <Header />
+                <Main />
+            </div>
         );
     }
 }

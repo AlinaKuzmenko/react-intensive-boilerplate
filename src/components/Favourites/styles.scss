@@ -1,0 +1,11 @@
+@import "../../theme/palette";
+
+.favourites {
+  width: 30%;
+  
+  header {
+    padding: 10px;
+    background-color: $paletteColor2;
+    color: $paletteColor1;
+  }
+}

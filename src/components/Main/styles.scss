@@ -1,0 +1,13 @@
+@import "../../theme/palette";
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  padding: 50px;
+  
+  
+  .content {
+    width: 65%;
+  }
+}
