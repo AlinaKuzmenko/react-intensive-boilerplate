@@ -12,7 +12,7 @@ export default class Main extends Component {
     render () {
         return (
             <main className = { Styles.main }>
-                <section className = { Styles.content }>
+                <div className = { Styles.content }>
                     <Switch>
                         <Route
                             component = { Home }
@@ -23,7 +23,7 @@ export default class Main extends Component {
                             path = '/:movieID'
                         />
                     </Switch>
-                </section>
+                </div>
                 <Favourites />
             </main>
         );

@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 import Main from '../../components/Main';
 
 export const options = {
-    api: 'https://api.themoviedb.org/3',
+    api: 'https://api.themoviedb.org/4',
     key: 'a6f017bd0704106423cc1e6ff3a6cc1e',
     language: 'language=en-US'
 };
@@ -35,12 +35,12 @@ export default class App extends Component {
     _getLatestMovie () {
         const { api, key } = options;
 
-        fetch(`${ api }/movie/latest?api_key=${ key }`, {
+        fetch(`${ api }/list/api_key=${ key }`, {
             method: 'GET',
-            crossDomain: true
+            
         })
-            .then((result) => {
-                if (result.status !== 200) {
+            .then((response) => {
+                if (!response.ok) {
                     throw new Error('Could not get latest movies');
                 }
                 return result.json();
@@ -54,7 +54,7 @@ export default class App extends Component {
     
                 }
             })
-            .catch(({ message }) => console.log(message));
+            .catch(({ message }) => console.log('Error message: ', message));
     }
     render () {
         return (
