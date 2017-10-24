@@ -25,6 +25,7 @@ export default class App extends Component {
     constructor () {
         super();
         this.getLatestMovie = ::this._getLatestMovie;
+        this.searchMovie = ::this._searchMovie;
     }
     state = {
         movies: []
@@ -56,10 +57,13 @@ export default class App extends Component {
             })
             .catch(({ message }) => console.log('Error message: ', message));
     }
+    _searchMovie (query) {
+        console.log(`search a movie by query '${query}'`);
+    }
     render () {
         return (
             <div>
-                <Header />
+                <Header searchMovie = { this.searchMovie } />
                 <Main />
             </div>
         );

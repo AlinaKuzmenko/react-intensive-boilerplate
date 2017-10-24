@@ -17,11 +17,12 @@ export default class Header extends Component {
   }
   _searchMovie (event) {
     const { query } = this.state;
+    const { searchMovie } = this.props;
     event.preventDefault();
     if (!query) {
       return;
     }
-    console.log('searchMovie');
+    searchMovie(query);
     this.textInput.value = '';
     this.setState(() => ({
       query: 'Search...'
