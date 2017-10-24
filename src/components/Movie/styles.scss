@@ -2,7 +2,18 @@
 
 .movie {
   width: 45%;
-  margin: 0;
+  margin: 5px;
   padding: 10px;
-  border: 1px solid $paletteColor7;
+  background-color: $paletteColor9;
+  
+  
+  img {
+    width: 100%;
+  }
+  
+  figcaption {
+    color: $paletteColor6;
+    font-size: 12px;
+    text-align: center;
+  }
 }
