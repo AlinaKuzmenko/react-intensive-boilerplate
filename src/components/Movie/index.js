@@ -1,28 +1,43 @@
 // Core
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { string, number } from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // Instruments
-import poster from '../../theme/assets/default-poster.png';
+import defaultPoster from '../../theme/assets/default-poster.png';
 import Styles from './styles.scss';
 
 
+const posterURL = `https://image.tmdb.org/t/p/w500`;
+
 export default class Movie extends Component {
     static propTypes = {
-        poster: string.isRequired,
+        id: number.isRequired,
         name: string.isRequired,
+        overview: string.isRequired,
+        poster: string.isRequired,
+        votes: number.isRequired,
     }
     static defaultProps = {
-      poster: poster,
-      name: 'Movie name',
-      description: 'There\'s no description for this movie yet',
+        id: 0,
+        name: 'Movie name',
+        overview: 'There\'s no overview for this movie yet',
+        poster: defaultPoster,
+        votes: 0
     }
     render () {
-        const { poster, name } = this.props;
+        const { id, name, overview, poster, votes } = this.props;
+        const src = poster ? `${ posterURL }/${ poster }` : defaultPoster;
         return (
             <figure className = { Styles.movie }>
-                <img src = { poster } alt = { `${ name } poster` }/>
-                <figcaption>{ name }</figcaption>
+                <Link to = { `/${ id }` }>
+                    <img src = { src } alt = { `${ name } poster` }/>
+                    <figcaption>
+                        <h3>{ name }</h3>
+                        <p>{ overview }</p>
+                        <span>{ `Votes: ${ votes }` }</span>
+                    </figcaption>
+                </Link>
             </figure>
         );
     }

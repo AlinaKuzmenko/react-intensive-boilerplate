@@ -10,18 +10,18 @@ import Styles from './styles';
 
 export default class Main extends Component {
     render () {
+        const { movies } = this.props;
+        
         return (
             <main className = { Styles.main }>
                 <div className = { Styles.content }>
                     <Switch>
-                        <Route
-                            component = { Home }
-                            path = '/'
-                        />
-                        <Route
-                            component = { Movie }
-                            path = '/:movieID'
-                        />
+                        <Route path = '/' >
+                          <Home movies = { movies } />
+                        </Route>
+                      <Route path = '/:movieID'>
+                        <Movie />
+                      </Route>
                     </Switch>
                 </div>
                 <Favourites />

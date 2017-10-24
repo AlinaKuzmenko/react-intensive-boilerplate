@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 import Main from '../../components/Main';
 
 export const options = {
-    api: 'https://api.themoviedb.org/4',
+    api: 'https://api.themoviedb.org/3/discover/movie',
     key: 'a6f017bd0704106423cc1e6ff3a6cc1e',
     language: 'language=en-US'
 };
@@ -24,19 +24,19 @@ export default class App extends Component {
     }
     constructor () {
         super();
-        this.getLatestMovie = ::this._getLatestMovie;
+        this.getLatestMovies = ::this._getLatestMovies;
         this.searchMovie = ::this._searchMovie;
     }
     state = {
         movies: []
     }
     componentDidMount () {
-        this.getLatestMovie();
+        this.getLatestMovies();
     }
-    _getLatestMovie () {
+    _getLatestMovies () {
         const { api, key } = options;
 
-        fetch(`${ api }/list/api_key=${ key }`, {
+        fetch(`${ api }?api_key=${ key }&sort_by=release_date.desc`, {
             method: 'GET',
             
         })
@@ -44,10 +44,9 @@ export default class App extends Component {
                 if (!response.ok) {
                     throw new Error('Could not get latest movies');
                 }
-                return result.json();
+                return response.json();
             })
             .then((data) => {
-                console.log('result', data);
                 if (data !== this.state.movies) {
                     this.setState(() => ({
                         movies: data,
@@ -61,10 +60,11 @@ export default class App extends Component {
         console.log(`search a movie by query '${query}'`);
     }
     render () {
+        const { movies } = this.state;
         return (
             <div>
                 <Header searchMovie = { this.searchMovie } />
-                <Main />
+                <Main movies = { movies } />
             </div>
         );
     }
