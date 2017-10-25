@@ -11,7 +11,6 @@ import Styles from './styles';
 export default class Main extends Component {
     render () {
         const { results } = this.props.movies;
-        console.log(results);
         return (
             <main className = { Styles.main }>
                 <div className = { Styles.content }>
