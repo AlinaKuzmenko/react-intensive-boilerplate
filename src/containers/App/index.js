@@ -9,7 +9,8 @@ import Main from '../../components/Main';
 export const options = {
     api: 'https://api.themoviedb.org/3/discover/movie',
     key: 'a6f017bd0704106423cc1e6ff3a6cc1e',
-    language: 'language=en-US'
+    language: 'language=en-US',
+    posterURL: `https://image.tmdb.org/t/p/w500`
 };
 
 
@@ -18,6 +19,7 @@ export default class App extends Component {
         api: string.isRequired,
         key: string.isRequired,
         language: string.isRequired,
+        posterURL: string.isRequired
     }
     getChildContext () {
         return options;

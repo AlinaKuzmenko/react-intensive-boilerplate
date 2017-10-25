@@ -5,23 +5,30 @@ import { Switch, Route } from 'react-router-dom';
 // Instruments
 import Home from '../Home';
 import Favourites from '../Favourites';
-import Movie from '../Movie';
+import MoviePage from '../MoviePage';
 import Styles from './styles';
 
 export default class Main extends Component {
     render () {
-        const { movies } = this.props;
-        
+        const { results } = this.props.movies;
+        console.log(results);
         return (
             <main className = { Styles.main }>
                 <div className = { Styles.content }>
                     <Switch>
-                        <Route path = '/' >
-                          <Home movies = { movies } />
+                        <Route exact path = '/' >
+                            <Home movies = { results } />
                         </Route>
-                      <Route path = '/:movieID'>
-                        <Movie />
-                      </Route>
+                        {
+                            results
+                            ? <Route
+                                    path = '/:movieID'
+                                    render = { ({ match }) =>
+                                        <MoviePage movie = { results.find((movie) => movie.id === match.params.movieID) } />
+                                    }
+                            />
+                            : null
+                        }
                     </Switch>
                 </div>
                 <Favourites />

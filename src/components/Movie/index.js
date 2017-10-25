@@ -8,14 +8,15 @@ import defaultPoster from '../../theme/assets/default-poster.png';
 import Styles from './styles.scss';
 
 
-const posterURL = `https://image.tmdb.org/t/p/w500`;
-
 export default class Movie extends Component {
+    static contextTypes = {
+        posterURL: string.isRequired,
+    }
     static propTypes = {
         id: number.isRequired,
         name: string.isRequired,
         overview: string.isRequired,
-        poster: string.isRequired,
+        poster: string,
         votes: number.isRequired,
     }
     static defaultProps = {
@@ -26,6 +27,7 @@ export default class Movie extends Component {
         votes: 0
     }
     render () {
+        const { posterURL } = this.context;
         const { id, name, overview, poster, votes } = this.props;
         const src = poster ? `${ posterURL }/${ poster }` : defaultPoster;
         return (

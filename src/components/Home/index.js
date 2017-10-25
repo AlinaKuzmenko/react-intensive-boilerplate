@@ -10,10 +10,9 @@ import { getUniqueID } from '../../helpers';
 
 export default class Home extends Component {
     render () {
-        const { results } = this.props.movies;
-        console.log('Movies at HOME: ', results);
-        const moviesList = results
-            ? results.map((movie) => (
+        const { movies } = this.props;
+        const moviesList = movies
+            ? movies.map((movie) => (
                 <Movie
                     id = { movie.id }
                     key = {getUniqueID(7)}
