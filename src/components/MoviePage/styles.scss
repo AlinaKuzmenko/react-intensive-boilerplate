@@ -2,5 +2,15 @@
 
 .moviePage {
   display: flex;
+  flex-direction: column;
   margin: 0;
+  
+  h2 {
+    margin-top: 0;
+    color: $paletteColor6;
+  }
+  
+  img {
+    width: 300px;
+  }
 }
