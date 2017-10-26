@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { array } from 'prop-types';
 
 // Instruments
+import { getUniqueID } from '../../helpers';
 import Movie from '../Movie';
 import Styles from './styles.scss';
-import { getUniqueID } from '../../helpers';
 
 
 export default class Home extends Component {
@@ -29,9 +29,9 @@ export default class Home extends Component {
             : null;
 
         return (
-            <section className = { Styles.home }>
+            <div className = { Styles.home }>
                 { moviesList }
-            </section>
+            </div>
         );
     }
 }
