@@ -1,6 +1,7 @@
 @import "../../theme/palette";
 
 .header {
+  min-width: 920px;
   padding: 50px 0;
   background-color: $paletteColor7;
   text-align: center;
@@ -20,26 +21,18 @@
   form {
     display: flex;
     justify-content: center;
+    position: relative;
     width: 500px;
     margin: 0 auto;
   
     input[type="text"] {
-      width: calc(70% - 20px);
-      margin-right: 20px;
+      width: 70%;
       padding: 10px;
       border: 0;
       outline: 0;
       color: $paletteColor6;
       font-size: 16px;
       line-height: 1.5;
-    }
-    
-    input[type="submit"] {
-      width: 30%;
-      border: 1px solid lighten($paletteColor8, 5%);
-      outline: none;
-      background-color: $paletteColor8;
-      color: $paletteColor1;
     }
   }
 }

@@ -1,7 +1,10 @@
 @import "../../theme/palette";
 
 .favourites {
-  width: 30%;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 220px;
   
   header {
     padding: 10px;

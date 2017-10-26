@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Instruments
@@ -11,33 +11,34 @@ export default class Header extends Component {
     static propTypes= {
         searchMovie: func.isRequired
     }
-    constructor () {
-        super();
-        this.handleQueryChange = ::this._handleQueryChange;
+    constructor (props) {
+        super(props);
         this.searchMovie = ::this._searchMovie;
+        this.resetDefaultPlaceholder = ::this._resetDefaultPlaceholder;
     }
     state = {
-        query: 'Search...'
+        query: 'Search...',
     }
     _searchMovie (event) {
-        const { query } = this.state;
+        event.preventDefault();
+        const query = event.target.value;
         const { searchMovie } = this.props;
 
-        event.preventDefault();
+        this.setState(() => ({ query }));
         if (!query) {
 
             return null;
         }
-        searchMovie(query);
-        this.textInput.value = '';
-        this.setState(() => ({
-            query: 'Search...'
-        }));
+        searchMovie(query.trim().toLowerCase());
     }
-    _handleQueryChange (event) {
-        const query = event.target.value;
-
-        this.setState(() => ({ query }));
+    _resetDefaultPlaceholder (event) {
+        if (!event.target.value) {
+            return null;
+        }
+        event.target.value = '';
+        this.setState(() => ({
+            query: 'Search ...'
+        }));
     }
     render () {
         const { query } = this.state;
@@ -50,15 +51,9 @@ export default class Header extends Component {
                 <form onSubmit = { this.searchMovie } >
                     <input
                         placeholder = { query }
-                        ref = { (input) => {
-                            this.textInput = input;
-                        } }
                         type = 'text'
-                        onChange = { this.handleQueryChange }
-                    />
-                    <input
-                        type = 'submit'
-                        value = 'Search'
+                        onChange = { this.searchMovie }
+                        onBlur = { this.resetDefaultPlaceholder }
                     />
                 </form>
             </header>

@@ -16,7 +16,8 @@ export default class Movie extends Component {
         id: number.isRequired,
         name: string.isRequired,
         votes: number.isRequired,
-        poster: string
+        poster: string,
+        releaseDate: string
     }
     static defaultProps = {
         id: 0,
