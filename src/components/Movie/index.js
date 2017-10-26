@@ -10,14 +10,14 @@ import Styles from './styles.scss';
 
 export default class Movie extends Component {
     static contextTypes = {
-        posterURL: string.isRequired,
+        posterURL: string.isRequired
     }
     static propTypes = {
         id: number.isRequired,
         name: string.isRequired,
         overview: string.isRequired,
-        poster: string,
         votes: number.isRequired,
+        poster: string
     }
     static defaultProps = {
         id: 0,
@@ -29,15 +29,16 @@ export default class Movie extends Component {
     render () {
         const { posterURL } = this.context;
         const { id, name, overview, poster, votes } = this.props;
-        const src = poster ? `${ posterURL }/${ poster }` : defaultPoster;
+        const src = poster ? `${posterURL}/${poster}` : defaultPoster;
+
         return (
             <figure className = { Styles.movie }>
-                <Link to = { `/${ id }` }>
-                    <img src = { src } alt = { `${ name } poster` }/>
+                <Link to = { `/${id}` }>
+                    <img alt = { `${name} poster` } src = { src } />
                     <figcaption>
                         <h3>{ name }</h3>
                         <p>{ overview }</p>
-                        <span>{ `Votes: ${ votes }` }</span>
+                        <span>{ `Votes: ${votes}` }</span>
                     </figcaption>
                 </Link>
             </figure>

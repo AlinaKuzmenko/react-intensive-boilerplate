@@ -1,5 +1,6 @@
 // Core
 import React, { Component } from 'react';
+import { array } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
 // Instruments
@@ -9,24 +10,28 @@ import MoviePage from '../MoviePage';
 import Styles from './styles';
 
 export default class Main extends Component {
+    static propTypes= {
+        movies: array
+    }
     render () {
-        const { results } = this.props.movies;
+        const { movies } = this.props;
+
         return (
             <main className = { Styles.main }>
                 <div className = { Styles.content }>
                     <Switch>
                         <Route exact path = '/' >
-                            <Home movies = { results } />
+                            <Home movies = { movies } />
                         </Route>
                         {
-                            results
-                            ? <Route
+                            movies
+                                ? <Route
                                     path = '/:movieID'
                                     render = { ({ match }) =>
-                                        <MoviePage movie = { results.find((movie) => movie.id === match.params.movieID) } />
+                                        <MoviePage movie = { movies.find((movie) => movie.id === match.params.movieID) } />
                                     }
-                            />
-                            : null
+                                />
+                                : null
                         }
                     </Switch>
                 </div>

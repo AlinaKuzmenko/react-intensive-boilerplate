@@ -21,9 +21,6 @@ export default class App extends Component {
         language: string.isRequired,
         posterURL: string.isRequired
     }
-    getChildContext () {
-        return options;
-    }
     constructor () {
         super();
         this.getLatestMovies = ::this._getLatestMovies;
@@ -34,74 +31,76 @@ export default class App extends Component {
     state = {
         movies: []
     }
+    getChildContext () {
+        return options;
+    }
     componentDidMount () {
-        this.getLatestMovies();
+        this.getLatestMovies(1);
     }
     _getMoviesGenres () {
         const { api, key } = options;
-    
-        fetch(`${ api }/genre/movie/list?api_key=${ key }`, {
-            method: 'GET',
+
+        fetch(`${api}/genre/movie/list?api_key=${key}`, {
+            method: 'GET'
         })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Could not get latest movies');
                 }
+
                 return response.json();
             })
             .then((data) => {
-            
                 if (data !== this.state.movies) {
                     console.log('MoviesGenres: ', data);
                     this.setState(() => ({
-                        movies: data,
-                    }))
-                
+                        movies: data
+                    }));
                 }
             })
             .catch(({ message }) => console.log('Error message: ', message));
     }
     _getMoviesByGenre () {
         const { api, key } = options;
-    
-        fetch(`${ api }/discover/movie?with_genres=28&api_key=${ key }`, {
-            method: 'GET',
+
+        fetch(`${api}/discover/movie?with_genres=28&api_key=${key}`, {
+            method: 'GET'
         })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Could not get latest movies');
                 }
+
                 return response.json();
             })
             .then((data) => {
-            
                 if (data !== this.state.movies) {
                     console.log('MoviesByGenre: ', data);
                     this.setState(() => ({
-                        movies: data,
-                    }))
-                
+                        movies: data
+                    }));
                 }
             })
             .catch(({ message }) => console.log('Error message: ', message));
     }
-    _getLatestMovies () {
+    _getLatestMovies (pageNumber) {
         const { api, key } = options;
 
-        fetch(`${ api }/discover/movie?api_key=${ key }&sort_by=release_date.desc&page=1&page=2&page=3&page=4`, {
-            method: 'GET',
+        fetch(`${api}/discover/movie?sort_by=popularity.desc&page=${pageNumber}&api_key=${key}`, {
+            method: 'GET'
         })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Could not get latest movies');
                 }
+
                 return response.json();
             })
-            .then((data) => {
-                if (data !== this.state.movies) {
+            .then(({ results }) => {
+                if (results !== this.state.movies) {
                     this.setState(() => ({
-                        movies: data,
-                    }))
+                        movies: results
+                    }));
                 }
             })
             .catch(({ message }) => console.log('Error message: ', message));
@@ -111,10 +110,13 @@ export default class App extends Component {
     }
     render () {
         const { movies } = this.state;
+
+        console.log('movies', movies);
+
         return (
             <div>
                 <Header searchMovie = { this.searchMovie } />
-                <span onClick = { this.getMoviesByGenre }>search by genre</span>
+                <span onClick = { this.getMoviesByGenre }>search by genre </span>
                 <span onClick = { this.getMoviesGenres }>get genres</span>
                 <Main movies = { movies } />
             </div>
