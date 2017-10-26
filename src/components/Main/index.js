@@ -28,8 +28,7 @@ export default class Main extends Component {
                                 ? <Route
                                     path = '/:movieID'
                                     render = { ({ match }) =>
-                                        <MoviePage movie = { movies.find((movie) => movie.id === match.params.movieID) } />
-                                    }
+                                        <MoviePage movie = { movies.find((movie) => movie.id === parseInt(match.params.movieID)) } /> }
                                 />
                                 : null
                         }

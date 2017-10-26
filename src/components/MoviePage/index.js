@@ -20,15 +20,14 @@ export default class MoviePage extends Component {
     }
     render () {
         const { posterURL } = this.context;
-        const {
-            poster_path,
-            title
-        } = this.props;
+        const { movie } = this.props;
+
+        console.log('movie: ', movie);
 
         return (
             <section className = { Styles.moviePage }>
-                <h2>{ title }</h2>
-                <img alt = { `${title} movie poster` } src = { `${posterURL}/${poster_path}` } />
+                <h2>{ movie.title }</h2>
+                <img alt = { `${movie.title} movie poster` } src = { `${posterURL}/${movie.poster_path}` } />
             </section>
         );
     }
