@@ -2,21 +2,21 @@
 
 .movie {
   display: flex;
-  width: calc(50% - 10px);
+  width: 180px;
   margin: 0 5px 10px;
+  background-color: $paletteColor9;
+  text-decoration: none;
   
-  a {
-    width: 100%;
-    padding: 10px;
-    background-color: $paletteColor9;
+  &:hover {
     text-decoration: none;
     color: $paletteColor6;
-    
-    &:hover {
-      text-decoration: none;
-      color: $paletteColor6;
-    }
+  }
   
+  figure {
+    margin: 0;
+    padding: 10px;
+    color: $paletteColor6;
+    
     img {
       width: 100%;
     }
