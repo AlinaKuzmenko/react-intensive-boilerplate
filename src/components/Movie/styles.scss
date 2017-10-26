@@ -13,6 +13,8 @@
   }
   
   figure {
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 10px;
     color: $paletteColor6;
@@ -22,14 +24,13 @@
     }
   
     figcaption {
-      display: flex;
-      flex-direction: column;
       position: relative;
+      margin-top: 5px;
       color: $paletteColor6;
     
       h3 {
-        margin: 25px 0 5px;
-        color: $paletteColor5;
+        margin: 25px 0 0;
+        color: $paletteColor6;
         font-size: 16px;
         font-weight: 600;
         text-align: center;
@@ -45,7 +46,7 @@
         position: absolute;
         width: 60px;
         border-radius: 3px;
-        background-color: $paletteColor5;
+        background-color: lighten($paletteColor7, 20%);
         color: $paletteColor1;
         font-size: 10px;
         line-height: 16px;
