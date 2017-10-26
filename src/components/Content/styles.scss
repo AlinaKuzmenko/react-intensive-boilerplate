@@ -1,13 +1,10 @@
 @import "../../theme/palette";
 
-.main {
+.content {
   display: flex;
   justify-content: space-between;
+  min-width: 620px;
   height: 100%;
-  padding: 50px;
-  
-  
-  .content {
-    width: 65%;
-  }
+  margin-left: 290px;
+  padding: 50px 50px 50px 0;
 }

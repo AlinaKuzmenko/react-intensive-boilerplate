@@ -4,7 +4,8 @@ import { string } from 'prop-types';
 
 // Instruments
 import Header from '../../components/Header';
-import Main from '../../components/Main';
+import Favourites from '../../components/Favourites';
+import Content from '../../components/Content';
 
 
 const APIKey = 'a6f017bd0704106423cc1e6ff3a6cc1e';
@@ -101,7 +102,10 @@ export default class App extends Component {
         return (
             <div>
                 <Header searchMovie = { this.searchMovie } />
-                <Main movies = { movies } />
+                <main style = {{ position: 'relative' }}>
+                    <Favourites />
+                    <Content movies = { movies } />
+                </main>
             </div>
         );
     }
