@@ -14,7 +14,12 @@ export default class MoviePage extends Component {
         movie: object
     }
     static defaultProps = {
+        original_language: '',
+        overview: '',
+        popularity: '',
         poster_path: '',
+        release_date: '',
+        vote_average: '',
         title: 'No title yet'
     }
     render () {
