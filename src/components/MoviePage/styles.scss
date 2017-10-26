@@ -3,14 +3,55 @@
 .moviePage {
   display: flex;
   flex-direction: column;
+  position: relative;
   margin: 0;
   
   h2 {
     margin-top: 0;
-    color: $paletteColor6;
+    color: $paletteColor1;
+    background-color: $paletteColor6;
+    line-height: 38px;
+    text-align: center;
+    text-transform: uppercase;
   }
   
   img {
     width: 300px;
+  }
+  
+  .details {
+    position: absolute;
+    top: 47px;
+    left: 320px;
+    background-color: #fff;
+  
+    p {
+      display: flex;
+      align-items: stretch;
+    
+      b {
+        padding-right: 20px;
+        text-align: right;
+      }
+    }
+  }
+  
+  .overview {
+    margin-top: 20px;
+    background-color: lighten($paletteColor9, 7%);
+    
+    h5 {
+      margin: 0;
+      padding-left: 10px;
+      background-color: $paletteColor8;
+      color: $paletteColor1;
+      font-size: 16px;
+      line-height: 38px;
+    }
+    
+    p {
+      margin: 0;
+      padding: 10px;
+    }
   }
 }
