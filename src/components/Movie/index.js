@@ -31,16 +31,19 @@ export default class Movie extends Component {
         const src = poster ? `${posterURL}/${poster}` : defaultPoster;
 
         return (
-            <figure className = { Styles.movie }>
-                <Link to = { `/${id}` }>
+            <Link
+                to = { `/${id}` }
+                  className = { Styles.movie }>
+                <figure>
                     <img alt = { `${name} poster` } src = { src } />
                     <figcaption>
                         <h3>{ name }</h3>
                         <span className = { Styles.votes }>{ `Votes: ${votes}` }</span>
                         <span className = { Styles.date }>{ releaseDate }</span>
                     </figcaption>
-                </Link>
-            </figure>
+                </figure>
+            </Link>
+
         );
     }
 }
