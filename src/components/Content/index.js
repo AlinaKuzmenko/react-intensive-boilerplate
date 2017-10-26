@@ -13,13 +13,16 @@ export default class Content extends Component {
         movies: array
     }
     render () {
-        const { movies } = this.props;
+        const { movies, notification } = this.props;
 
         return (
             <div className = { Styles.content }>
                 <Switch>
                     <Route exact path = '/' >
-                        <Home movies = { movies } />
+                        <Home
+                            movies = { movies }
+                            notification = { notification }
+                        />
                     </Route>
                     {
                         movies

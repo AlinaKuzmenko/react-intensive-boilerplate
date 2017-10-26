@@ -38,8 +38,9 @@ export default class App extends Component {
         this.searchMovie = ::this._searchMovie;
     }
     state = {
+        filteredMovies: [],
         movies: [],
-        moviesGenres: []
+        moviesGenres: [],
     }
     getChildContext () {
         return options;
@@ -62,7 +63,6 @@ export default class App extends Component {
                 return response.json();
             })
             .then(({ results, total_results }) => {
-                console.log('Latest Movies', results);
                 if (results !== this.state.movies) {
                     this.setState(() => ({
                         movies: results
@@ -94,17 +94,26 @@ export default class App extends Component {
             .catch(({ message }) => console.log('Error message: ', message));
     }
     _searchMovie (query) {
-        console.log(`search a movie by query '${query}'`);
+        const { movies } = this.state;
+        const moviesFiltered = movies.filter((movie) => {
+            const title = movie.title.toLowerCase();
+            
+            return title.indexOf(query) !== -1;
+        });
+        this.setState(() => ({
+            filteredMovies: moviesFiltered
+        }));
     }
     render () {
-        const { movies } = this.state;
+        const { movies, filteredMovies } = this.state;
+        const moviesShown = filteredMovies.length !== 0 ? filteredMovies : movies;
 
         return (
             <div>
                 <Header searchMovie = { this.searchMovie } />
                 <main style = {{ position: 'relative' }}>
                     <Favourites />
-                    <Content movies = { movies } />
+                    <Content movies = { moviesShown } />
                 </main>
             </div>
         );
