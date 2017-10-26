@@ -13,23 +13,21 @@ export default class Content extends Component {
         movies: array
     }
     render () {
-        const { movies, notification } = this.props;
+        const { movies } = this.props;
 
         return (
             <div className = { Styles.content }>
                 <Switch>
                     <Route exact path = '/' >
-                        <Home
-                            movies = { movies }
-                            notification = { notification }
-                        />
+                        <Home movies = { movies } />
                     </Route>
                     {
                         movies
                             ? <Route
                                 path = '/:movieID'
                                 render = { ({ match }) =>
-                                    <MoviePage movie = { movies.find((movie) => movie.id === parseInt(match.params.movieID)) } /> }
+                                    <MoviePage movie = { movies.find((movie) => movie.id === parseInt(match.params.movieID)) } />
+                                }
                             />
                             : null
                     }

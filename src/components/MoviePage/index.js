@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { object, string } from 'prop-types';
 
 // Instruments
 import Styles from './styles.scss';
@@ -11,8 +11,7 @@ export default class MoviePage extends Component {
         posterURL: string.isRequired
     }
     static propTypes = {
-        poster_path: string,
-        title: string
+        movie: object
     }
     static defaultProps = {
         poster_path: '',
@@ -21,14 +20,14 @@ export default class MoviePage extends Component {
     render () {
         const { posterURL } = this.context;
         const { movie: {
-            title,
-            poster_path,
             original_language,
             overview,
             popularity,
+            poster_path,
             release_date,
-            vote_average,
-        } } = this.props;
+            title,
+            vote_average
+        }} = this.props;
 
         return (
             <section className = { Styles.moviePage }>

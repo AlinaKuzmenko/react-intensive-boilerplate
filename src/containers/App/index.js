@@ -40,7 +40,7 @@ export default class App extends Component {
     state = {
         filteredMovies: [],
         movies: [],
-        moviesGenres: [],
+        moviesGenres: []
     }
     getChildContext () {
         return options;
@@ -62,7 +62,7 @@ export default class App extends Component {
 
                 return response.json();
             })
-            .then(({ results, total_results }) => {
+            .then(({ results }) => {
                 if (results !== this.state.movies) {
                     this.setState(() => ({
                         movies: results
@@ -73,7 +73,7 @@ export default class App extends Component {
     }
     _getMoviesGenres () {
         const { api, key, moviesGenres } = options;
-        
+
         fetch(`${api}/${moviesGenres}?${key}`, {
             method: 'GET'
         })
@@ -81,13 +81,13 @@ export default class App extends Component {
                 if (!response.ok) {
                     throw new Error('Could not get latest movies');
                 }
-                
+
                 return response.json();
             })
             .then(({ genres }) => {
                 if (genres !== this.state.movies) {
                     this.setState(() => ({
-                        genres: genres
+                        genres
                     }));
                 }
             })
@@ -95,9 +95,15 @@ export default class App extends Component {
     }
     _searchMovie (query) {
         const { movies } = this.state;
-        const moviesFiltered = movies.filter((movie) => {
+        let moviesFiltered = [];
+
+        console.log('query', query);
+        if (!query) {
+            moviesFiltered = movies;
+        }
+        moviesFiltered = movies.filter((movie) => {
             const title = movie.title.toLowerCase();
-            
+
             return title.indexOf(query) !== -1;
         });
         this.setState(() => ({
@@ -111,7 +117,7 @@ export default class App extends Component {
         return (
             <div>
                 <Header searchMovie = { this.searchMovie } />
-                <main style = {{ position: 'relative' }}>
+                <main style = { { position: 'relative' } }>
                     <Favourites />
                     <Content movies = { moviesShown } />
                 </main>

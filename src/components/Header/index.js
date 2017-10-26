@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { func, bool } from 'prop-types';
+import { func } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Instruments
@@ -16,19 +16,10 @@ export default class Header extends Component {
         this.searchMovie = ::this._searchMovie;
         this.resetDefaultPlaceholder = ::this._resetDefaultPlaceholder;
     }
-    state = {
-        query: 'Search...',
-    }
     _searchMovie (event) {
-        event.preventDefault();
         const query = event.target.value;
         const { searchMovie } = this.props;
 
-        this.setState(() => ({ query }));
-        if (!query) {
-
-            return null;
-        }
         searchMovie(query.trim().toLowerCase());
     }
     _resetDefaultPlaceholder (event) {
@@ -36,12 +27,9 @@ export default class Header extends Component {
             return null;
         }
         event.target.value = '';
-        this.setState(() => ({
-            query: 'Search ...'
-        }));
+        event.target.placeholder = 'Search ...';
     }
     render () {
-        const { query } = this.state;
 
         return (
             <header className = { Styles.header }>
@@ -50,10 +38,10 @@ export default class Header extends Component {
                 </h1>
                 <form onSubmit = { this.searchMovie } >
                     <input
-                        placeholder = { query }
+                        placeholder = 'Search ...'
                         type = 'text'
-                        onChange = { this.searchMovie }
                         onBlur = { this.resetDefaultPlaceholder }
+                        onChange = { this.searchMovie }
                     />
                 </form>
             </header>
