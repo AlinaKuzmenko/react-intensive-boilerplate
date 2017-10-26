@@ -32,8 +32,8 @@ export default class Movie extends Component {
 
         return (
             <Link
-                to = { `/${id}` }
-                  className = { Styles.movie }>
+                className = { Styles.movie }
+                to = { `/${id}` } >
                 <figure>
                     <img alt = { `${name} poster` } src = { src } />
                     <figcaption>
