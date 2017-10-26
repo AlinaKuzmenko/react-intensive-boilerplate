@@ -15,20 +15,18 @@ export default class Movie extends Component {
     static propTypes = {
         id: number.isRequired,
         name: string.isRequired,
-        overview: string.isRequired,
         votes: number.isRequired,
         poster: string
     }
     static defaultProps = {
         id: 0,
         name: 'Movie name',
-        overview: 'There\'s no overview for this movie yet',
         poster: defaultPoster,
         votes: 0
     }
     render () {
         const { posterURL } = this.context;
-        const { id, name, overview, poster, votes } = this.props;
+        const { id, name, poster, releaseDate, votes } = this.props;
         const src = poster ? `${posterURL}/${poster}` : defaultPoster;
 
         return (
@@ -37,8 +35,8 @@ export default class Movie extends Component {
                     <img alt = { `${name} poster` } src = { src } />
                     <figcaption>
                         <h3>{ name }</h3>
-                        <p>{ overview }</p>
-                        <span>{ `Votes: ${votes}` }</span>
+                        <span className = { Styles.votes }>{ `Votes: ${votes}` }</span>
+                        <span className = { Styles.date }>{ releaseDate }</span>
                     </figcaption>
                 </Link>
             </figure>

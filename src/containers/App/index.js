@@ -6,10 +6,16 @@ import { string } from 'prop-types';
 import Header from '../../components/Header';
 import Main from '../../components/Main';
 
+
+const APIKey = 'a6f017bd0704106423cc1e6ff3a6cc1e';
+
 export const options = {
     api: 'https://api.themoviedb.org/3',
-    key: 'a6f017bd0704106423cc1e6ff3a6cc1e',
-    language: 'language=en-US',
+    discoverMovie: 'discover/movie',
+    moviesGenres: 'genre/movie/list',
+    key: `api_key=${APIKey}`,
+    latest: '',
+    popular: 'movie/popular',
     posterURL: `https://image.tmdb.org/t/p/w500`
 };
 
@@ -17,30 +23,34 @@ export const options = {
 export default class App extends Component {
     static childContextTypes = {
         api: string.isRequired,
+        discoverMovie: string,
+        moviesGenres: string,
         key: string.isRequired,
-        language: string.isRequired,
-        posterURL: string.isRequired
+        latest: string,
+        popular: string,
+        posterURL: string
     }
     constructor () {
         super();
-        this.getLatestMovies = ::this._getLatestMovies;
+        this.getMovies = ::this._getMovies;
         this.getMoviesGenres= ::this._getMoviesGenres;
-        this.getMoviesByGenre = ::this._getMoviesByGenre;
         this.searchMovie = ::this._searchMovie;
     }
     state = {
-        movies: []
+        movies: [],
+        moviesGenres: []
     }
     getChildContext () {
         return options;
     }
     componentDidMount () {
-        this.getLatestMovies(1);
+        this.getMovies(1);
+        this.getMoviesGenres();
     }
-    _getMoviesGenres () {
-        const { api, key } = options;
+    _getMovies (pageNumber) {
+        const { api, discoverMovie, key } = options;
 
-        fetch(`${api}/genre/movie/list?api_key=${key}`, {
+        fetch(`${api}/${discoverMovie}?page=${pageNumber}&${key}`, {
             method: 'GET'
         })
             .then((response) => {
@@ -50,56 +60,33 @@ export default class App extends Component {
 
                 return response.json();
             })
-            .then((data) => {
-                if (data !== this.state.movies) {
-                    console.log('MoviesGenres: ', data);
-                    this.setState(() => ({
-                        movies: data
-                    }));
-                }
-            })
-            .catch(({ message }) => console.log('Error message: ', message));
-    }
-    _getMoviesByGenre () {
-        const { api, key } = options;
-
-        fetch(`${api}/discover/movie?with_genres=28&api_key=${key}`, {
-            method: 'GET'
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Could not get latest movies');
-                }
-
-                return response.json();
-            })
-            .then((data) => {
-                if (data !== this.state.movies) {
-                    console.log('MoviesByGenre: ', data);
-                    this.setState(() => ({
-                        movies: data
-                    }));
-                }
-            })
-            .catch(({ message }) => console.log('Error message: ', message));
-    }
-    _getLatestMovies (pageNumber) {
-        const { api, key } = options;
-
-        fetch(`${api}/discover/movie?sort_by=popularity.desc&page=${pageNumber}&api_key=${key}`, {
-            method: 'GET'
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Could not get latest movies');
-                }
-
-                return response.json();
-            })
-            .then(({ results }) => {
+            .then(({ results, total_results }) => {
+                console.log('Latest Movies', results);
                 if (results !== this.state.movies) {
                     this.setState(() => ({
                         movies: results
+                    }));
+                }
+            })
+            .catch(({ message }) => console.log('Error message: ', message));
+    }
+    _getMoviesGenres () {
+        const { api, key, moviesGenres } = options;
+        
+        fetch(`${api}/${moviesGenres}?${key}`, {
+            method: 'GET'
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Could not get latest movies');
+                }
+                
+                return response.json();
+            })
+            .then(({ genres }) => {
+                if (genres !== this.state.movies) {
+                    this.setState(() => ({
+                        genres: genres
                     }));
                 }
             })
@@ -111,13 +98,9 @@ export default class App extends Component {
     render () {
         const { movies } = this.state;
 
-        console.log('movies', movies);
-
         return (
             <div>
                 <Header searchMovie = { this.searchMovie } />
-                <span onClick = { this.getMoviesByGenre }>search by genre </span>
-                <span onClick = { this.getMoviesGenres }>get genres</span>
                 <Main movies = { movies } />
             </div>
         );

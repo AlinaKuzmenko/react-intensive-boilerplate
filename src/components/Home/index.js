@@ -22,6 +22,7 @@ export default class Home extends Component {
                     name = { movie.title }
                     overview = { movie.overview }
                     poster = { movie.poster_path }
+                    releaseDate = { movie.release_date }
                     votes = { movie.vote_average }
                 />
             ))
