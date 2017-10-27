@@ -40,13 +40,17 @@ export default class App extends Component {
     state = {
         filteredMovies: [],
         movies: [],
-        moviesGenres: []
+        moviesGenres: [],
+        moviesTotalNumber: 0
     }
     getChildContext () {
         return options;
     }
     componentDidMount () {
         this.getMovies(1);
+        this.getMovies(2);
+        this.getMovies(3);
+        this.getMovies(4);
         this.getMoviesGenres();
     }
     _getMovies (pageNumber) {
@@ -62,10 +66,11 @@ export default class App extends Component {
 
                 return response.json();
             })
-            .then(({ results }) => {
+            .then(({ results, total_results }) => {
                 if (results !== this.state.movies) {
                     this.setState(() => ({
-                        movies: results
+                        movies: [...this.state.movies, ...results],
+                        moviesTotalNumber: total_results
                     }));
                 }
             })
