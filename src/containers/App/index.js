@@ -41,7 +41,7 @@ export default class App extends Component {
         filteredMovies: [],
         movies: [],
         moviesGenres: [],
-        moviesTotalNumber: 0
+        totalResults: 0
     }
     getChildContext () {
         return options;
@@ -70,7 +70,7 @@ export default class App extends Component {
                 if (results !== this.state.movies) {
                     this.setState(() => ({
                         movies: [...this.state.movies, ...results],
-                        moviesTotalNumber: total_results
+                        totalResults: total_results
                     }));
                 }
             })
@@ -116,7 +116,7 @@ export default class App extends Component {
         }));
     }
     render () {
-        const { movies, filteredMovies } = this.state;
+        const { movies, filteredMovies, totalResults } = this.state;
         const moviesShown = filteredMovies.length !== 0 ? filteredMovies : movies;
 
         return (
