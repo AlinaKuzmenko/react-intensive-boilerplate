@@ -28,10 +28,6 @@ describe('Header component', () => {
         expect(header.find('header')).toHaveLength(1);
     });
 
-    test('Should have className \'header\'', () => {
-        expect(header.find('header').hasClass('header')).toBe(true);
-    });
-
     test('Should have one \'h1\' element', () => {
         expect(header.find('h1')).toHaveLength(1);
     });
