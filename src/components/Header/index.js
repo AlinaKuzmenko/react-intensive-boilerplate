@@ -15,13 +15,21 @@ export default class Header extends Component {
         super(props);
         this.searchMovie = ::this._searchMovie;
     }
+    state = {
+        inputPlaceholder: 'Search ...',
+        inputValue: ''
+    }
     _searchMovie (event) {
         const query = event.target.value;
         const { searchMovie } = this.props;
 
+        this.setState(() => ({
+            inputValue: query
+        }));
         searchMovie(query.trim().toLowerCase());
     }
     render () {
+        const { inputPlaceholder, inputValue } = this.state;
 
         return (
             <header className = { Styles.header }>
@@ -30,8 +38,10 @@ export default class Header extends Component {
                 </h1>
                 <form onSubmit = { this.searchMovie } >
                     <input
-                        placeholder = 'Search ...'
+                        placeholder = { inputPlaceholder }
                         type = 'text'
+                        value = { inputValue }
+
                         onChange = { this.searchMovie }
                     />
                 </form>
