@@ -23,7 +23,8 @@ export default class Movie extends Component {
         id: 0,
         name: 'Movie name',
         poster: defaultPoster,
-        votes: 0
+        releaseDate: '',
+        votes: '0'
     }
     render () {
         const { posterURL } = this.context;
