@@ -1,7 +1,6 @@
 // Core
 import React, { Component } from 'react';
 import { func } from 'prop-types';
-import { Link } from 'react-router-dom';
 
 // Instruments
 import Styles from './styles.scss';
@@ -34,14 +33,13 @@ export default class Header extends Component {
         return (
             <header className = { Styles.header }>
                 <h1>
-                    <Link to = '/'>Moviesearcha</Link>
+                    <a href = '/'>Moviesearcha</a>
                 </h1>
                 <form onSubmit = { this.searchMovie } >
                     <input
                         placeholder = { inputPlaceholder }
                         type = 'text'
                         value = { inputValue }
-
                         onChange = { this.searchMovie }
                     />
                 </form>

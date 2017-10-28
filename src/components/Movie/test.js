@@ -2,7 +2,6 @@
 import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { MemoryRouter, Link } from 'react-router-dom';
 
 
 // Instruments
@@ -27,14 +26,12 @@ const props = {
     votes: 777
 };
 const movie = mount(
-    <MemoryRouter>
-        <Movie />
-    </MemoryRouter>
+    <Movie />
 );
 
 describe('Movie component', () => {
     test('Should have an \'a\' element', () => {
-        expect(movie.find(Link)).toHaveLength(1);
+        expect(movie.find('a')).toHaveLength(1);
     });
     
     test('Should have a \'figure\' element', () => {

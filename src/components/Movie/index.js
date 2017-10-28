@@ -1,7 +1,6 @@
 // Core
 import React, { Component } from 'react';
 import { string, number } from 'prop-types';
-import { Link } from 'react-router-dom';
 
 // Instruments
 import defaultPoster from '../../theme/assets/default-poster.png';
@@ -32,9 +31,9 @@ export default class Movie extends Component {
         const src = poster ? `${posterURL}/${poster}` : defaultPoster;
 
         return (
-            <Link
+            <a
                 className = { Styles.movie }
-                to = { `/${id}` } >
+                href = { `/${id}` } >
                 <figure>
                     <img alt = { `${name} poster` } src = { src } />
                     <figcaption>
@@ -43,7 +42,7 @@ export default class Movie extends Component {
                         <span className = { Styles.date }>{ releaseDate }</span>
                     </figcaption>
                 </figure>
-            </Link>
+            </a>
 
         );
     }

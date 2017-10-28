@@ -1,6 +1,5 @@
 // Core
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { array, string } from 'prop-types';
 
 // Instruments
@@ -24,10 +23,10 @@ export default class Favourites extends Component {
             ? movies.map(
                 ({ poster_path, title }) => (
                     <li>
-                        <Link to = '/:movieID'>
+                        <a href = '/:movieID'>
                             <img alt = '' src = {`${posterURL}/${poster_path}`} />
                             <span>{ title }</span>
-                        </Link>
+                        </a>
                     </li>
                 )
             )
