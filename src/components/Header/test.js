@@ -3,24 +3,32 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-
 // Instruments
 import Header from './index';
+import { MemoryRouter } from 'react-router-dom';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const
-    query = 'Star Wars',
-    state = {
+const query = 'Star Wars';
+const state = {
         inputPlaceholder: 'Search ...',
         inputValue: ''
-    },
-    mutatedState = {
+    };
+const mutatedState = {
         inputPlaceholder: 'Search ...',
         inputValue: query
-    },
-    header = mount(
-        <Header searchMovie = {() => null} />
+    };
+const location = {
+        hash: "/",
+        key: "bwooxy",
+        pathname: "/",
+        search: "",
+        state
+    };
+const header = mount(
+        <MemoryRouter initialEntries = { [location] }>
+            <Header searchMovie = {() => null} />
+        </MemoryRouter>
     );
 
 describe('Header component', () => {
