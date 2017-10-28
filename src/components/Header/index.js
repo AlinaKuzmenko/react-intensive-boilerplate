@@ -14,7 +14,6 @@ export default class Header extends Component {
     constructor (props) {
         super(props);
         this.searchMovie = ::this._searchMovie;
-        this.resetDefaultPlaceholder = ::this._resetDefaultPlaceholder;
     }
     state = {
         inputPlaceholder: 'Search ...',
@@ -29,17 +28,6 @@ export default class Header extends Component {
         }));
         searchMovie(query.trim().toLowerCase());
     }
-    _resetDefaultPlaceholder (event) {
-        const { searchMovie } = this.props;
-
-        if (!event.target.value) {
-            return null;
-        }
-        this.setState(() => ({
-            inputValue: ''
-        }));
-        searchMovie('');
-    }
     render () {
         const { inputPlaceholder, inputValue } = this.state;
 
@@ -53,7 +41,7 @@ export default class Header extends Component {
                         placeholder = { inputPlaceholder }
                         type = 'text'
                         value = { inputValue }
-                        onBlur = { this.resetDefaultPlaceholder }
+
                         onChange = { this.searchMovie }
                     />
                 </form>
