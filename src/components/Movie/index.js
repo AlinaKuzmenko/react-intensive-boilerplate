@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { string, number } from 'prop-types';
+import { object, string } from 'prop-types';
 
 // Instruments
 import defaultPoster from '../../theme/assets/default-poster.png';
@@ -12,31 +12,26 @@ export default class Movie extends Component {
         posterURL: string.isRequired
     }
     static propTypes = {
-        id: number.isRequired,
-        name: string.isRequired,
-        votes: number.isRequired,
-        popularity: number,
-        poster: string,
-        releaseDate: string
+        movie: object
     }
     static defaultProps = {
-        id: 0,
-        name: 'Movie name',
-        popularity: 'unknown',
-        poster: defaultPoster,
-        releaseDate: 'unknown',
-        votes: '0'
+        
     }
     render () {
         const { posterURL } = this.context;
         const {
-            id,
-            name,
-            poster,
-            releaseDate,
-            votes,
-            popularity
+            movie: {
+                id,
+                genre_ids: genreIDs,
+                original_title: title,
+                overview,
+                poster_path: poster,
+                release_date: releaseDate,
+                popularity,
+                vote_count: votes
+            }
         } = this.props;
+        console.log('this.props.movie', this.props.movie);
         const src = poster ? `${posterURL}/${poster}` : defaultPoster;
         const date = releaseDate.split('-').reverse().join('-');
 
@@ -45,12 +40,11 @@ export default class Movie extends Component {
                 className = { Styles.movie }
                 href = { `/${id}` } >
                 <figure>
-                    <p>{ popularity }</p>
-                    <img alt = { `${name} poster` } src = { src } />
+                    <img alt = { `${title} poster` } src = { src } />
                     <figcaption>
-                        <h3>{ name }</h3>
-                        <span className = { Styles.votes }>{ `Votes: ${votes}` }</span>
-                        <span className = { Styles.date }>{ date }</span>
+                        <span className = { Styles.popularity }>{ `popularity: ${popularity}` }</span>
+                        <span className = { Styles.date }>{ `Release date: ${date}` }</span>
+                        <h3>{ title }</h3>
                     </figcaption>
                 </figure>
             </a>

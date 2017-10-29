@@ -29,7 +29,7 @@
       color: $paletteColor6;
     
       h3 {
-        margin: 25px 0 0;
+        margin: 10px 0 0 0;
         color: $paletteColor6;
         font-size: 16px;
         font-weight: 600;
@@ -42,24 +42,17 @@
       }
     
       span {
-        display: inline-block;
-        position: absolute;
-        width: 60px;
+        display: block;
+        margin-bottom: 3px;
+        padding: 2px;
         border-radius: 3px;
         background-color: lighten($paletteColor7, 20%);
         color: $paletteColor1;
         font-size: 10px;
-        line-height: 16px;
-        text-align: center;
+        line-height: 12px;
         
-        &.votes {
-          top: 0;
-          left: 0;
-        }
-        
-        &.date {
-          top: 0;
-          right: 0;
+        &:first-letter {
+          text-transform: capitalize;
         }
       }
     }

@@ -16,16 +16,7 @@ export default class Home extends Component {
         const { movies } = this.props;
         const moviesList = movies
             ? movies.map((movie) => (
-                <Movie
-                    id = { movie.id }
-                    key = { getUniqueID(7) }
-                    name = { movie.title }
-                    overview = { movie.overview }
-                    popularity = { movie.popularity }
-                    poster = { movie.poster_path }
-                    releaseDate = { movie.release_date }
-                    votes = { movie.vote_average }
-                />
+                <Movie movie = { movie } />
             ))
             : null;
 
