@@ -13,8 +13,8 @@ export default class Header extends Component {
         sortByLatest: func.isRequired,
         sortByPopularity: func.isRequired
     }
-    constructor (props) {
-        super(props);
+    constructor () {
+        super();
         this.searchMovie = ::this._searchMovie;
         this.sortByLatest = ::this._sortByLatest;
         this.sortByPopularity = ::this._sortByPopularity;
@@ -25,12 +25,12 @@ export default class Header extends Component {
     }
     _searchMovie (event) {
         const query = event.target.value;
-        const { searchMovie } = this.props;
-
+        const { activeTab, searchMovie } = this.props;
+    
         this.setState(() => ({
             inputValue: query
         }));
-        searchMovie(query.trim().toLowerCase());
+        searchMovie(query.trim().toLowerCase(), activeTab);
     }
     _sortByLatest (event) {
         event.preventDefault();

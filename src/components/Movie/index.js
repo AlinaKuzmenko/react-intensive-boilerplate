@@ -31,7 +31,6 @@ export default class Movie extends Component {
                 vote_count: votes
             }
         } = this.props;
-        console.log('this.props.movie', this.props.movie);
         const src = poster ? `${posterURL}/${poster}` : defaultPoster;
         const date = releaseDate.split('-').reverse().join('-');
 

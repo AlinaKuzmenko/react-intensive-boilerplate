@@ -16,7 +16,10 @@ export default class Home extends Component {
         const { movies } = this.props;
         const moviesList = movies
             ? movies.map((movie) => (
-                <Movie movie = { movie } />
+                <Movie
+                    key = { getUniqueID(7) }
+                    movie = { movie }
+                />
             ))
             : null;
 

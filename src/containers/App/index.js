@@ -34,9 +34,9 @@ export default class App extends Component {
     constructor () {
         super();
         this.getMovies = ::this._getMovies;
-        this.searchMovie = ::this._searchMovie;
         this.sortByLatest = ::this._sortByLatest;
         this.sortByPopularity = ::this._sortByPopularity;
+        this.searchMovie = ::this._searchMovie;
     }
     state = {
         activeTab: '',
@@ -74,33 +74,13 @@ export default class App extends Component {
                     this.setState(() =>
                         Object.assign({}, this.state, {
                             movies: Object.assign({}, this.state.movies, {
-                                all: [ ...this.state.movies.all, ...results]
+                                all: [ ...this.state.movies.all, ...results],
                             })
                         })
                     );
                 }
             })
             .catch(({ message }) => console.log('Error message: ', message));
-    }
-    _searchMovie (query) {
-        const { movies } = this.state;
-        let moviesFiltered = [];
-
-        if (!query) {
-            moviesFiltered = movies.all;
-        }
-        moviesFiltered = movies.all.filter((movie) => {
-            const title = movie.title.toLowerCase();
-
-            return title.indexOf(query) !== -1;
-        });
-        this.setState(() =>
-            Object.assign({}, this.state, {
-                movies: Object.assign({}, this.state.movies, {
-                    filtered: moviesFiltered
-                })
-            })
-        );
     }
     _sortByLatest () {
         const { activeTab, movies: { all, latest } } = this.state;
@@ -151,14 +131,38 @@ export default class App extends Component {
             })
         }));
     }
-
+    _searchMovie (query) {
+        const { movies } = this.state;
+        let moviesFiltered = [];
+        
+        if (!query) {
+            moviesFiltered = movies.all;
+            this.setState(() => ({
+                activeTab: '',
+                movies: { ...this.state.movies }
+            }));
+        }
+        moviesFiltered = movies.all.filter((movie) => {
+            const title = movie.title.toLowerCase();
+            
+            return title.indexOf(query) !== -1;
+        });
+        this.setState(() =>
+            Object.assign({}, this.state, {
+                activeTab: '',
+                movies: Object.assign({}, this.state.movies, {
+                    filtered: moviesFiltered
+                })
+            })
+        );
+    }
     render () {
         const {
             activeTab,
-            movies: { all, latest, popular }
+            movies: { all, filtered, latest, popular }
         } = this.state;
         let moviesShown;
-
+        
         switch (activeTab) {
             case 'popular':
                 moviesShown = popular;
@@ -170,7 +174,6 @@ export default class App extends Component {
                 moviesShown = all;
                 break;
         }
-
         return (
             <div>
                 <Header
