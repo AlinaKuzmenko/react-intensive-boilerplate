@@ -1,10 +1,10 @@
 // Core
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { array, string } from 'prop-types';
 
 // Instruments
 import Styles from './styles.scss';
+import { getUniqueID } from '../../helpers';
 
 
 export default class Favourites extends Component {
@@ -20,19 +20,19 @@ export default class Favourites extends Component {
     render () {
         const { posterURL } = this.context;
         const { movies } = this.props;
-        const moviesList = (movies.length > 0)
+        const moviesList = movies.length > 0
             ? movies.map(
                 ({ poster_path, title }) => (
-                    <li>
-                        <Link to = '/:movieID'>
-                            <img alt = '' src = {`${posterURL}/${poster_path}`} />
+                    <li key = { getUniqueID(15) }>
+                        <a href = '/:movieID'>
+                            <img alt = '' src = { `${posterURL}/${poster_path}` } />
                             <span>{ title }</span>
-                        </Link>
+                        </a>
                     </li>
                 )
             )
             : <li>No movies</li>;
-        
+
         return (
             <aside className = { Styles.favourites }>
                 <header>Favourites</header>

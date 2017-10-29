@@ -21,6 +21,7 @@ export default class Home extends Component {
                     key = { getUniqueID(7) }
                     name = { movie.title }
                     overview = { movie.overview }
+                    popularity = { movie.popularity }
                     poster = { movie.poster_path }
                     releaseDate = { movie.release_date }
                     votes = { movie.vote_average }

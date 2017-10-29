@@ -1,7 +1,6 @@
 // Core
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 
 // Instruments
 import './theme/reset.css';
@@ -10,7 +9,5 @@ import './theme/reset.css';
 import App from './containers/App';
 
 render((
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <App />
 ), document.getElementById('root'));

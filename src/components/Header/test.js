@@ -2,7 +2,7 @@
 import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { MemoryRouter } from 'react-router-dom';
+
 
 // Instruments
 import Header from './';
@@ -19,27 +19,13 @@ const mutatedState = {
         inputPlaceholder: 'Search ...',
         inputValue: query
     };
-const location = {
-        hash: "/",
-        key: "bwooxy",
-        pathname: "/",
-        search: "",
-        state
-    };
+
 const header = mount(
-    <MemoryRouter initialEntries = { [location] }>
-        <Header searchMovie = {() => null} />
-    </MemoryRouter>
+    <Header searchMovie = {() => null} />
 );
 
 describe('Header component', () => {
     test('Should have a valid initial state', () => {
-        expect(header.state()).toEqual(state);
-    });
-    
-    test('Should get an initial state on blur', () => {
-        header.setState(() => (mutatedState));
-        header.find('input').simulate('blur');
         expect(header.state()).toEqual(state);
     });
     
@@ -50,17 +36,8 @@ describe('Header component', () => {
             }
         });
         expect(header.state()).toEqual(mutatedState);
-        console.log(header.find('input').text());
     });
     
-    test('Shouldn\'t do anything if the query is an empty string', () => {
-        header.find('input').simulate('change', {
-            target: {
-                value: ''
-            }
-        });
-        
-    });
     test('Should have one \'header\' element', () => {
         expect(header.find('header')).toHaveLength(1);
     });
@@ -80,4 +57,8 @@ describe('Header component', () => {
     test('Should have a \'form\' element with one \'input\' element', () => {
         expect(header.find('form').find('input')).toHaveLength(1);
     });
+    
+    test('Should have one \'nav\' elemnt', () => {
+        expect(header.find('nav')).toHaveLength(1);
+    })
 });
