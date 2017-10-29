@@ -9,11 +9,15 @@ import Styles from './styles.scss';
 
 export default class Header extends Component {
     static propTypes= {
-        searchMovie: func.isRequired
+        searchMovie: func.isRequired,
+        sortByLatest: func.isRequired,
+        sortByPopularity: func.isRequired
     }
     constructor (props) {
         super(props);
         this.searchMovie = ::this._searchMovie;
+        this.sortByLatest = ::this._sortByLatest;
+        this.sortByPopularity = ::this._sortByPopularity;
     }
     state = {
         inputPlaceholder: 'Search ...',
@@ -27,6 +31,18 @@ export default class Header extends Component {
             inputValue: query
         }));
         searchMovie(query.trim().toLowerCase());
+    }
+    _sortByLatest (event) {
+        event.preventDefault();
+        const { sortByLatest } = this.props;
+
+        sortByLatest();
+    }
+    _sortByPopularity (event) {
+        event.preventDefault();
+        const { sortByPopularity } = this.props;
+
+        sortByPopularity();
     }
     render () {
         const { inputPlaceholder, inputValue } = this.state;
@@ -45,8 +61,8 @@ export default class Header extends Component {
                     />
                 </form>
                 <Navigation>
-                    <a href = '/'>Popular</a>
-                    <a href = '/'>Latest</a>
+                    <a href = '/' onClick = { this.sortByPopularity }>Popular</a>
+                    <a href = '/' onClick = { this.sortByLatest }>Latest</a>
                 </Navigation>
             </header>
         );

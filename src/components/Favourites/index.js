@@ -4,6 +4,7 @@ import { array, string } from 'prop-types';
 
 // Instruments
 import Styles from './styles.scss';
+import { getUniqueID } from '../../helpers';
 
 
 export default class Favourites extends Component {
@@ -19,19 +20,19 @@ export default class Favourites extends Component {
     render () {
         const { posterURL } = this.context;
         const { movies } = this.props;
-        const moviesList = (movies.length > 0)
+        const moviesList = movies.length > 0
             ? movies.map(
                 ({ poster_path, title }) => (
-                    <li>
+                    <li key = { getUniqueID(15) }>
                         <a href = '/:movieID'>
-                            <img alt = '' src = {`${posterURL}/${poster_path}`} />
+                            <img alt = '' src = { `${posterURL}/${poster_path}` } />
                             <span>{ title }</span>
                         </a>
                     </li>
                 )
             )
             : <li>No movies</li>;
-        
+
         return (
             <aside className = { Styles.favourites }>
                 <header>Favourites</header>
