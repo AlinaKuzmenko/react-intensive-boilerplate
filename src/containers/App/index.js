@@ -122,7 +122,6 @@ export default class App extends Component {
             return bDate - aDate;
         };
         const moviesSorted = all.sort(sortByDate);
-        console.log("moviesSorted");
 
         this.setState(() => ({
             activeTab: 'latest',
@@ -145,7 +144,6 @@ export default class App extends Component {
 
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
         const moviesSorted = all.sort(sortByPopularity);
-        console.log("moviesSorted");
     
         this.setState(() => ({
             movies: Object.assign({}, this.state.movies, {

@@ -1,14 +1,14 @@
 // Core
 import React, { Component } from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 
 // Instruments
-import Navigation from '../Navigation';
 import Styles from './styles.scss';
 
 
 export default class Header extends Component {
     static propTypes= {
+        activeTab: string.isRequired,
         searchMovie: func.isRequired,
         sortByLatest: func.isRequired,
         sortByPopularity: func.isRequired
@@ -45,7 +45,11 @@ export default class Header extends Component {
         sortByPopularity();
     }
     render () {
-        const { inputPlaceholder, inputValue } = this.state;
+        const {
+            inputPlaceholder,
+            inputValue
+        } = this.state;
+        const { activeTab } = this.props;
 
         return (
             <header className = { Styles.header }>
@@ -60,10 +64,22 @@ export default class Header extends Component {
                         onChange = { this.searchMovie }
                     />
                 </form>
-                <Navigation>
-                    <a href = '/' onClick = { this.sortByPopularity }>Popular</a>
-                    <a href = '/' onClick = { this.sortByLatest }>Latest</a>
-                </Navigation>
+                <nav className = { Styles.navigation }>
+                    <a
+                        className = { activeTab === 'popular' ? Styles.active : '' }
+                        href = '/'
+                        onClick = { this.sortByPopularity }
+                    >
+                        Popular
+                    </a>
+                    <a
+                        className = { activeTab === 'latest' ? Styles.active : '' }
+                        href = '/'
+                        onClick = { this.sortByLatest }
+                    >
+                        Latest
+                    </a>
+                </nav>
             </header>
         );
     }
