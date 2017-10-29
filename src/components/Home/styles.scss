@@ -2,7 +2,9 @@
 
 .home {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 0;
+  flex-wrap:wrap;
+  justify-content: space-between;
+  min-width: 420px;
+  margin: 0 270px;
+  padding: 50px;
 }

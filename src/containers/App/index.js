@@ -1,11 +1,12 @@
 // Core
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import { string } from 'prop-types';
 
 // Instruments
 import Header from '../../components/Header';
 import Favourites from '../../components/Favourites';
-import Content from '../../components/Content';
+import Home from '../../components/Home';
 
 
 const APIKey = 'a6f017bd0704106423cc1e6ff3a6cc1e';
@@ -124,7 +125,7 @@ export default class App extends Component {
                 <Header searchMovie = { this.searchMovie } />
                 <main style = { { position: 'relative' } }>
                     <Favourites />
-                    <Content movies = { moviesShown } />
+                    <Home movies = { movies } />
                 </main>
             </div>
         );

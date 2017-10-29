@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { func } from 'prop-types';
 
 // Instruments
+import Navigation from '../Navigation';
 import Styles from './styles.scss';
 
 
@@ -43,6 +44,10 @@ export default class Header extends Component {
                         onChange = { this.searchMovie }
                     />
                 </form>
+                <Navigation>
+                    <a href = '/'>Popular</a>
+                    <a href = '/'>Latest</a>
+                </Navigation>
             </header>
         );
     }
