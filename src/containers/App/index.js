@@ -103,14 +103,26 @@ export default class App extends Component {
         );
     }
     _sortByLatest () {
-        const { movies } = this.state;
+        const { activeTab, movies: { all, latest } } = this.state;
+
+        if (activeTab === 'latest') {
+
+            return null;
+        } else {
+            this.setState(() => ({
+                activeTab: 'latest',
+                movies: { ...this.state.movies }
+            }));
+        }
+
         const sortByDate = (a, b) => {
             const aDate = new Date(a.release_date).getTime();
             const bDate = new Date(b.release_date).getTime();
 
             return bDate - aDate;
         };
-        const moviesSorted = movies.all.sort(sortByDate);
+        const moviesSorted = all.sort(sortByDate);
+        console.log("moviesSorted");
 
         this.setState(() => ({
             activeTab: 'latest',
@@ -120,36 +132,44 @@ export default class App extends Component {
         }));
     }
     _sortByPopularity () {
-        const { movies } = this.state;
-        const sortByPopularity = (a, b) => b.popularity - a.popularity;
-        const moviesSorted = movies.all.sort(sortByPopularity);
+        const { activeTab, movies: { all, popular } } = this.state;
+        if (activeTab === 'popular') {
 
+            return null;
+        } else {
+            this.setState(() => ({
+                activeTab: 'popular',
+                movies: { ...this.state.movies }
+            }));
+        }
+
+        const sortByPopularity = (a, b) => b.popularity - a.popularity;
+        const moviesSorted = all.sort(sortByPopularity);
+        console.log("moviesSorted");
+    
         this.setState(() => ({
-            activeTab: 'popular',
             movies: Object.assign({}, this.state.movies, {
                 popular: moviesSorted
             })
         }));
     }
+
     render () {
         const {
             activeTab,
-            movies
+            movies: { all, latest, popular }
         } = this.state;
         let moviesShown;
 
         switch (activeTab) {
             case 'popular':
-                console.log('switched to popular');
-                moviesShown = movies.popular;
+                moviesShown = popular;
                 break;
             case 'latest':
-                console.log('switched to latest');
-                moviesShown = movies.latest;
+                moviesShown = latest;
                 break;
             default:
-                console.log('switched to default');
-                moviesShown = movies.all;
+                moviesShown = all;
                 break;
         }
 
