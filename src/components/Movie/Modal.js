@@ -24,12 +24,14 @@ export default class Modal extends Component {
         super();
         this.handleModal = ::this._handleModal;
     }
+    state = {
+        top: 0
+    }
     componentDidMount () {
-        const { movie: { id }} = this.props;
-        const modal = document.getElementById(`modal-${id}`);
-
         document.body.style.overflow = 'hidden';
-        modal.style.top = `${window.scrollY}px`;
+        this.setState(() => ({
+            top: window.scrollY
+        }));
     }
     componentWillUnmount () {
         document.body.style.overflow = 'scroll';
@@ -42,6 +44,7 @@ export default class Modal extends Component {
     }
     render () {
         const { posterURL } = this.context;
+        const { top } = this.state;
         const {
             movie: {
                 id,
@@ -58,7 +61,8 @@ export default class Modal extends Component {
         return (
             <section
                 className = { Styles.modal }
-                id = { `modal-${id}` }>
+                id = { `modal-${id}` }
+                style = {{ top }}>
                 <header>
                     <h2>{ title }</h2>
                     <span

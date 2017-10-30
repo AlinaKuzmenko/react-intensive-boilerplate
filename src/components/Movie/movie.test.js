@@ -78,10 +78,8 @@ describe('Movie component', () => {
         expect(movie.find('h3').text()).toBe(defaultProps.original_title);
     });
     
-    // This works only if i am not tying to find smth in the DOM in theModal component
     test('Should show Modal when Movie is clicked', () => {
         movie.find('a').simulate('click');
-        // expect(movie.find(Modal).exists()).toBe(true);
         expect(movie.state()).toEqual(mutatedState);
     })
 });
