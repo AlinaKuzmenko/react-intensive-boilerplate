@@ -7,6 +7,7 @@
   background-color: $paletteColor9;
   
   a {
+    width: 100%;
     color: $paletteColor6;
     text-decoration: none;
   
@@ -14,63 +15,66 @@
       color: $paletteColor6;
       text-decoration: none;
     }
-  }
   
-  figure {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 10px;
-    color: $paletteColor6;
-    
-    img {
-      width: 100%;
-    }
-  
-    figcaption {
-      position: relative;
-      margin-top: 5px;
+    figure {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 10px;
       color: $paletteColor6;
     
-      h3 {
-        margin: 10px 0 0 0;
+      img {
+        width: 100%;
+      }
+    
+      figcaption {
+        position: relative;
+        margin-top: 5px;
         color: $paletteColor6;
-        font-size: 16px;
-        font-weight: 600;
-        text-align: center;
-      }
-    
-      p {
-        margin: 5px 0;
-        font-size: 12px;
-      }
-    
-      span {
-        display: block;
-        margin-bottom: 3px;
-        padding: 2px;
-        border-radius: 3px;
-        background-color: lighten($paletteColor7, 20%);
-        color: $paletteColor1;
-        font-size: 10px;
-        line-height: 12px;
+      
+        h3 {
+          margin: 10px 0 0 0;
+          color: $paletteColor6;
+          font-size: 16px;
+          font-weight: 600;
+          text-align: center;
+        }
+      
+        p {
+          margin: 5px 0;
+          font-size: 12px;
+        }
+      
+        span {
+          display: block;
+          margin-bottom: 3px;
+          padding: 2px;
+          border-radius: 3px;
+          background-color: lighten($paletteColor7, 20%);
+          color: $paletteColor1;
+          font-size: 10px;
+          line-height: 12px;
         
-        &:first-letter {
-          text-transform: capitalize;
+          &:first-letter {
+            text-transform: capitalize;
+          }
         }
       }
     }
   }
-  
   .modal {
     display: flex;
+    align-items: stretch;
     flex-direction: column;
+    justify-content: center;
     position: absolute;
     top: 0;
     left: 0;
-    width: 600px;
+    width: 100vw;
+    height: 100vh;
     margin: 0 auto;
-    filter: drop-shadow(0 0 10px $paletteColor6);
+    padding: 0 50px;
+    background-color: $paletteColor10;
     z-index: 100;
     
     header {
@@ -84,7 +88,7 @@
       h2 {
         margin: 5px 20px;
       }
-  
+      
       .close {
         width: 20px;
         height: 20px;
@@ -96,7 +100,7 @@
       justify-content: space-between;
       background-color: $paletteColor9;
       padding: 20px;
-  
+      
       img {
         height: 200px
       }
@@ -115,18 +119,18 @@
           &:last-child {
             margin-bottom: 0;
           }
-    
+          
           mark {
             display: inline-block;
             font-weight: 700;
             padding-right: 3px;
             background-color: transparent;
-      
+            
             &:first-letter {
               text-transform: uppercase;
             }
           }
-    
+          
           span {
             margin: 0;
           }

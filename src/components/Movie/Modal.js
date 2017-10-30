@@ -27,12 +27,9 @@ export default class Modal extends Component {
     componentDidMount () {
         const { movie: { id }} = this.props;
         const modal = document.getElementById(`modal-${id}`);
-        const top = window.scrollY + 200;
-        const left = (window.innerWidth / 2) - (modal.scrollWidth / 2);
 
         document.body.style.overflow = 'hidden';
-        modal.style.top = `${top}px`;
-        modal.style.left = `${left}px`;
+        modal.style.top = `${window.scrollY}px`;
     }
     componentWillUnmount () {
         document.body.style.overflow = 'scroll';

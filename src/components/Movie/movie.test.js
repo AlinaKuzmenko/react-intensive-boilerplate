@@ -6,6 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 
 // Instruments
 import Movie from './';
+import Modal from './';
 import defaultPoster from '../../theme/assets/default-poster.png';
 
 
@@ -13,58 +14,74 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const defaultProps = {
     id: 0,
-    name: 'Movie name',
-    poster: defaultPoster,
-    releaseDate: '',
-    votes: '0'
+    original_title: 'unknown',
+    release_date: 'unknown',
+    popularity: 0
 };
 const props = {
     id: 550,
-    name: 'Fight Club',
-    poster: `https://image.tmdb.org/t/p/w500/adw6Lq9FiC9zjYEpOqfq03ituwp.jpg`,
-    releaseDate: '15.10.1999',
-    votes: 777
+    original_title: 'Fight Club',
+    poster_path: 'https://image.tmdb.org/t/p/w500/adw6Lq9FiC9zjYEpOqfq03ituwp.jpg',
+    release_date: '15-10-1999',
+    popularity: 777
 };
+
+const state = {
+    modalIsOpened: false
+};
+
+const mutatedState = {
+    modalIsOpened: true
+};
+
 const movie = mount(
-    <Movie />
+    <Movie movie = {props} />
 );
 
 describe('Movie component', () => {
     test('Should have an \'a\' element', () => {
         expect(movie.find('a')).toHaveLength(1);
     });
-    
+
     test('Should have a \'figure\' element', () => {
         expect(movie.find('figure')).toHaveLength(1);
     });
-    
+
     test('Should have an \'img\' element inside the \'figure\'', () => {
         expect(movie.find('figure').find('img')).toHaveLength(1);
     });
-    
+
     test('Should have a \'figcaption\' element inside the \'figure\'', () => {
         expect(movie.find('figure').find('figcaption')).toHaveLength(1);
     });
-    
+
     test('Should have an \'h3\' element inside the \'figcaption\'', () => {
         expect(movie.find('figcaption').find('h3')).toHaveLength(1);
     });
-    
+
     test('Should have two \'span\' elements inside the \'figcaption\'', () => {
         expect(movie.find('figcaption').find('span')).toHaveLength(2);
     });
-    
+
     test('Should have props that are passed', () => {
         movie.setProps({ props });
         expect(movie.props().props).toEqual(props);
     });
-    
+
     test('Should have a name with the value from the passed props', () => {
         movie.setProps({ props });
         expect(movie.props().props).toEqual(props);
     });
-    
+
     test('Should have a default text in \'h3\' if props not passed', () => {
-        expect(movie.find('h3').text()).toBe(defaultProps.name);
+        movie.setProps({ movie: defaultProps });
+        expect(movie.find('h3').text()).toBe(defaultProps.original_title);
     });
+    
+    // This works only if i am not tying to find smth in the DOM in theModal component
+    test('Should show Modal when Movie is clicked', () => {
+        movie.find('a').simulate('click');
+        // expect(movie.find(Modal).exists()).toBe(true);
+        expect(movie.state()).toEqual(mutatedState);
+    })
 });

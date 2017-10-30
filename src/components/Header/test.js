@@ -12,16 +12,24 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const query = 'Star Wars';
 const state = {
-        inputPlaceholder: 'Search ...',
-        inputValue: ''
-    };
+    inputPlaceholder: 'Search ...',
+    inputValue: ''
+};
 const mutatedState = {
-        inputPlaceholder: 'Search ...',
-        inputValue: query
-    };
+    inputPlaceholder: 'Search ...',
+    inputValue: query
+};
+
+const activeTab = '';
+
 
 const header = mount(
-    <Header searchMovie = {() => null} />
+    <Header
+        activeTab = { activeTab }
+        searchMovie = {() => null}
+        sortByLatest = {() => null}
+        sortByPopularity = {() => null}
+    />
 );
 
 describe('Header component', () => {
@@ -58,7 +66,7 @@ describe('Header component', () => {
         expect(header.find('form').find('input')).toHaveLength(1);
     });
     
-    test('Should have one \'nav\' elemnt', () => {
+    test('Should have one \'nav\' element', () => {
         expect(header.find('nav')).toHaveLength(1);
     })
 });

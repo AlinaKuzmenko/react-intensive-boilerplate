@@ -4,6 +4,7 @@ import { object, string } from 'prop-types';
 
 // Instruments
 import Modal from './Modal';
+import defaultPoster from '../../theme/assets/default-poster.png';
 import Styles from './styles.scss';
 
 
@@ -16,8 +17,10 @@ export default class Movie extends Component {
     }
     static defaultProps = {
         movie: {
-            original_title: '',
-            overview: 'No overview'
+            id: 0,
+            original_title: 'unknown',
+            release_date: 'unknown',
+            popularity: 0
         }
     }
     constructor () {
@@ -62,7 +65,7 @@ export default class Movie extends Component {
                 movie = { this.props.movie }
             />
             : null;
-        const src = `${posterURL}${poster}`;
+        const src = poster ? `${posterURL}${poster}` : defaultPoster;
         const date = releaseDate.split('-').reverse().join('-');
 
         return (
