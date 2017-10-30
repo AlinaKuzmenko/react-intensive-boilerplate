@@ -182,7 +182,7 @@ export default class App extends Component {
                     sortByLatest = { this.sortByLatest }
                     sortByPopularity = { this.sortByPopularity }
                 />
-                <main style = { { position: 'relative' } }>
+                <main>
                     <Favourites />
                     <Home movies = { moviesShown } />
                 </main>

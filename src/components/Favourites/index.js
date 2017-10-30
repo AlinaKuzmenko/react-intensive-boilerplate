@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { array, string } from 'prop-types';
 
 // Instruments
-import Styles from './styles.scss';
 import { getUniqueID } from '../../helpers';
+import Styles from './styles.scss';
 
 
 export default class Favourites extends Component {
