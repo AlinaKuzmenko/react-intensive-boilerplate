@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { number, object, string } from 'prop-types';
+import { func, object, string } from 'prop-types';
 
 // Instruments
 import Styles from './styles.scss';
@@ -11,40 +11,41 @@ export default class Modal extends Component {
         posterURL: string.isRequired
     }
     static propTypes = {
-        movie: object,
-        scrollTop: number
+        handleModal: func.isRequired,
+        movie: object
     }
     static defaultProps = {
         movie: {
             original_title: '',
-            overview: 'No overview',
-        },
-        scrollTop: 0
+            overview: 'No overview'
+        }
     }
     constructor () {
         super();
         this.handleModal = ::this._handleModal;
     }
     componentDidMount () {
-        const { movie: { id }, scrollTop } = this.props;
+        const { movie: { id }} = this.props;
         const modal = document.getElementById(`modal-${id}`);
-        // document.body.style.overflow = 'hidden';
-        console.log('modal ', modal);
-        modal.style.top = window.scrollY + 200 +  'px';
-        modal.style.left = (window.innerWidth / 2) - (modal.scrollWidth / 2) +  'px';
+        const top = window.scrollY + 200;
+        const left = (window.innerWidth / 2) - (modal.scrollWidth / 2);
+
+        document.body.style.overflow = 'hidden';
+        modal.style.top = `${top}px`;
+        modal.style.left = `${left}px`;
     }
     componentWillUnmount () {
-        // document.body.style.overflow = 'scroll';
+        document.body.style.overflow = 'scroll';
     }
-    _handleModal() {
+    _handleModal () {
         event.preventDefault();
         const { handleModal } = this.props;
+
         handleModal(event);
     }
     render () {
         const { posterURL } = this.context;
         const {
-            scrollTop,
             movie: {
                 id,
                 original_title: title,
@@ -56,15 +57,16 @@ export default class Modal extends Component {
             }
         } = this.props;
         const src = `${posterURL}${poster}`;
-    
+
         return (
-            <section id = { `modal-${id}` } className = { Styles.modal }>
+            <section
+                className = { Styles.modal }
+                id = { `modal-${id}` }>
                 <header>
                     <h2>{ title }</h2>
                     <span
                         className = { Styles.close }
-                        onClick = { this.handleModal }
-                    >
+                        onClick = { this.handleModal }>
                         X
                     </span>
                 </header>

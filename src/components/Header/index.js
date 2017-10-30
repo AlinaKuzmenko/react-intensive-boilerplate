@@ -26,7 +26,7 @@ export default class Header extends Component {
     _searchMovie (event) {
         const query = event.target.value;
         const { activeTab, searchMovie } = this.props;
-    
+
         this.setState(() => ({
             inputValue: query
         }));
@@ -68,15 +68,13 @@ export default class Header extends Component {
                     <a
                         className = { activeTab === 'popular' ? Styles.active : '' }
                         href = '/'
-                        onClick = { this.sortByPopularity }
-                    >
+                        onClick = { this.sortByPopularity }>
                         Popular
                     </a>
                     <a
                         className = { activeTab === 'latest' ? Styles.active : '' }
                         href = '/'
-                        onClick = { this.sortByLatest }
-                    >
+                        onClick = { this.sortByLatest }>
                         Latest
                     </a>
                 </nav>

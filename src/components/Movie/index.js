@@ -17,7 +17,7 @@ export default class Movie extends Component {
     static defaultProps = {
         movie: {
             original_title: '',
-            overview: 'No overview',
+            overview: 'No overview'
         }
     }
     constructor () {
@@ -25,11 +25,11 @@ export default class Movie extends Component {
         this.handleModal = ::this._handleModal;
     }
     state = {
-        modalIsOpened: false,
-        scrollTop: 0
+        modalIsOpened: false
     }
     componentDidMount () {
         const { modalIsOpened } = this.state;
+
         if (modalIsOpened) {
             window.onwheel.preventDefault(); // modern standard
             window.onmousewheel.preventDefault(); // older browsers, IE
@@ -39,43 +39,39 @@ export default class Movie extends Component {
     }
     _handleModal (event) {
         event.preventDefault();
-        const movieOffsetTop = event.target.offsetTop;
+
         this.setState(() => ({
-            modalIsOpened: !this.state.modalIsOpened,
-            scrollTop: movieOffsetTop
+            modalIsOpened: !this.state.modalIsOpened
         }));
     }
     render () {
         const { posterURL } = this.context;
-        const { modalIsOpened, scrollTop } = this.state;
+        const { modalIsOpened } = this.state;
         const {
             movie: {
                 id,
-                genre_ids: genreIDs,
                 original_title: title,
-                overview,
                 poster_path: poster,
                 release_date: releaseDate,
-                popularity,
-                vote_count: votes
+                popularity
             }
         } = this.props;
         const modal = modalIsOpened
             ? <Modal
                 handleModal = { this.handleModal }
                 movie = { this.props.movie }
-                scrollTop = { scrollTop }
             />
             : null;
         const src = `${posterURL}${poster}`;
         const date = releaseDate.split('-').reverse().join('-');
 
         return (
-            <div id = {`movie-${ id }`} className = { Styles.movie }>
+            <div
+                className = { Styles.movie }
+                id = { `movie-${id}` }>
                 <a
                     href = '/'
-                    onClick = { this.handleModal }
-                >
+                    onClick = { this.handleModal }>
                     <figure>
                         <img
                             alt = { `${title} poster` }
