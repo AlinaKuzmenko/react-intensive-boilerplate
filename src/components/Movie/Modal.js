@@ -27,7 +27,7 @@ export default class Modal extends Component {
     state = {
         top: 0
     }
-    componentDidMount () {
+    componentWillMount () {
         document.body.style.overflow = 'hidden';
         this.setState(() => ({
             top: window.scrollY
@@ -62,7 +62,7 @@ export default class Modal extends Component {
             <section
                 className = { Styles.modal }
                 id = { `modal-${id}` }
-                style = {{ top }}>
+                style = { { top } }>
                 <header>
                     <h2>{ title }</h2>
                     <span
