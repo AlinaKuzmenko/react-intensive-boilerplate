@@ -4,6 +4,7 @@ import { object, string } from 'prop-types';
 
 // Instruments
 import Modal from './Modal';
+import Star from '../Star';
 import defaultPoster from '../../theme/assets/default-poster.png';
 import Styles from './styles.scss';
 
@@ -72,6 +73,10 @@ export default class Movie extends Component {
             <div
                 className = { Styles.movie }
                 id = { `movie-${id}` }>
+                <Star
+                    isFavourite = { false }
+                    movieID = { id }
+                />
                 <a
                     href = '/'
                     onClick = { this.handleModal }>
