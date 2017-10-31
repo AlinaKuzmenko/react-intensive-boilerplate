@@ -18,7 +18,6 @@ export default class Favourites extends Component {
         movies: []
     }
     render () {
-        console.log(window.localStorage);
         const { posterURL } = this.context;
         const { movies } = this.props;
         const moviesList = movies.length > 0

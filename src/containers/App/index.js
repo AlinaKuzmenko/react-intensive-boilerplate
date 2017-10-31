@@ -37,11 +37,13 @@ export default class App extends Component {
         this.sortByLatest = ::this._sortByLatest;
         this.sortByPopularity = ::this._sortByPopularity;
         this.searchMovie = ::this._searchMovie;
+        this.getFavourites = ::this._getFavourites;
     }
     state = {
         activeTab: '',
         movies: {
             all: [],
+            favourites: [],
             filtered: [],
             latest: [],
             popular: []
@@ -55,6 +57,7 @@ export default class App extends Component {
         this.getMovies(2);
         this.getMovies(3);
         this.getMovies(4);
+        this.getFavourites();
     }
     _getMovies (pageNumber) {
         const { api, discoverMovie, key } = options;
@@ -130,6 +133,18 @@ export default class App extends Component {
             })
         }));
     }
+    _getFavourites () {
+        if (window.localStorage.length !== 0) {
+            this.setState(() =>
+                Object.assign({}, this.state, {
+                    movies: Object.assign({}, this.state.movies, {
+                        favourites: [...this.state.movies.favourites, ...localStorage.getItem('favourites').split(',')]
+                    })
+                })
+            );
+        }
+        return null;
+    }
     _searchMovie (query) {
         const { movies } = this.state;
         let moviesFiltered = [];
@@ -158,7 +173,12 @@ export default class App extends Component {
     render () {
         const {
             activeTab,
-            movies: { all, latest, popular }
+            movies: {
+                all,
+                favourites,
+                latest,
+                popular
+            }
         } = this.state;
         let moviesShown;
 
