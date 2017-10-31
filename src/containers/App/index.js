@@ -204,7 +204,10 @@ export default class App extends Component {
                 />
                 <main>
                     <Favourites />
-                    <Home movies = { moviesShown } />
+                    <Home
+                        favourites = { favourites }
+                        movies = { moviesShown }
+                    />
                 </main>
             </div>
         );

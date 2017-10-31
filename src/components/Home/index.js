@@ -13,14 +13,18 @@ export default class Home extends Component {
         movies: array
     }
     render () {
-        const { movies } = this.props;
+        const { favourites, movies } = this.props;
         const moviesList = movies
-            ? movies.map((movie) => (
-                <Movie
-                    key = { getUniqueID(7) }
-                    movie = { movie }
-                />
-            ))
+            ? movies.map((movie) => {
+                const fav = new Set(favourites);
+                const isFavourite = fav.has(movie.id);
+                return (
+                    <Movie
+                        isFavourite = { isFavourite }
+                        key = { getUniqueID(7) }
+                        movie = { movie } />
+                );
+            })
             : null;
 
         return (

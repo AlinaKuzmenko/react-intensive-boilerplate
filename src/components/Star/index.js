@@ -21,11 +21,18 @@ export default class Star extends Component {
     state = {
         isFavourite: false
     }
-    componentWillMount () {
+    componentDidMount () {
         
     }
     _handleFavourites () {
-        console.log('handleFavourites');
+        const { id, isFavourite } = this.props;
+    
+        if (!isFavourite) {
+            console.log('is not in favourites');
+            // localStorage.setItem('favourites', [...localStorage.getItem('favourites').split(','), ...[id]])
+        } else {
+            console.log('is in favourites');
+        }
         
     }
     render () {

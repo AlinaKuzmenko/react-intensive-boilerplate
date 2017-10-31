@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { object, string } from 'prop-types';
+import { bool, object, string } from 'prop-types';
 
 // Instruments
 import Modal from './Modal';
@@ -14,9 +14,11 @@ export default class Movie extends Component {
         posterURL: string.isRequired
     }
     static propTypes = {
+        isFavourite: bool.isRequired,
         movie: object
     }
     static defaultProps = {
+        isFavourite: false,
         movie: {
             id: 0,
             original_title: 'unknown',
@@ -52,6 +54,7 @@ export default class Movie extends Component {
         const { posterURL } = this.context;
         const { modalIsOpened } = this.state;
         const {
+            isFavourite,
             movie: {
                 id,
                 original_title: title,
@@ -74,9 +77,8 @@ export default class Movie extends Component {
                 className = { Styles.movie }
                 id = { `movie-${id}` }>
                 <Star
-                    isFavourite = { false }
-                    movieID = { id }
-                />
+                    id = { id }
+                    isFavourite = { isFavourite } />
                 <a
                     href = '/'
                     onClick = { this.handleModal }>
