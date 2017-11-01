@@ -17,22 +17,14 @@ export default class Star extends Component {
     }
     constructor () {
         super();
-        this.handleFavourites = :: this._handleFavourites;
+        this.addFavourites = :: this._addFavourites;
     }
     state = {
         isFavourite: false
     }
     componentDidMount () {
     }
-    _handleFavourites () {
-        const { id, isFavourite } = this.props;
-    
-        if (!isFavourite) {
-            console.log('is not in favourites');
-            // localStorage.setItem('favourites', [...localStorage.getItem('favourites').split(','), ...[id]])
-        } else {
-            console.log('is in favourites');
-        }
+    _addFavourites () {
         
     }
     render () {
@@ -45,7 +37,7 @@ export default class Star extends Component {
             <img
                 className = { Styles[className] }
                 src = { star }
-                onClick = { this.handleFavourites }
+                onClick = { this.addFavourites }
             />
         );
     }
