@@ -135,17 +135,23 @@ export default class App extends Component {
         }));
     }
     _getFavourites () {
-        if (window.localStorage.length !== 0) {
-            this.setState(() =>
-                Object.assign({}, this.state, {
-                    movies: Object.assign({}, this.state.movies, {
-                        favourites: [...this.state.movies.favourites, ...localStorage.getItem('favourites').split(',')]
-                    })
-                })
-            );
-        }
+        let favourites = [];
+        const { movies } = this.state;
+        const isLocalStorageEmpty = localStorage.length === 0;
+        const isLocalStorageFavouritesEmpty = localStorage.favourites
+            ? localStorage.favourites.length === 0
+            : false;
 
-        return null;
+        if (!isLocalStorageEmpty && !isLocalStorageFavouritesEmpty) {
+            favourites = localStorage.getItem('favourites').split(',');
+        }
+        this.setState(() =>
+            Object.assign({}, this.state, {
+                movies: Object.assign({}, movies, {
+                    favourites: [...movies.favourites, ...favourites]
+                })
+            })
+        );
     }
     _searchMovie (query) {
         const { movies } = this.state;
@@ -177,12 +183,14 @@ export default class App extends Component {
             activeTab,
             movies: {
                 all,
+                favourites,
                 latest,
                 popular
             }
         } = this.state;
         let moviesShown = '';
 
+        console.log('favourites in App', favourites);
         switch (activeTab) {
             case 'popular':
                 moviesShown = popular;
@@ -205,7 +213,10 @@ export default class App extends Component {
                 />
                 <main>
                     <Favourites />
-                    <Home movies = { moviesShown } />
+                    <Home
+                        favourites = { favourites }
+                        movies = { moviesShown }
+                    />
                 </main>
             </div>
         );

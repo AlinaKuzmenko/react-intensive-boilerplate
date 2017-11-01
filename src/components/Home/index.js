@@ -17,14 +17,15 @@ export default class Home extends Component {
         const { favourites, movies } = this.props;
         const moviesList = movies
             ? movies.map((movie) => {
-                const fav = new Set(favourites);
-                const isFavourite = fav.has(movie.id);
+                const setOfFavourites = new Set(favourites);
+                const isFavourite = setOfFavourites.has(`${movie.id}`);
 
                 return (
                     <Movie
                         isFavourite = { isFavourite }
                         key = { getUniqueID(7) }
                         movie = { movie }
+                        setOfFavourites = { setOfFavourites }
                     />
                 );
             })

@@ -14,8 +14,9 @@ export default class Movie extends Component {
         posterURL: string.isRequired
     }
     static propTypes = {
-        isFavourite: bool.isRequired,
-        movie:       object
+        isFavourite:     bool.isRequired,
+        setOfFavourites: object.isRequired,
+        movie:           object
     }
     static defaultProps = {
         isFavourite: false,
@@ -51,7 +52,8 @@ export default class Movie extends Component {
                 poster_path: poster,
                 release_date: releaseDate,
                 popularity
-            }
+            },
+            setOfFavourites
         } = this.props;
         const modal = modalIsOpened
             ? <Modal
@@ -71,6 +73,7 @@ export default class Movie extends Component {
                 <Star
                     id = { id }
                     isFavourite = { isFavourite }
+                    setOfFavourites = { setOfFavourites }
                 />
                 <a
                     href = '/'
