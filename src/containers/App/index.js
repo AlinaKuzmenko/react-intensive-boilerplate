@@ -11,13 +11,13 @@ import Home from '../../components/Home';
 const APIKey = 'a6f017bd0704106423cc1e6ff3a6cc1e';
 
 export const options = {
-    api: 'https://api.themoviedb.org/3',
+    api:           'https://api.themoviedb.org/3',
     discoverMovie: 'discover/movie',
-    moviesGenres: 'genre/movie/list',
-    key: `api_key=${APIKey}`,
-    latest: '',
-    popular: 'movie/popular',
-    posterURL: `https://image.tmdb.org/t/p/w500`
+    moviesGenres:  'genre/movie/list',
+    key:           `api_key=${APIKey}`,
+    latest:        '',
+    popular:       'movie/popular',
+    posterURL:     `https://image.tmdb.org/t/p/w500`
 };
 
 
@@ -50,7 +50,7 @@ export default class App extends Component {
     getChildContext () {
         return options;
     }
-    componentDidMount () {
+    componentWillMount () {
         this.getMovies(1);
         this.getMovies(2);
         this.getMovies(3);
@@ -63,7 +63,7 @@ export default class App extends Component {
             method: 'GET'
         })
             .then((response) => {
-                if (!response.ok) {
+                if (response.status !== 200) {
                     throw new Error('Could not get latest movies');
                 }
 
@@ -87,7 +87,7 @@ export default class App extends Component {
 
         if (activeTab === 'latest') {
 
-            return null;
+            return;
         }
         this.setState(() => ({
             activeTab: 'latest',
@@ -114,7 +114,7 @@ export default class App extends Component {
 
         if (activeTab === 'popular') {
 
-            return null;
+            return;
         }
         this.setState(() => ({
             activeTab: 'popular',

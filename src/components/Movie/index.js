@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { object, string } from 'prop-types';
 
 // Instruments
-import Modal from './Modal';
+import Modal from '../Modal';
 import defaultPoster from '../../theme/assets/default-poster.png';
 import Styles from './styles.scss';
 
