@@ -10,7 +10,8 @@ import Styles from './styles.scss';
 
 export default class Home extends Component {
     static propTypes = {
-        movies: array
+        favourites: array,
+        movies:     array
     }
     render () {
         const { favourites, movies } = this.props;
@@ -18,11 +19,13 @@ export default class Home extends Component {
             ? movies.map((movie) => {
                 const fav = new Set(favourites);
                 const isFavourite = fav.has(movie.id);
+
                 return (
                     <Movie
                         isFavourite = { isFavourite }
                         key = { getUniqueID(7) }
-                        movie = { movie } />
+                        movie = { movie }
+                    />
                 );
             })
             : null;

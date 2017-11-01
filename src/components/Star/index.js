@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { bool, string } from 'prop-types';
+import { bool, number } from 'prop-types';
 
 // Instruments
 import star from '../../theme/assets/star.png';
@@ -9,6 +9,7 @@ import Styles from './styles.scss';
 
 export default class Star extends Component {
     static propTypes = {
+        id: number.isRequired,
         isFavourite: bool.isRequired
     }
     static defaultProps = {
@@ -22,7 +23,6 @@ export default class Star extends Component {
         isFavourite: false
     }
     componentDidMount () {
-        
     }
     _handleFavourites () {
         const { id, isFavourite } = this.props;
@@ -45,7 +45,8 @@ export default class Star extends Component {
             <img
                 className = { Styles[className] }
                 src = { star }
-                onClick = { this.handleFavourites } />
+                onClick = { this.handleFavourites }
+            />
         );
     }
 }

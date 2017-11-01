@@ -144,6 +144,7 @@ export default class App extends Component {
                 })
             );
         }
+
         return null;
     }
     _searchMovie (query) {
@@ -176,7 +177,6 @@ export default class App extends Component {
             activeTab,
             movies: {
                 all,
-                favourites,
                 latest,
                 popular
             }
@@ -205,10 +205,7 @@ export default class App extends Component {
                 />
                 <main>
                     <Favourites />
-                    <Home
-                        favourites = { favourites }
-                        movies = { moviesShown }
-                    />
+                    <Home movies = { moviesShown } />
                 </main>
             </div>
         );

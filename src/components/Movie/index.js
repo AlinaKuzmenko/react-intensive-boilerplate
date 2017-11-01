@@ -15,11 +15,11 @@ export default class Movie extends Component {
     }
     static propTypes = {
         isFavourite: bool.isRequired,
-        movie: object
+        movie:       object
     }
     static defaultProps = {
         isFavourite: false,
-        movie: {
+        movie:       {
             id:             0,
             original_title: 'unknown', // eslint-disable-line
             release_date:   'unknown', // eslint-disable-line
@@ -70,7 +70,8 @@ export default class Movie extends Component {
                 id = { `movie-${id}` }>
                 <Star
                     id = { id }
-                    isFavourite = { isFavourite } />
+                    isFavourite = { isFavourite }
+                />
                 <a
                     href = '/'
                     onClick = { this.handleModal }>
