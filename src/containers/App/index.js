@@ -23,13 +23,13 @@ export const options = {
 
 export default class App extends Component {
     static childContextTypes = {
-        api: string.isRequired,
+        api:           string.isRequired,
         discoverMovie: string,
-        moviesGenres: string,
-        key: string.isRequired,
-        latest: string,
-        popular: string,
-        posterURL: string
+        moviesGenres:  string,
+        key:           string.isRequired,
+        latest:        string,
+        popular:       string,
+        posterURL:     string
     }
     constructor () {
         super();
@@ -40,11 +40,11 @@ export default class App extends Component {
     }
     state = {
         activeTab: '',
-        movies: {
-            all: [],
+        movies:    {
+            all:      [],
             filtered: [],
-            latest: [],
-            popular: []
+            latest:   [],
+            popular:  []
         }
     }
     getChildContext () {
@@ -91,7 +91,7 @@ export default class App extends Component {
         }
         this.setState(() => ({
             activeTab: 'latest',
-            movies: { ...this.state.movies }
+            movies:    { ...this.state.movies }
         }));
 
         const sortByDate = (a, b) => {
@@ -104,7 +104,7 @@ export default class App extends Component {
 
         this.setState(() => ({
             activeTab: 'latest',
-            movies: Object.assign({}, this.state.movies, {
+            movies:    Object.assign({}, this.state.movies, {
                 latest: moviesSorted
             })
         }));
@@ -118,7 +118,7 @@ export default class App extends Component {
         }
         this.setState(() => ({
             activeTab: 'popular',
-            movies: { ...this.state.movies }
+            movies:    { ...this.state.movies }
         }));
 
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
@@ -138,7 +138,7 @@ export default class App extends Component {
             moviesFiltered = movies.all;
             this.setState(() => ({
                 activeTab: '',
-                movies: { ...this.state.movies }
+                movies:    { ...this.state.movies }
             }));
         }
         moviesFiltered = movies.all.filter((movie) => {
@@ -149,7 +149,7 @@ export default class App extends Component {
         this.setState(() =>
             Object.assign({}, this.state, {
                 activeTab: '',
-                movies: Object.assign({}, this.state.movies, {
+                movies:    Object.assign({}, this.state.movies, {
                     filtered: moviesFiltered
                 })
             })
@@ -160,7 +160,7 @@ export default class App extends Component {
             activeTab,
             movies: { all, latest, popular }
         } = this.state;
-        let moviesShown;
+        let moviesShown = '';
 
         switch (activeTab) {
             case 'popular':

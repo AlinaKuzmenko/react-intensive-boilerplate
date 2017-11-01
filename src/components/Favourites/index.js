@@ -22,10 +22,10 @@ export default class Favourites extends Component {
         const { movies } = this.props;
         const moviesList = movies.length > 0
             ? movies.map(
-                ({ poster_path, title }) => (
+                ({ poster_path: posterPath, title }) => ( // eslint-disable-line
                     <li key = { getUniqueID(15) }>
                         <a href = '/:movieID'>
-                            <img alt = '' src = { `${posterURL}/${poster_path}` } />
+                            <img alt = '' src = { `${posterURL}/${posterPath}` } />
                             <span>{ title }</span>
                         </a>
                     </li>

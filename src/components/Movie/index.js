@@ -17,10 +17,10 @@ export default class Movie extends Component {
     }
     static defaultProps = {
         movie: {
-            id: 0,
-            original_title: 'unknown',
-            release_date: 'unknown',
-            popularity: 0
+            id:             0,
+            original_title: 'unknown', // eslint-disable-line
+            release_date:   'unknown', // eslint-disable-line
+            popularity:     0
         }
     }
     constructor () {
@@ -29,16 +29,6 @@ export default class Movie extends Component {
     }
     state = {
         modalIsOpened: false
-    }
-    componentDidMount () {
-        const { modalIsOpened } = this.state;
-
-        if (modalIsOpened) {
-            window.onwheel.preventDefault(); // modern standard
-            window.onmousewheel.preventDefault(); // older browsers, IE
-            window.ontouchmove.preventDefault(); // mobile
-            document.onkeydown.preventDefaultForScrollKeys();
-        }
     }
     _handleModal (event) {
         event.preventDefault();
@@ -66,7 +56,9 @@ export default class Movie extends Component {
             />
             : null;
         const src = poster ? `${posterURL}${poster}` : defaultPoster;
-        const date = releaseDate.split('-').reverse().join('-');
+        const date = releaseDate
+            ? releaseDate.split('-').reverse().join('-')
+            : null;
 
         return (
             <div

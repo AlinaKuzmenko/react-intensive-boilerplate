@@ -12,12 +12,12 @@ export default class Modal extends Component {
     }
     static propTypes = {
         handleModal: func.isRequired,
-        movie: object
+        movie:       object
     }
     static defaultProps = {
         movie: {
-            original_title: '',
-            overview: 'No overview'
+            original_title: '', // eslint-disable-line
+            overview:       'No overview' // eslint-disable-line
         }
     }
     constructor () {
