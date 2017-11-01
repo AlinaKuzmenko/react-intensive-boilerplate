@@ -8,9 +8,9 @@ import Styles from './styles.scss';
 
 export default class Header extends Component {
     static propTypes= {
-        activeTab: string.isRequired,
-        searchMovie: func.isRequired,
-        sortByLatest: func.isRequired,
+        activeTab:        string.isRequired,
+        searchMovie:      func.isRequired,
+        sortByLatest:     func.isRequired,
         sortByPopularity: func.isRequired
     }
     constructor () {
@@ -21,7 +21,7 @@ export default class Header extends Component {
     }
     state = {
         inputPlaceholder: 'Search ...',
-        inputValue: ''
+        inputValue:       ''
     }
     _searchMovie (event) {
         const query = event.target.value;

@@ -11,25 +11,25 @@ import Home from '../../components/Home';
 const APIKey = 'a6f017bd0704106423cc1e6ff3a6cc1e';
 
 export const options = {
-    api: 'https://api.themoviedb.org/3',
+    api:           'https://api.themoviedb.org/3',
     discoverMovie: 'discover/movie',
-    moviesGenres: 'genre/movie/list',
-    key: `api_key=${APIKey}`,
-    latest: '',
-    popular: 'movie/popular',
-    posterURL: `https://image.tmdb.org/t/p/w500`
+    moviesGenres:  'genre/movie/list',
+    key:           `api_key=${APIKey}`,
+    latest:        '',
+    popular:       'movie/popular',
+    posterURL:     `https://image.tmdb.org/t/p/w500`
 };
 
 
 export default class App extends Component {
     static childContextTypes = {
-        api: string.isRequired,
+        api:           string.isRequired,
         discoverMovie: string,
-        moviesGenres: string,
-        key: string.isRequired,
-        latest: string,
-        popular: string,
-        posterURL: string
+        moviesGenres:  string,
+        key:           string.isRequired,
+        latest:        string,
+        popular:       string,
+        posterURL:     string
     }
     constructor () {
         super();
@@ -41,18 +41,18 @@ export default class App extends Component {
     }
     state = {
         activeTab: '',
-        movies: {
-            all: [],
+        movies:    {
+            all:        [],
             favourites: [],
-            filtered: [],
-            latest: [],
-            popular: []
+            filtered:   [],
+            latest:     [],
+            popular:    []
         }
     }
     getChildContext () {
         return options;
     }
-    componentDidMount () {
+    componentWillMount () {
         this.getMovies(1);
         this.getMovies(2);
         this.getMovies(3);
@@ -61,19 +61,20 @@ export default class App extends Component {
     }
     _getMovies (pageNumber) {
         const { api, discoverMovie, key } = options;
+        const { movies } = this.state;
 
         fetch(`${api}/${discoverMovie}?page=${pageNumber}&${key}`, {
             method: 'GET'
         })
             .then((response) => {
-                if (!response.ok) {
+                if (response.status !== 200) {
                     throw new Error('Could not get latest movies');
                 }
 
                 return response.json();
             })
             .then(({ results }) => {
-                if (results !== this.state.movies.all) {
+                if (results !== movies.all) {
                     this.setState(() =>
                         Object.assign({}, this.state, {
                             movies: Object.assign({}, this.state.movies, {
@@ -86,15 +87,15 @@ export default class App extends Component {
             .catch(({ message }) => console.log('Error message: ', message));
     }
     _sortByLatest () {
-        const { activeTab, movies: { all }} = this.state;
+        const { activeTab, movies } = this.state;
 
         if (activeTab === 'latest') {
 
-            return null;
+            return;
         }
         this.setState(() => ({
             activeTab: 'latest',
-            movies: { ...this.state.movies }
+            movies:    { ...movies }
         }));
 
         const sortByDate = (a, b) => {
@@ -103,32 +104,32 @@ export default class App extends Component {
 
             return bDate - aDate;
         };
-        const moviesSorted = all.sort(sortByDate);
+        const moviesSorted = movies.all.sort(sortByDate);
 
         this.setState(() => ({
             activeTab: 'latest',
-            movies: Object.assign({}, this.state.movies, {
+            movies:    Object.assign({}, movies, {
                 latest: moviesSorted
             })
         }));
     }
     _sortByPopularity () {
-        const { activeTab, movies: { all }} = this.state;
+        const { activeTab, movies } = this.state;
 
         if (activeTab === 'popular') {
 
-            return null;
+            return;
         }
         this.setState(() => ({
             activeTab: 'popular',
-            movies: { ...this.state.movies }
+            movies:    { ...movies }
         }));
 
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
-        const moviesSorted = all.sort(sortByPopularity);
+        const moviesSorted = movies.all.sort(sortByPopularity);
 
         this.setState(() => ({
-            movies: Object.assign({}, this.state.movies, {
+            movies: Object.assign({}, movies, {
                 popular: moviesSorted
             })
         }));
@@ -153,7 +154,7 @@ export default class App extends Component {
             moviesFiltered = movies.all;
             this.setState(() => ({
                 activeTab: '',
-                movies: { ...this.state.movies }
+                movies:    { ...movies }
             }));
         }
         moviesFiltered = movies.all.filter((movie) => {
@@ -164,7 +165,7 @@ export default class App extends Component {
         this.setState(() =>
             Object.assign({}, this.state, {
                 activeTab: '',
-                movies: Object.assign({}, this.state.movies, {
+                movies:    Object.assign({}, movies, {
                     filtered: moviesFiltered
                 })
             })
@@ -180,7 +181,7 @@ export default class App extends Component {
                 popular
             }
         } = this.state;
-        let moviesShown;
+        let moviesShown = '';
 
         switch (activeTab) {
             case 'popular':
