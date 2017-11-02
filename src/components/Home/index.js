@@ -16,7 +16,12 @@ export default class Home extends Component {
         movies:               array
     }
     render () {
-        const { addToFavourites, deleteFromFavourites, favourites, movies } = this.props;
+        const {
+            addToFavourites,
+            deleteFromFavourites,
+            favourites,
+            movies
+        } = this.props;
         const moviesList = movies
             ? movies.map((movie) => {
                 const setOfFavourites = new Set(favourites);

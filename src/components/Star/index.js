@@ -16,15 +16,12 @@ export default class Star extends Component {
         setOfFavourites:      object.isRequired
     }
     static defaultProps = {
-        // isFavourite: false
+        isFavourite: false
     }
     constructor (props) {
         super(props);
         this.addToFavourites = :: this._addToFavourites;
         this.deleteFromFavourites = :: this._deleteFromFavourites;
-    }
-    state = {
-        isFavourite: this.props.isFavourite
     }
     _addToFavourites () {
         const { id, addToFavourites } = this.props;
@@ -37,7 +34,7 @@ export default class Star extends Component {
         deleteFromFavourites(id);
     }
     render () {
-        const { isFavourite } = this.state;
+        const { isFavourite } = this.props;
         const className = isFavourite
             ? 'starActive'
             : 'star';
