@@ -37,14 +37,16 @@ export default class App extends Component {
         this.sortByLatest = ::this._sortByLatest;
         this.sortByPopularity = ::this._sortByPopularity;
         this.searchMovie = ::this._searchMovie;
+        this.getFavourites = ::this._getFavourites;
     }
     state = {
         activeTab: '',
         movies:    {
-            all:      [],
-            filtered: [],
-            latest:   [],
-            popular:  []
+            all:        [],
+            favourites: [],
+            filtered:   [],
+            latest:     [],
+            popular:    []
         }
     }
     getChildContext () {
@@ -55,6 +57,10 @@ export default class App extends Component {
         this.getMovies(2);
         this.getMovies(3);
         this.getMovies(4);
+        this.getFavourites();
+    }
+    componentDidMount () {
+        this.getFavourites();
     }
     _getMovies (pageNumber) {
         const { api, discoverMovie, key } = options;
@@ -131,6 +137,25 @@ export default class App extends Component {
             })
         }));
     }
+    _getFavourites () {
+        let favourites = [];
+        const { movies } = this.state;
+        const isLocalStorageEmpty = localStorage.length === 0;
+        const isLocalStorageFavouritesEmpty = localStorage.favourites
+            ? localStorage.favourites.length === 0
+            : false;
+
+        if (!isLocalStorageEmpty && !isLocalStorageFavouritesEmpty) {
+            favourites = localStorage.getItem('favourites').split(',');
+        }
+        this.setState(() =>
+            Object.assign({}, this.state, {
+                movies: Object.assign({}, movies, {
+                    favourites
+                })
+            })
+        );
+    }
     _searchMovie (query) {
         const { movies } = this.state;
         let moviesFiltered = [];
@@ -159,10 +184,16 @@ export default class App extends Component {
     render () {
         const {
             activeTab,
-            movies: { all, latest, popular }
+            movies: {
+                all,
+                favourites,
+                latest,
+                popular
+            }
         } = this.state;
         let moviesShown = '';
 
+        console.log('favourites in App', favourites);
         switch (activeTab) {
             case 'popular':
                 moviesShown = popular;
@@ -185,7 +216,10 @@ export default class App extends Component {
                 />
                 <main>
                     <Favourites />
-                    <Home movies = { moviesShown } />
+                    <Home
+                        favourites = { favourites }
+                        movies = { moviesShown }
+                    />
                 </main>
             </div>
         );
