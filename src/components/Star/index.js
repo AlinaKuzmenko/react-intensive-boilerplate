@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { bool, number, object } from 'prop-types';
+import { bool, func, number, object } from 'prop-types';
 
 // Instruments
 import star from '../../theme/assets/star.png';
@@ -9,9 +9,11 @@ import Styles from './styles.scss';
 
 export default class Star extends Component {
     static propTypes = {
-        id:              number.isRequired,
-        isFavourite:     bool.isRequired,
-        setOfFavourites: object.isRequired
+        addToFavourites:      func.isRequired,
+        deleteFromFavourites: func.isRequired,
+        id:                   number.isRequired,
+        isFavourite:          bool.isRequired,
+        setOfFavourites:      object.isRequired
     }
     static defaultProps = {
         // isFavourite: false
@@ -19,30 +21,20 @@ export default class Star extends Component {
     constructor (props) {
         super(props);
         this.addToFavourites = :: this._addToFavourites;
-        this.removeFromFavourites = :: this._removeFromFavourites;
+        this.deleteFromFavourites = :: this._deleteFromFavourites;
     }
     state = {
         isFavourite: this.props.isFavourite
     }
     _addToFavourites () {
-        const { isFavourite } = this.state;
-        const { id, setOfFavourites } = this.props;
+        const { id, addToFavourites } = this.props;
 
-        setOfFavourites.add(id);
-        localStorage.setItem('favourites', [...setOfFavourites]);
-        this.setState(() => ({
-            isFavourite: !isFavourite
-        }));
+        addToFavourites(id);
     }
-    _removeFromFavourites () {
-        const { isFavourite } = this.state;
-        const { id, setOfFavourites } = this.props;
+    _deleteFromFavourites () {
+        const { id, deleteFromFavourites } = this.props;
 
-        setOfFavourites.delete(`${id}`);
-        localStorage.setItem('favourites', [...setOfFavourites]);
-        this.setState(() => ({
-            isFavourite: !isFavourite
-        }));
+        deleteFromFavourites(id);
     }
     render () {
         const { isFavourite } = this.state;
@@ -50,7 +42,7 @@ export default class Star extends Component {
             ? 'starActive'
             : 'star';
         const handleFavourites = isFavourite
-            ? this.removeFromFavourites
+            ? this.deleteFromFavourites
             : this.addToFavourites;
 
         return (

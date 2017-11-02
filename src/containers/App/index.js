@@ -38,6 +38,8 @@ export default class App extends Component {
         this.sortByPopularity = ::this._sortByPopularity;
         this.searchMovie = ::this._searchMovie;
         this.getFavourites = ::this._getFavourites;
+        this.addToFavourites = ::this._addToFavourites;
+        this.deleteFromFavourites = ::this._deleteFromFavourites;
     }
     state = {
         activeTab: '',
@@ -156,6 +158,24 @@ export default class App extends Component {
             })
         );
     }
+    _addToFavourites (id) {
+        const { movies: { favourites }} = this.state;
+        const _id = id.toString();
+        const setOfFavourites = new Set(favourites);
+
+        setOfFavourites.add(_id);
+        localStorage.setItem('favourites', [...setOfFavourites]);
+        this.getFavourites();
+    }
+    _deleteFromFavourites (id) {
+        const { movies: { favourites }} = this.state;
+        const _id = id.toString();
+        const setOfFavourites = new Set(favourites);
+
+        setOfFavourites.delete(_id);
+        localStorage.setItem('favourites', [...setOfFavourites]);
+        this.getFavourites();
+    }
     _searchMovie (query) {
         const { movies } = this.state;
         let moviesFiltered = [];
@@ -217,6 +237,8 @@ export default class App extends Component {
                 <main>
                     <Favourites />
                     <Home
+                        addToFavourites = { this.addToFavourites }
+                        deleteFromFavourites = { this.deleteFromFavourites }
                         favourites = { favourites }
                         movies = { moviesShown }
                     />
