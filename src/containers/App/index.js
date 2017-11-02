@@ -213,7 +213,6 @@ export default class App extends Component {
         } = this.state;
         let moviesShown = '';
 
-        console.log('favourites in App', favourites);
         switch (activeTab) {
             case 'popular':
                 moviesShown = popular;
