@@ -59,6 +59,9 @@ export default class App extends Component {
         this.getMovies(4);
         this.getFavourites();
     }
+    componentDidMount () {
+        this.getFavourites();
+    }
     _getMovies (pageNumber) {
         const { api, discoverMovie, key } = options;
         const { movies } = this.state;
@@ -148,7 +151,7 @@ export default class App extends Component {
         this.setState(() =>
             Object.assign({}, this.state, {
                 movies: Object.assign({}, movies, {
-                    favourites: [...movies.favourites, ...favourites]
+                    favourites
                 })
             })
         );
