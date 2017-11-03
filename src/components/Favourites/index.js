@@ -44,8 +44,9 @@ export default class Favourites extends Component {
         // !TODO: WHY DOEST IT WORK WITH FAVOURITES INSTEAD OF MOVIES???
         // !TODO: It's been working until I crashed a browser by calling getFavourites in the render method O.o
         // !TODO: I get a list of favourite movies ids and an array of movies from props and filter them (line 35)
-        // !TODO: Then I add filtered movies to state on componentDidMount in a getFavourites method
-        // !TODO: State is changed, so a component has to be re-rendered.
+        // !TODO: Then I add filtered movies (favouritesList) to state.favourites on componentDidMount in a getFavourites method
+        // !TODO: State is changed, so a component has to be re-rendered but it isn't. Why?
+        // !TODO: Favourites component is initialized in components/HomePage/index.js
         
         const { favourites } = this.state;
         const { movies } = this.props;

@@ -92,6 +92,9 @@ export default class HomePage extends Component {
     _sortMovies () {
         const { movies } = this.state;
         // !TODO: ANYTHING IS SORTED HERE
+        // !TODO: sortByLatest and sortByPopularity functions were not changed during refactoring
+        // !TODO: But they don't sort anything anymore
+        // !TODO: on lines 105 and 106 I expect to get sorted arrays but I get an initial (the same as movies.all)
         const sortByLatest = (a, b) => {
             const aDate = new Date(a.release_date).getTime();
             const bDate = new Date(b.release_date).getTime();
@@ -196,6 +199,7 @@ export default class HomePage extends Component {
                 break;
         }
         //!TODO: WHY IS IT LOGGING 4 TIMES (ON EACH getMovies CALL IN COMPONENTWILLMOUNT METHOD???
+        //!TODO: I call getMovies() on componentWillMount, so why does component render until it is mounted?
         console.log('all', all);
         return (
             <div className = { Styles.homePage }>
@@ -205,7 +209,6 @@ export default class HomePage extends Component {
                     toggleTabs = { this.toggleTabs }
                 />
                 <main>
-                    {/*!TODO: WHY DOESN'T Favourites GET ALL MOVIES???*/}
                     <Favourites
                         favourites = { favourites }
                         movies = { all }
