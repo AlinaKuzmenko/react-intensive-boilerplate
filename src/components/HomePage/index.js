@@ -201,8 +201,6 @@ export default class HomePage extends Component {
             return setOfFavourites.has(`${movie.id}`);
         });
         
-        //!TODO: WHY IS IT LOGGING 4 TIMES (ON EACH getMovies CALL IN COMPONENTWILLMOUNT METHOD???
-        console.log('all', all);
         return (
             <div className = { Styles.homePage }>
                 <Header
@@ -211,7 +209,6 @@ export default class HomePage extends Component {
                     toggleTabs = { this.toggleTabs }
                 />
                 <main>
-                    {/*!TODO: WHY DOESN'T Favourites GET ALL MOVIES???*/}
                     <Favourites movies = { favouritesList } />
                     <Home
                         addToFavourites = { this.addToFavourites }
