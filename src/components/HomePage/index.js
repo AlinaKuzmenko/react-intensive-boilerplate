@@ -6,23 +6,11 @@ import { string } from 'prop-types';
 import Header from '../../components/Header';
 import Favourites from '../../components/Favourites';
 import Home from '../../components/Home';
-
-
-const APIKey = 'a6f017bd0704106423cc1e6ff3a6cc1e';
-
-export const options = {
-    api:           'https://api.themoviedb.org/3',
-    discoverMovie: 'discover/movie',
-    moviesGenres:  'genre/movie/list',
-    key:           `api_key=${APIKey}`,
-    latest:        '',
-    popular:       'movie/popular',
-    posterURL:     `https://image.tmdb.org/t/p/w500`
-};
+import Styles from './';
 
 
 export default class HomePage extends Component {
-    static childContextTypes = {
+    static contextTypes = {
         api:           string.isRequired,
         discoverMovie: string,
         moviesGenres:  string,
@@ -34,12 +22,12 @@ export default class HomePage extends Component {
     constructor () {
         super();
         this.getMovies = ::this._getMovies;
-        this.sortByLatest = ::this._sortByLatest;
-        this.sortByPopularity = ::this._sortByPopularity;
         this.searchMovie = ::this._searchMovie;
         this.getFavourites = ::this._getFavourites;
         this.addToFavourites = ::this._addToFavourites;
         this.deleteFromFavourites = ::this._deleteFromFavourites;
+        this.sortMovies = ::this._sortMovies;
+        this.toggleTabs = ::this._toggleTabs;
     }
     state = {
         activeTab: '',
@@ -51,24 +39,19 @@ export default class HomePage extends Component {
             popular:    []
         }
     }
-    getChildContext () {
-        return options;
-    }
     componentWillMount () {
         this.getMovies(1);
         this.getMovies(2);
         this.getMovies(3);
-        this.getMovies(4);
+        this.getMovies(4, true);
         this.getFavourites();
+    
     }
-    componentDidMount () {
-        this.getFavourites();
-    }
-    _getMovies (pageNumber) {
-        const { api, discoverMovie, key } = options;
+    _getMovies (pageNumber, sort) {
+        const { api, discoverMovie, key } = this.context;
         const { movies } = this.state;
 
-        fetch(`${api}/${discoverMovie}?page=${pageNumber}&${key}`, {
+        fetch(`${api}/${discoverMovie}page=${pageNumber}&${key}`, {
             method: 'GET'
         })
             .then((response) => {
@@ -80,62 +63,50 @@ export default class HomePage extends Component {
             })
             .then(({ results }) => {
                 if (results !== movies.all) {
-                    this.setState(() =>
+                    // !TODO: 'movies' is already declared in the upper scope
+                    this.setState(({ movies }) =>
                         Object.assign({}, this.state, {
-                            movies: Object.assign({}, this.state.movies, {
-                                all: [...this.state.movies.all, ...results]
+                            movies: Object.assign({}, movies, {
+                                all: [...movies.all, ...results]
                             })
                         })
                     );
                 }
+            }).then(() => {
+                if (sort) {
+                    this.sortMovies();
+                }
             })
             .catch(({ message }) => console.log('Error message: ', message));
     }
-    _sortByLatest () {
+    _toggleTabs (tabName) {
         const { activeTab, movies } = this.state;
 
-        if (activeTab === 'latest') {
-
-            return;
+        if (tabName !== activeTab) {
+            this.setState(() => ({
+                activeTab: tabName,
+                movies:    { ...movies }
+            }));
         }
-        this.setState(() => ({
-            activeTab: 'latest',
-            movies:    { ...movies }
-        }));
-
-        const sortByDate = (a, b) => {
+    }
+    _sortMovies () {
+        const { movies } = this.state;
+        // !TODO: ANYTHING IS SORTED HERE
+        const sortByLatest = (a, b) => {
             const aDate = new Date(a.release_date).getTime();
             const bDate = new Date(b.release_date).getTime();
 
             return bDate - aDate;
         };
-        const moviesSorted = movies.all.sort(sortByDate);
-
-        this.setState(() => ({
-            activeTab: 'latest',
-            movies:    Object.assign({}, movies, {
-                latest: moviesSorted
-            })
-        }));
-    }
-    _sortByPopularity () {
-        const { activeTab, movies } = this.state;
-
-        if (activeTab === 'popular') {
-
-            return;
-        }
-        this.setState(() => ({
-            activeTab: 'popular',
-            movies:    { ...movies }
-        }));
-
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
-        const moviesSorted = movies.all.sort(sortByPopularity);
+        const latest = movies.all.sort(sortByLatest);
+        const popular = movies.all.sort(sortByPopularity);
 
         this.setState(() => ({
-            movies: Object.assign({}, movies, {
-                popular: moviesSorted
+            activeTab: '',
+            movies:    Object.assign({}, movies, {
+                latest,
+                popular
             })
         }));
     }
@@ -224,17 +195,24 @@ export default class HomePage extends Component {
                 moviesShown = all;
                 break;
         }
-
+    
+        const setOfFavourites = new Set(favourites);
+        const favouritesList = all.filter((movie) => {
+            return setOfFavourites.has(`${movie.id}`);
+        });
+        
+        //!TODO: WHY IS IT LOGGING 4 TIMES (ON EACH getMovies CALL IN COMPONENTWILLMOUNT METHOD???
+        console.log('all', all);
         return (
-            <div>
+            <div className = { Styles.homePage }>
                 <Header
                     activeTab = { activeTab }
                     searchMovie = { this.searchMovie }
-                    sortByLatest = { this.sortByLatest }
-                    sortByPopularity = { this.sortByPopularity }
+                    toggleTabs = { this.toggleTabs }
                 />
                 <main>
-                    <Favourites />
+                    {/*!TODO: WHY DOESN'T Favourites GET ALL MOVIES???*/}
+                    <Favourites movies = { favouritesList } />
                     <Home
                         addToFavourites = { this.addToFavourites }
                         deleteFromFavourites = { this.deleteFromFavourites }

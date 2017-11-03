@@ -8,16 +8,14 @@ import Styles from './styles.scss';
 
 export default class Header extends Component {
     static propTypes= {
-        activeTab:        string.isRequired,
-        searchMovie:      func.isRequired,
-        sortByLatest:     func.isRequired,
-        sortByPopularity: func.isRequired
+        activeTab:   string.isRequired,
+        searchMovie: func.isRequired,
+        toggleTabs:  func.isRequired
     }
     constructor () {
         super();
         this.searchMovie = ::this._searchMovie;
-        this.sortByLatest = ::this._sortByLatest;
-        this.sortByPopularity = ::this._sortByPopularity;
+        this.toggleTabs = ::this._toggleTabs;
     }
     state = {
         inputPlaceholder: 'Search ...',
@@ -32,17 +30,11 @@ export default class Header extends Component {
         }));
         searchMovie(query.trim().toLowerCase(), activeTab);
     }
-    _sortByLatest (event) {
+    _toggleTabs (event) {
         event.preventDefault();
-        const { sortByLatest } = this.props;
+        const { toggleTabs } = this.props;
 
-        sortByLatest();
-    }
-    _sortByPopularity (event) {
-        event.preventDefault();
-        const { sortByPopularity } = this.props;
-
-        sortByPopularity();
+        toggleTabs(event.target.innerHTML);
     }
     render () {
         const {
@@ -68,14 +60,14 @@ export default class Header extends Component {
                     <a
                         className = { activeTab === 'popular' ? Styles.active : '' }
                         href = '/'
-                        onClick = { this.sortByPopularity }>
-                        Popular
+                        onClick = { this.toggleTabs }>
+                        popular
                     </a>
                     <a
                         className = { activeTab === 'latest' ? Styles.active : '' }
                         href = '/'
-                        onClick = { this.sortByLatest }>
-                        Latest
+                        onClick = { this.toggleTabs }>
+                        latest
                     </a>
                 </nav>
             </header>

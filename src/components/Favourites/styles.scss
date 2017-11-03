@@ -1,41 +1,37 @@
-@import "../../theme/palette";
+@import '../../theme/palette';
+
 
 .favourites {
-  position: absolute;
-  top: 298px;
-  left: 50px;
-  width: 220px;
-  
-  header {
-    padding: 10px;
-    background-color: $paletteColor6;
-    color: $paletteColor1;
-  }
-  
-  ul {
-    margin: 0;
-    padding: 0;
-    background-color: lighten($paletteColor6, 85%);
-    list-style: none;
-    
-    li {
-      display: block;
-      margin: 0;
-      padding: 5px;
-      border-bottom: 1px solid $paletteColor9;
-  
-      a {
-        display: flex;
-        align-items: center;
-        color: $paletteColor6;
-        text-decoration: none;
-        
-        img {
-          display: block;
-          height: 50px;
-          margin-right: 10px;
-        }
-      }
+    position: absolute;
+    top: 298px;
+    left: 50px;
+    width: 220px;
+
+    header {
+        padding: 10px;
+        background-color: $paletteColor6;
+        color: $paletteColor1;
     }
-  }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: lighten($paletteColor6, 85%);
+
+        li {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 5px;
+            border-bottom: 1px solid $paletteColor9;
+            color: $paletteColor6;
+            text-decoration: none;
+
+            img {
+                height: 50px;
+                margin-right: 10px;
+            }
+        }
+    }
 }

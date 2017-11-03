@@ -12,10 +12,12 @@ export default class Favourites extends Component {
         posterURL: string.isRequired
     }
     static propTypes = {
-        movies: array.isRequired
+        favourites: array.isRequired,
+        movies:     array.isRequired
     }
     static defaultProps = {
-        movies: []
+        favourites: [],
+        movies:     []
     }
     render () {
         const { posterURL } = this.context;
@@ -24,10 +26,8 @@ export default class Favourites extends Component {
             ? movies.map(
                 ({ poster_path: posterPath, title }) => ( // eslint-disable-line
                     <li key = { getUniqueID(15) }>
-                        <a href = '/:movieID'>
-                            <img alt = '' src = { `${posterURL}/${posterPath}` } />
-                            <span>{ title }</span>
-                        </a>
+                        <img alt = '' src = { `${posterURL}/${posterPath}` } />
+                        <span>{ title }</span>
                     </li>
                 )
             )
