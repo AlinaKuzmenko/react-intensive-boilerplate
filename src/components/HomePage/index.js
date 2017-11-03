@@ -195,12 +195,6 @@ export default class HomePage extends Component {
                 moviesShown = all;
                 break;
         }
-    
-        const setOfFavourites = new Set(favourites);
-        const favouritesList = all.filter((movie) => {
-            return setOfFavourites.has(`${movie.id}`);
-        });
-        
         //!TODO: WHY IS IT LOGGING 4 TIMES (ON EACH getMovies CALL IN COMPONENTWILLMOUNT METHOD???
         console.log('all', all);
         return (
@@ -212,7 +206,10 @@ export default class HomePage extends Component {
                 />
                 <main>
                     {/*!TODO: WHY DOESN'T Favourites GET ALL MOVIES???*/}
-                    <Favourites movies = { favouritesList } />
+                    <Favourites
+                        favourites = { favourites }
+                        movies = { all }
+                    />
                     <Home
                         addToFavourites = { this.addToFavourites }
                         deleteFromFavourites = { this.deleteFromFavourites }

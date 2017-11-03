@@ -19,11 +19,33 @@ export default class Favourites extends Component {
         favourites: [],
         movies:     []
     }
+    constructor () {
+        super();
+        this.getFavourites = ::this._getFavourites;
+    }
+    state = {
+        favourites: []
+    }
+    componentDidMount () {
+        this.getFavourites();
+    }
+    _getFavourites () {
+        const { favourites, movies } = this.props;
+        const setOfFavourites = new Set(favourites);
+        const favouritesList = movies.filter((movie) => {
+            return setOfFavourites.has(`${movie.id}`);
+        });
+        this.setState(() => ({
+            favourites: favouritesList
+        }));
+    }
     render () {
         const { posterURL } = this.context;
+        // !TODO: WHY DOEST IT WORK WITH FAVOURITES INSTEAD OF MOVIES???
+        const { favourites } = this.state;
         const { movies } = this.props;
-        const moviesList = movies.length > 0
-            ? movies.map(
+        const moviesList = favourites.length > 0
+            ? favourites.map(
                 ({ poster_path: posterPath, title }) => ( // eslint-disable-line
                     <li key = { getUniqueID(15) }>
                         <img alt = '' src = { `${posterURL}/${posterPath}` } />
