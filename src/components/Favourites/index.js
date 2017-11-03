@@ -42,9 +42,14 @@ export default class Favourites extends Component {
     render () {
         const { posterURL } = this.context;
         // !TODO: WHY DOEST IT WORK WITH FAVOURITES INSTEAD OF MOVIES???
+        // !TODO: It's been working until I crashed a browser by calling getFavourites in the render method O.o
+        // !TODO: I get a list of favourite movies ids and an array of movies from props and filter them (line 35)
+        // !TODO: Then I add filtered movies to state on componentDidMount in a getFavourites method
+        // !TODO: State is changed, so a component has to be re-rendered.
+        
         const { favourites } = this.state;
         const { movies } = this.props;
-        const moviesList = favourites.length > 0
+        const moviesList = favourites.length > 0 // try 'movies' instead of 'favourites'
             ? favourites.map(
                 ({ poster_path: posterPath, title }) => ( // eslint-disable-line
                     <li key = { getUniqueID(15) }>
@@ -57,7 +62,8 @@ export default class Favourites extends Component {
 
         return (
             <aside className = { Styles.favourites }>
-                <header>Favourites</header>
+                {/*!TODO: I can get favourites by clicking header*/}
+                <header onClick = { this.getFavourites }>Favourites</header>
                 <ul>
                     { moviesList }
                 </ul>
