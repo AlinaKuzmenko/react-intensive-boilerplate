@@ -8,7 +8,7 @@ import Movie from '../Movie';
 import Styles from './styles.scss';
 
 
-export default class Home extends Component {
+export default class Content extends Component {
     static propTypes = {
         addToFavourites:      func.isRequired,
         deleteFromFavourites: func.isRequired,
@@ -41,7 +41,7 @@ export default class Home extends Component {
             : null;
 
         return (
-            <div className = { Styles.home }>
+            <div className = { Styles.content }>
                 { moviesList }
             </div>
         );

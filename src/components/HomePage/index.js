@@ -5,7 +5,7 @@ import { string } from 'prop-types';
 // Instruments
 import Header from '../../components/Header';
 import Favourites from '../../components/Favourites';
-import Home from '../../components/Home';
+import Content from '../../components/Content';
 import Styles from './';
 
 
@@ -45,11 +45,10 @@ export default class HomePage extends Component {
         this.getMovies(3);
         this.getMovies(4, true);
         this.getFavourites();
-    
     }
     _getMovies (pageNumber, sort) {
         const { api, discoverMovie, key } = this.context;
-        const { movies } = this.state;
+        const { movies: { all }} = this.state;
 
         fetch(`${api}/${discoverMovie}page=${pageNumber}&${key}`, {
             method: 'GET'
@@ -62,8 +61,7 @@ export default class HomePage extends Component {
                 return response.json();
             })
             .then(({ results }) => {
-                if (results !== movies.all) {
-                    // !TODO: 'movies' is already declared in the upper scope
+                if (results !== all) {
                     this.setState(({ movies }) =>
                         Object.assign({}, this.state, {
                             movies: Object.assign({}, movies, {
@@ -80,18 +78,17 @@ export default class HomePage extends Component {
             .catch(({ message }) => console.log('Error message: ', message));
     }
     _toggleTabs (tabName) {
-        const { activeTab, movies } = this.state;
+        const { activeTab } = this.state;
 
         if (tabName !== activeTab) {
-            this.setState(() => ({
+            this.setState(({ movies }) => ({
                 activeTab: tabName,
                 movies:    { ...movies }
             }));
         }
     }
     _sortMovies () {
-        const { movies } = this.state;
-        // !TODO: ANYTHING IS SORTED HERE
+        const { movies: { all }} = this.state;
         const sortByLatest = (a, b) => {
             const aDate = new Date(a.release_date).getTime();
             const bDate = new Date(b.release_date).getTime();
@@ -99,10 +96,10 @@ export default class HomePage extends Component {
             return bDate - aDate;
         };
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
-        const latest = movies.all.sort(sortByLatest);
-        const popular = movies.all.sort(sortByPopularity);
+        const latest = all.sort(sortByLatest);
+        const popular = all.sort(sortByPopularity);
 
-        this.setState(() => ({
+        this.setState(({ movies }) => ({
             activeTab: '',
             movies:    Object.assign({}, movies, {
                 latest,
@@ -112,7 +109,6 @@ export default class HomePage extends Component {
     }
     _getFavourites () {
         let favourites = [];
-        const { movies } = this.state;
         const isLocalStorageEmpty = localStorage.length === 0;
         const isLocalStorageFavouritesEmpty = localStorage.favourites
             ? localStorage.favourites.length === 0
@@ -121,7 +117,7 @@ export default class HomePage extends Component {
         if (!isLocalStorageEmpty && !isLocalStorageFavouritesEmpty) {
             favourites = localStorage.getItem('favourites').split(',');
         }
-        this.setState(() =>
+        this.setState(({ movies }) =>
             Object.assign({}, this.state, {
                 movies: Object.assign({}, movies, {
                     favourites
@@ -148,22 +144,22 @@ export default class HomePage extends Component {
         this.getFavourites();
     }
     _searchMovie (query) {
-        const { movies } = this.state;
+        const { movies: { all }} = this.state;
         let moviesFiltered = [];
 
         if (!query) {
-            moviesFiltered = movies.all;
-            this.setState(() => ({
+            moviesFiltered = all;
+            this.setState(({ movies }) => ({
                 activeTab: '',
                 movies:    { ...movies }
             }));
         }
-        moviesFiltered = movies.all.filter((movie) => {
+        moviesFiltered = all.filter((movie) => {
             const title = movie.title.toLowerCase();
 
             return title.indexOf(query) !== -1;
         });
-        this.setState(() =>
+        this.setState(({ movies }) =>
             Object.assign({}, this.state, {
                 activeTab: '',
                 movies:    Object.assign({}, movies, {
@@ -195,12 +191,9 @@ export default class HomePage extends Component {
                 moviesShown = all;
                 break;
         }
-    
         const setOfFavourites = new Set(favourites);
-        const favouritesList = all.filter((movie) => {
-            return setOfFavourites.has(`${movie.id}`);
-        });
-        
+        const favouritesList = all.filter((movie) => setOfFavourites.has(`${movie.id}`));
+
         return (
             <div className = { Styles.homePage }>
                 <Header
@@ -210,7 +203,7 @@ export default class HomePage extends Component {
                 />
                 <main>
                     <Favourites movies = { favouritesList } />
-                    <Home
+                    <Content
                         addToFavourites = { this.addToFavourites }
                         deleteFromFavourites = { this.deleteFromFavourites }
                         favourites = { favourites }
