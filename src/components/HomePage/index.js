@@ -26,8 +26,9 @@ export default class HomePage extends Component {
         this.getFavourites = ::this._getFavourites;
         this.addToFavourites = ::this._addToFavourites;
         this.deleteFromFavourites = ::this._deleteFromFavourites;
-        this.sortMovies = ::this._sortMovies;
         this.toggleTabs = ::this._toggleTabs;
+        this.sortByLatest = ::this._sortByLatest;
+        this.sortByPopularity = ::this._sortByPopularity;
     }
     state = {
         activeTab: '',
@@ -70,10 +71,6 @@ export default class HomePage extends Component {
                         })
                     );
                 }
-            }).then(() => {
-                if (sort) {
-                    this.sortMovies();
-                }
             })
             .catch(({ message }) => console.log('Error message: ', message));
     }
@@ -87,23 +84,51 @@ export default class HomePage extends Component {
             }));
         }
     }
-    _sortMovies () {
-        const { movies: { all }} = this.state;
-        const sortByLatest = (a, b) => {
+    _sortByLatest () {
+        const { activeTab, movies } = this.state;
+        
+        if (activeTab === 'latest') {
+            
+            return;
+        }
+        this.setState(() => ({
+            activeTab: 'latest',
+            movies:    { ...movies }
+        }));
+        
+        const sortByDate = (a, b) => {
             const aDate = new Date(a.release_date).getTime();
             const bDate = new Date(b.release_date).getTime();
-
+            
             return bDate - aDate;
         };
-        const sortByPopularity = (a, b) => b.popularity - a.popularity;
-        const latest = all.sort(sortByLatest);
-        const popular = all.sort(sortByPopularity);
-
-        this.setState(({ movies }) => ({
-            activeTab: '',
+        const moviesSorted = movies.all.sort(sortByDate);
+        
+        this.setState(() => ({
+            activeTab: 'latest',
             movies:    Object.assign({}, movies, {
-                latest,
-                popular
+                latest: moviesSorted
+            })
+        }));
+    }
+    _sortByPopularity () {
+        const { activeTab, movies } = this.state;
+        
+        if (activeTab === 'popular') {
+            
+            return;
+        }
+        this.setState(() => ({
+            activeTab: 'popular',
+            movies:    { ...movies }
+        }));
+        
+        const sortByPopularity = (a, b) => b.popularity - a.popularity;
+        const moviesSorted = movies.all.sort(sortByPopularity);
+        
+        this.setState(() => ({
+            movies: Object.assign({}, movies, {
+                popular: moviesSorted
             })
         }));
     }
@@ -200,6 +225,8 @@ export default class HomePage extends Component {
                     activeTab = { activeTab }
                     searchMovie = { this.searchMovie }
                     toggleTabs = { this.toggleTabs }
+                    sortByLatest = { this.sortByLatest }
+                    sortByPopularity = { this.sortByPopularity }
                 />
                 <main>
                     <Favourites movies = { favouritesList } />
