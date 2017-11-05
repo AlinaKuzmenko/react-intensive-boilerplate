@@ -83,7 +83,6 @@ export default class HomePage extends Component {
         }
         this.setState(() => ({
             activeTab: 'latest',
-            movies:    { ...movies }
         }));
         const sortByDate = (a, b) => {
             const aDate = new Date(a.release_date).getTime();
@@ -91,7 +90,8 @@ export default class HomePage extends Component {
 
             return bDate - aDate;
         };
-        const moviesSorted = movies.all.sort(sortByDate);
+        const moviesList = [...movies.all];
+        const moviesSorted = moviesList.sort(sortByDate);
 
         this.setState(() => ({
             activeTab: 'latest',
@@ -108,14 +108,14 @@ export default class HomePage extends Component {
             return;
         }
         this.setState(() => ({
-            activeTab: 'popular',
-            movies:    { ...movies }
+            activeTab: 'popular'
         }));
 
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
-        const moviesSorted = movies.all.sort(sortByPopularity);
+        const moviesList = [...movies.all];
+        const moviesSorted = moviesList.sort(sortByPopularity);
 
-        this.setState(() => ({
+        this.setState(({ movies }) => ({
             movies: Object.assign({}, movies, {
                 popular: moviesSorted
             })
