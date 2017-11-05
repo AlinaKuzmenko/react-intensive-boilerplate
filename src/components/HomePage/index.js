@@ -1,15 +1,19 @@
 // Core
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { func, string } from 'prop-types';
 
 // Instruments
 import Header from '../../components/Header';
 import Favourites from '../../components/Favourites';
 import Content from '../../components/Content';
 import Styles from './';
+import { getMovies } from '../../helpers';
 
 
 export default class HomePage extends Component {
+    static childContextTypes = {
+        test: func.isRequired
+    }
     static contextTypes = {
         api:           string.isRequired,
         discoverMovie: string,
@@ -40,39 +44,25 @@ export default class HomePage extends Component {
             popular:    []
         }
     }
+    getChildContext () {
+        return {
+            test: this.getMovies
+        };
+    }
     componentWillMount () {
-        this.getMovies(1);
-        this.getMovies(2);
-        this.getMovies(3);
         this.getMovies(4);
         this.getFavourites();
     }
-    _getMovies (pageNumber) {
-        const { api, discoverMovie, key } = this.context;
-        const { movies: { all }} = this.state;
+    async _getMovies (pagesNumber) {
+        const moviesList = await getMovies(this.context, pagesNumber);
 
-        fetch(`${api}/${discoverMovie}page=${pageNumber}&${key}`, {
-            method: 'GET'
-        })
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error('Could not get latest movies');
-                }
-
-                return response.json();
+        this.setState(({ movies }) =>
+            Object.assign({}, this.state, {
+                movies: Object.assign({}, movies, {
+                    all: [...movies.all, ...moviesList]
+                })
             })
-            .then(({ results }) => {
-                if (results !== all) {
-                    this.setState(({ movies }) =>
-                        Object.assign({}, this.state, {
-                            movies: Object.assign({}, movies, {
-                                all: [...movies.all, ...results]
-                            })
-                        })
-                    );
-                }
-            })
-            .catch(({ message }) => console.log('Error message: ', message));
+        );
     }
     _toggleTabs (tabName) {
         const { activeTab } = this.state;
@@ -86,24 +76,23 @@ export default class HomePage extends Component {
     }
     _sortByLatest () {
         const { activeTab, movies } = this.state;
-        
+
         if (activeTab === 'latest') {
-            
+
             return;
         }
         this.setState(() => ({
             activeTab: 'latest',
             movies:    { ...movies }
         }));
-        
         const sortByDate = (a, b) => {
             const aDate = new Date(a.release_date).getTime();
             const bDate = new Date(b.release_date).getTime();
-            
+
             return bDate - aDate;
         };
         const moviesSorted = movies.all.sort(sortByDate);
-        
+
         this.setState(() => ({
             activeTab: 'latest',
             movies:    Object.assign({}, movies, {
@@ -113,19 +102,19 @@ export default class HomePage extends Component {
     }
     _sortByPopularity () {
         const { activeTab, movies } = this.state;
-        
+
         if (activeTab === 'popular') {
-            
+
             return;
         }
         this.setState(() => ({
             activeTab: 'popular',
             movies:    { ...movies }
         }));
-        
+
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
         const moviesSorted = movies.all.sort(sortByPopularity);
-        
+
         this.setState(() => ({
             movies: Object.assign({}, movies, {
                 popular: moviesSorted
@@ -224,9 +213,9 @@ export default class HomePage extends Component {
                 <Header
                     activeTab = { activeTab }
                     searchMovie = { this.searchMovie }
-                    toggleTabs = { this.toggleTabs }
                     sortByLatest = { this.sortByLatest }
                     sortByPopularity = { this.sortByPopularity }
+                    toggleTabs = { this.toggleTabs }
                 />
                 <main>
                     <Favourites movies = { favouritesList } />
