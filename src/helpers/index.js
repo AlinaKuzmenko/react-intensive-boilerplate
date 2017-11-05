@@ -25,6 +25,7 @@ export const getMovies = async (context, pagesNumber) => {
     const { api, discoverMovie, key } = context;
     const movies = [];
     const urls = [...new Array(pagesNumber).keys()].map((index) => `${api}/${discoverMovie}page=${index+1}&${key}`);
+    console.log(urls);
     const pAll = urls.map((url) => {
         const promise = fetch(url, {
             method: 'GET'
@@ -40,6 +41,7 @@ export const getMovies = async (context, pagesNumber) => {
             movies.push(...results);
         });
     });
-
+    
+    console.log('movies', movies);
     return movies;
 };
