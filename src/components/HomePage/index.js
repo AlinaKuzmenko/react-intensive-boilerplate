@@ -47,15 +47,15 @@ export default class HomePage extends Component {
     getChildContext () {
         return {
             test: this.getMovies
-        }
+        };
     }
     componentWillMount () {
-        this.getMovies(20);
+        this.getMovies(4);
         this.getFavourites();
     }
     async _getMovies (pagesNumber) {
         const moviesList = await getMovies(this.context, pagesNumber);
-    
+
         this.setState(({ movies }) =>
             Object.assign({}, this.state, {
                 movies: Object.assign({}, movies, {
@@ -76,24 +76,23 @@ export default class HomePage extends Component {
     }
     _sortByLatest () {
         const { activeTab, movies } = this.state;
-        
+
         if (activeTab === 'latest') {
-            
+
             return;
         }
         this.setState(() => ({
             activeTab: 'latest',
             movies:    { ...movies }
         }));
-        
         const sortByDate = (a, b) => {
             const aDate = new Date(a.release_date).getTime();
             const bDate = new Date(b.release_date).getTime();
-            
+
             return bDate - aDate;
         };
         const moviesSorted = movies.all.sort(sortByDate);
-        
+
         this.setState(() => ({
             activeTab: 'latest',
             movies:    Object.assign({}, movies, {
@@ -103,19 +102,19 @@ export default class HomePage extends Component {
     }
     _sortByPopularity () {
         const { activeTab, movies } = this.state;
-        
+
         if (activeTab === 'popular') {
-            
+
             return;
         }
         this.setState(() => ({
             activeTab: 'popular',
             movies:    { ...movies }
         }));
-        
+
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
         const moviesSorted = movies.all.sort(sortByPopularity);
-        
+
         this.setState(() => ({
             movies: Object.assign({}, movies, {
                 popular: moviesSorted
@@ -214,9 +213,9 @@ export default class HomePage extends Component {
                 <Header
                     activeTab = { activeTab }
                     searchMovie = { this.searchMovie }
-                    toggleTabs = { this.toggleTabs }
                     sortByLatest = { this.sortByLatest }
                     sortByPopularity = { this.sortByPopularity }
+                    toggleTabs = { this.toggleTabs }
                 />
                 <main>
                     <Favourites movies = { favouritesList } />

@@ -24,23 +24,19 @@ export const getRandomColor = () => {
 export const getMovies = async (context, pagesNumber) => {
     const { api, discoverMovie, key } = context;
     const movies = [];
-    const urls = [...new Array(pagesNumber).keys()].map((index) => {
-        return `${api}/${discoverMovie}page=${index+1}&${key}`
-    });
+    const urls = [...new Array(pagesNumber).keys()].map((index) => `${api}/${discoverMovie}page=${index+1}&${key}`);
     const pAll = urls.map((url) => {
         const promise = fetch(url, {
             method: 'GET'
-        }).then((response) => {
-            return response;
-        });
-        
+        }).then((response) => response);
+
         return promise;
     });
 
     await Promise.all(pAll).then((responses) => {
         responses.map(async (response) => {
             const { results } = await response.json();
-            
+
             movies.push(...results);
         });
     });

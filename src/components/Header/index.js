@@ -11,8 +11,10 @@ export default class Header extends Component {
         test: func.isRequired
     }
     static propTypes= {
-        activeTab:   string.isRequired,
-        searchMovie: func.isRequired,
+        activeTab:        string.isRequired,
+        searchMovie:      func.isRequired,
+        sortByLatest:     func.isRequired,
+        sortByPopularity: func.isRequired
     }
     constructor () {
         super();
@@ -36,13 +38,13 @@ export default class Header extends Component {
     _sortByLatest (event) {
         event.preventDefault();
         const { sortByLatest } = this.props;
-        
+
         sortByLatest();
     }
     _sortByPopularity (event) {
         event.preventDefault();
         const { sortByPopularity } = this.props;
-        
+
         sortByPopularity();
     }
     render () {
@@ -52,8 +54,9 @@ export default class Header extends Component {
             inputValue
         } = this.state;
         const { activeTab } = this.props;
+
         console.log('test', test);
-    
+
         return (
             <header className = { Styles.header }>
                 <h1>
