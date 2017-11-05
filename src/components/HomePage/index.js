@@ -1,6 +1,7 @@
 // Core
 import React, { Component } from 'react';
 import { func, string } from 'prop-types';
+import { memoize } from 'lodash';
 
 // Instruments
 import Header from '../../components/Header';
@@ -38,7 +39,7 @@ export default class HomePage extends Component {
         activeTab: 'all',
         movies:    {
             all:        [],
-            favourites: [],
+            favourites: new Set(),
             filtered:   [],
             latest:     [],
             popular:    []
@@ -50,7 +51,7 @@ export default class HomePage extends Component {
         };
     }
     componentWillMount () {
-        this.getMovies(40);
+        this.getMovies(1);
         this.getFavourites();
     }
     async _getMovies (pagesNumber) {
@@ -104,7 +105,7 @@ export default class HomePage extends Component {
         this.setState(({ movies }) =>
             Object.assign({}, this.state, {
                 movies: Object.assign({}, movies, {
-                    favourites
+                    favourites: movies.favourites.add([...favourites])
                 })
             })
         );
@@ -178,9 +179,14 @@ export default class HomePage extends Component {
                 moviesShown = all;
                 break;
         }
-        const setOfFavourites = new Set(favourites);
-        const favouritesList = all.filter((movie) => setOfFavourites.has(`${movie.id}`));
-        console.log('all', all);
+        
+        const favouritesList = all.filter((movie) => {
+            console.log(movie.id);
+            console.log(favourites.has(`${movie.id}`));
+            return favourites.has(`${movie.id}`);
+        });
+        console.log('SET favourites', favourites);
+        console.log(movies);
         return (
             <div className = { Styles.homePage }>
                 <Header

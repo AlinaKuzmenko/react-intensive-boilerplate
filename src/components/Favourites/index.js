@@ -22,6 +22,7 @@ export default class Favourites extends Component {
     render () {
         const { posterURL } = this.context;
         const { movies } = this.props;
+        console.log('movies set', movies);
         const moviesList = movies.length > 0
             ? movies.map(
                 ({ poster_path: posterPath, title }) => ( // eslint-disable-line
