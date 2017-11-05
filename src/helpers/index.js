@@ -20,3 +20,34 @@ export const getRandomColor = () => {
 
     return color;
 };
+
+export const getMovies = async (context, pagesNumber) => {
+    // ${api}/${discoverMovie}page=${page}&${key}
+    const { api, discoverMovie, key } = context;
+    const movies = [];
+    const urls = [`${api}/${discoverMovie}page=1&${key}`, `${api}/${discoverMovie}page=2&${key}`];
+    console.log('urls', urls);
+    
+    const pAll = urls.map((url) => {
+        const promise = fetch(url, {
+            method: 'GET'
+        }).then((response) => {
+            return response;
+        });
+        
+        return promise;
+    });
+    
+    console.log('pAll', pAll);
+    
+    await Promise.all(pAll).then(async (responses) => {
+        
+        for (let response of responses) {
+            const value = await response.json();
+            
+            movies.push(...value.results);
+        }
+    });
+    
+    return movies;
+};

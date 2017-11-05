@@ -7,6 +7,7 @@ import Header from '../../components/Header';
 import Favourites from '../../components/Favourites';
 import Content from '../../components/Content';
 import Styles from './';
+import { getMovies } from '../../helpers';
 
 
 export default class HomePage extends Component {
@@ -41,38 +42,21 @@ export default class HomePage extends Component {
         }
     }
     componentWillMount () {
-        this.getMovies(1);
         this.getMovies(2);
-        this.getMovies(3);
-        this.getMovies(4);
         this.getFavourites();
     }
-    _getMovies (pageNumber) {
-        const { api, discoverMovie, key } = this.context;
+    _getMovies (pagesNumber) {
         const { movies: { all }} = this.state;
-
-        fetch(`${api}/${discoverMovie}page=${pageNumber}&${key}`, {
-            method: 'GET'
-        })
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error('Could not get latest movies');
-                }
-
-                return response.json();
-            })
-            .then(({ results }) => {
-                if (results !== all) {
-                    this.setState(({ movies }) =>
-                        Object.assign({}, this.state, {
-                            movies: Object.assign({}, movies, {
-                                all: [...movies.all, ...results]
-                            })
-                        })
-                    );
-                }
-            })
-            .catch(({ message }) => console.log('Error message: ', message));
+    
+        getMovies(this.context, pagesNumber);
+        
+        // this.setState(({ movies }) =>
+        //     Object.assign({}, this.state, {
+        //         movies: Object.assign({}, movies, {
+        //             all: [...movies.all, ...results]
+        //         })
+        //     })
+        // );
     }
     _toggleTabs (tabName) {
         const { activeTab } = this.state;
