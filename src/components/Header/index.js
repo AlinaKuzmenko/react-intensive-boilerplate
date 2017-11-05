@@ -8,19 +8,18 @@ import Styles from './styles.scss';
 
 export default class Header extends Component {
     static contextTypes = {
-        test: func.isRequired
+        toggleTabs: func.isRequired
     }
     static propTypes= {
         activeTab:        string.isRequired,
         searchMovie:      func.isRequired,
-        sortByLatest:     func.isRequired,
         sortByPopularity: func.isRequired
     }
     constructor () {
         super();
         this.searchMovie = ::this._searchMovie;
-        this.sortByLatest = ::this._sortByLatest;
         this.sortByPopularity = ::this._sortByPopularity;
+        this.toggleTabs = ::this._toggleTabs;
     }
     state = {
         inputPlaceholder: 'Search ...',
@@ -35,27 +34,25 @@ export default class Header extends Component {
         }));
         searchMovie(query.trim().toLowerCase(), activeTab);
     }
-    _sortByLatest (event) {
-        event.preventDefault();
-        const { sortByLatest } = this.props;
-
-        sortByLatest();
-    }
     _sortByPopularity (event) {
         event.preventDefault();
         const { sortByPopularity } = this.props;
 
         sortByPopularity();
     }
+    _toggleTabs (event) {
+        event.preventDefault();
+        const { toggleTabs } = this.context;
+        const tabName = event.target.innerHTML;
+
+        toggleTabs(tabName);
+    }
     render () {
-        const { test } = this.context;
         const {
             inputPlaceholder,
             inputValue
         } = this.state;
         const { activeTab } = this.props;
-
-        console.log('test', test);
 
         return (
             <header className = { Styles.header }>
@@ -80,7 +77,7 @@ export default class Header extends Component {
                     <a
                         className = { activeTab === 'latest' ? Styles.active : '' }
                         href = '/'
-                        onClick = { this.sortByLatest }>
+                        onClick = { this.toggleTabs }>
                         latest
                     </a>
                 </nav>
