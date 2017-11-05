@@ -7,6 +7,9 @@ import Styles from './styles.scss';
 
 
 export default class Header extends Component {
+    static contextTypes = {
+        test: func.isRequired
+    }
     static propTypes= {
         activeTab:   string.isRequired,
         searchMovie: func.isRequired,
@@ -43,12 +46,14 @@ export default class Header extends Component {
         sortByPopularity();
     }
     render () {
+        const { test } = this.context;
         const {
             inputPlaceholder,
             inputValue
         } = this.state;
         const { activeTab } = this.props;
-
+        console.log('test', test);
+    
         return (
             <header className = { Styles.header }>
                 <h1>

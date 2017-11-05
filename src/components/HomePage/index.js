@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { func, string } from 'prop-types';
 
 // Instruments
 import Header from '../../components/Header';
@@ -11,6 +11,9 @@ import { getMovies } from '../../helpers';
 
 
 export default class HomePage extends Component {
+    static childContextTypes = {
+        test: func.isRequired
+    }
     static contextTypes = {
         api:           string.isRequired,
         discoverMovie: string,
@@ -41,16 +44,25 @@ export default class HomePage extends Component {
             popular:    []
         }
     }
+    getChildContext () {
+        return {
+            test: this.getMovies
+        }
+    }
     componentWillMount () {
-        this.getMovies(2);
+        this.getMovies(20);
         this.getFavourites();
     }
     async _getMovies (pagesNumber) {
-        const { movies: { all }} = this.state;
+        const moviesList = await getMovies(this.context, pagesNumber);
     
-        const movies = await getMovies(this.context, 2);
-        console.log('movies', movies);
-    
+        this.setState(({ movies }) =>
+            Object.assign({}, this.state, {
+                movies: Object.assign({}, movies, {
+                    all: [...movies.all, ...moviesList]
+                })
+            })
+        );
     }
     _toggleTabs (tabName) {
         const { activeTab } = this.state;
