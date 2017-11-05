@@ -35,7 +35,7 @@ export default class HomePage extends Component {
         this.sortByPopularity = ::this._sortByPopularity;
     }
     state = {
-        activeTab: '',
+        activeTab: 'all',
         movies:    {
             all:        [],
             favourites: [],
@@ -50,21 +50,18 @@ export default class HomePage extends Component {
         };
     }
     componentWillMount () {
-        this.getMovies(4);
+        this.getMovies(40);
         this.getFavourites();
     }
     async _getMovies (pagesNumber) {
-        const moviesList = await getMovies(this.context, pagesNumber);
-        const latest = this.sortByLatest(moviesList);
-        const popular = this.sortByPopularity(moviesList);
-        console.log('---', latest);
+        const all = await getMovies(this.context, pagesNumber);
 
         this.setState(({ movies }) =>
             Object.assign({}, this.state, {
                 movies: Object.assign({}, movies, {
-                    all: [...movies.all, ...moviesList],
-                    latest,
-                    popular
+                    all,
+                    latest: this.sortByLatest(all),
+                    popular: this.sortByPopularity(all)
                 })
             })
         );
@@ -75,7 +72,7 @@ export default class HomePage extends Component {
         if (tabName !== activeTab) {
             this.setState(({ movies }) => ({
                 activeTab: tabName,
-                movies:    { ...movies }
+                movies
             }));
         }
     }
@@ -86,17 +83,13 @@ export default class HomePage extends Component {
 
             return bDate - aDate;
         };
-        const moviesList = [...movies];
-        const moviesSorted = moviesList.sort(sortByDate);
 
-        return moviesSorted;
+        return [...movies].sort(sortByDate);
     }
     _sortByPopularity (movies) {
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
-        const moviesList = [...movies];
-        const moviesSorted = moviesList.sort(sortByPopularity);
-        
-        return moviesSorted;
+
+        return [...movies].sort(sortByPopularity);
     }
     _getFavourites () {
         let favourites = [];
@@ -172,6 +165,9 @@ export default class HomePage extends Component {
         let moviesShown = '';
 
         switch (activeTab) {
+            case 'all':
+                moviesShown = all;
+                break;
             case 'popular':
                 moviesShown = popular;
                 break;
@@ -184,7 +180,7 @@ export default class HomePage extends Component {
         }
         const setOfFavourites = new Set(favourites);
         const favouritesList = all.filter((movie) => setOfFavourites.has(`${movie.id}`));
-        console.log('popular', popular);
+        console.log('all', all);
         return (
             <div className = { Styles.homePage }>
                 <Header

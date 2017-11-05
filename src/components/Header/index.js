@@ -61,6 +61,12 @@ export default class Header extends Component {
                 </form>
                 <nav className = { Styles.navigation }>
                     <a
+                        className = { activeTab === 'all' ? Styles.active : '' }
+                        href = '/'
+                        onClick = { this.toggleTabs }>
+                        all
+                    </a>
+                    <a
                         className = { activeTab === 'popular' ? Styles.active : '' }
                         href = '/'
                         onClick = { this.toggleTabs }>
