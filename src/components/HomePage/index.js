@@ -44,10 +44,10 @@ export default class HomePage extends Component {
         this.getMovies(1);
         this.getMovies(2);
         this.getMovies(3);
-        this.getMovies(4, true);
+        this.getMovies(4);
         this.getFavourites();
     }
-    _getMovies (pageNumber, sort) {
+    _getMovies (pageNumber) {
         const { api, discoverMovie, key } = this.context;
         const { movies: { all }} = this.state;
 
