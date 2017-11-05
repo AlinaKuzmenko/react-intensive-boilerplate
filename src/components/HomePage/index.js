@@ -45,18 +45,12 @@ export default class HomePage extends Component {
         this.getMovies(2);
         this.getFavourites();
     }
-    _getMovies (pagesNumber) {
+    async _getMovies (pagesNumber) {
         const { movies: { all }} = this.state;
     
-        getMovies(this.context, pagesNumber);
-        
-        // this.setState(({ movies }) =>
-        //     Object.assign({}, this.state, {
-        //         movies: Object.assign({}, movies, {
-        //             all: [...movies.all, ...results]
-        //         })
-        //     })
-        // );
+        const movies = await getMovies(this.context, 2);
+        console.log('movies', movies);
+    
     }
     _toggleTabs (tabName) {
         const { activeTab } = this.state;
