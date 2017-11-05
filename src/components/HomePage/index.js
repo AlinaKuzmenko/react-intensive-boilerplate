@@ -12,7 +12,7 @@ import { getMovies } from '../../helpers';
 
 export default class HomePage extends Component {
     static childContextTypes = {
-        test: func.isRequired
+        toggleTabs: func.isRequired
     }
     static contextTypes = {
         api:           string.isRequired,
@@ -46,7 +46,7 @@ export default class HomePage extends Component {
     }
     getChildContext () {
         return {
-            test: this.getMovies
+            toggleTabs: this.toggleTabs
         };
     }
     componentWillMount () {
@@ -55,11 +55,14 @@ export default class HomePage extends Component {
     }
     async _getMovies (pagesNumber) {
         const moviesList = await getMovies(this.context, pagesNumber);
+        const latest = this.sortByLatest(moviesList);
+        console.log('---', latest);
 
         this.setState(({ movies }) =>
             Object.assign({}, this.state, {
                 movies: Object.assign({}, movies, {
-                    all: [...movies.all, ...moviesList]
+                    all: [...movies.all, ...moviesList],
+                    latest
                 })
             })
         );
@@ -74,34 +77,20 @@ export default class HomePage extends Component {
             }));
         }
     }
-    _sortByLatest () {
-        const { activeTab, movies } = this.state;
-
-        if (activeTab === 'latest') {
-
-            return;
-        }
-        this.setState(() => ({
-            activeTab: 'latest',
-        }));
+    _sortByLatest (movies) {
         const sortByDate = (a, b) => {
             const aDate = new Date(a.release_date).getTime();
             const bDate = new Date(b.release_date).getTime();
 
             return bDate - aDate;
         };
-        const moviesList = [...movies.all];
+        const moviesList = [...movies];
         const moviesSorted = moviesList.sort(sortByDate);
 
-        this.setState(() => ({
-            activeTab: 'latest',
-            movies:    Object.assign({}, movies, {
-                latest: moviesSorted
-            })
-        }));
+        return moviesSorted;
     }
     _sortByPopularity () {
-        const { activeTab, movies } = this.state;
+        const { activeTab, movies: { all }} = this.state;
 
         if (activeTab === 'popular') {
 
@@ -112,7 +101,7 @@ export default class HomePage extends Component {
         }));
 
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
-        const moviesList = [...movies.all];
+        const moviesList = [...all];
         const moviesSorted = moviesList.sort(sortByPopularity);
 
         this.setState(({ movies }) => ({
@@ -207,13 +196,12 @@ export default class HomePage extends Component {
         }
         const setOfFavourites = new Set(favourites);
         const favouritesList = all.filter((movie) => setOfFavourites.has(`${movie.id}`));
-
+        console.log('latest', latest);
         return (
             <div className = { Styles.homePage }>
                 <Header
                     activeTab = { activeTab }
                     searchMovie = { this.searchMovie }
-                    sortByLatest = { this.sortByLatest }
                     sortByPopularity = { this.sortByPopularity }
                     toggleTabs = { this.toggleTabs }
                 />

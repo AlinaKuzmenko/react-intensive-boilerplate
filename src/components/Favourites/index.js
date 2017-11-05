@@ -19,15 +19,6 @@ export default class Favourites extends Component {
         favourites: [],
         movies:     []
     }
-    shouldComponentUpdate (nextProps) {
-        console.log('nextProps --- ', nextProps);
-        console.log('this.props --- ', this.props);
-        if (nextProps !== this.props) {
-            return true;
-        }
-
-        return false;
-    }
     render () {
         const { posterURL } = this.context;
         const { movies } = this.props;
