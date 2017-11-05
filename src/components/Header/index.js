@@ -8,10 +8,8 @@ import Styles from './styles.scss';
 
 export default class Header extends Component {
     static propTypes= {
-        activeTab:        string.isRequired,
-        searchMovie:      func.isRequired,
-        sortByLatest:     func.isRequired,
-        sortByPopularity: func.isRequired
+        activeTab:   string.isRequired,
+        searchMovie: func.isRequired,
     }
     constructor () {
         super();
@@ -35,13 +33,13 @@ export default class Header extends Component {
     _sortByLatest (event) {
         event.preventDefault();
         const { sortByLatest } = this.props;
-
+        
         sortByLatest();
     }
     _sortByPopularity (event) {
         event.preventDefault();
         const { sortByPopularity } = this.props;
-
+        
         sortByPopularity();
     }
     render () {
@@ -69,13 +67,13 @@ export default class Header extends Component {
                         className = { activeTab === 'popular' ? Styles.active : '' }
                         href = '/'
                         onClick = { this.sortByPopularity }>
-                        Popular
+                        popular
                     </a>
                     <a
                         className = { activeTab === 'latest' ? Styles.active : '' }
                         href = '/'
                         onClick = { this.sortByLatest }>
-                        Latest
+                        latest
                     </a>
                 </nav>
             </header>

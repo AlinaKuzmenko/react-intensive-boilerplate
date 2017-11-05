@@ -10,7 +10,7 @@ const APIKey = 'a6f017bd0704106423cc1e6ff3a6cc1e';
 
 export const options = {
     api:           'https://api.themoviedb.org/3',
-    discoverMovie: 'discover/movie',
+    discoverMovie: 'discover/movie?',
     moviesGenres:  'genre/movie/list',
     key:           `api_key=${APIKey}`,
     latest:        '',

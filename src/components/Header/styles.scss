@@ -1,56 +1,60 @@
-@import "../../theme/palette";
+@import '../../theme/palette';
+
 
 .header {
-  min-width: 920px;
-  padding-top: 50px;
-  background-color: $paletteColor7;
-  text-align: center;
-  
-  h1 {
-    font-size: 30px;
-    letter-spacing: 16px;
+    min-width: 920px;
+    padding-top: 50px;
+    background-color: $paletteColor7;
     text-align: center;
-    text-transform: uppercase;
-  
-    a {
-      color: $paletteColor1;
-      text-decoration: none;
+
+    h1 {
+        font-size: 30px;
+        letter-spacing: 16px;
+        text-align: center;
+        text-transform: uppercase;
+
+        a {
+            color: $paletteColor1;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
     }
-  }
-  
-  form {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    width: 500px;
-    margin: 0 auto 50px;
-  
-    input[type="text"] {
-      width: 70%;
-      padding: 10px;
-      border: 0;
-      outline: 0;
-      color: $paletteColor6;
-      font-size: 16px;
-      line-height: 1.5;
+
+    form {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        width: 500px;
+        margin: 0 auto 50px;
+
+        [type='text'] {
+            width: 70%;
+            padding: 10px;
+            border: 0;
+            outline: 0;
+            color: $paletteColor6;
+            font-size: 16px;
+            line-height: 1.5;
+        }
     }
-  }
-  
-  .navigation {
-    display: flex;
-    justify-content: center;
-    background-color: lighten($paletteColor7, 20%);
+
+    .navigation {
+        display: flex;
+        justify-content: center;
+        background-color: lighten($paletteColor7, 20%);
+
+        a {
+            padding: 0 20px;
+            color: $paletteColor1;
+            font-size: 12px;
+            line-height: 30px;
+            text-decoration: none;
+            text-transform: uppercase;
     
-    a {
-      padding: 0 20px;
-      color: $paletteColor1;
-      line-height: 30px;
-      text-decoration: none;
-      
-      &.active {
-        background-color: $paletteColor1;
-        color: $paletteColor6;
-      }
+            &.active {
+                background-color: $paletteColor1;
+                color: lighten($paletteColor6, 20%);
+            }
+        }
     }
-  }
 }
