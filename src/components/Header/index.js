@@ -13,12 +13,10 @@ export default class Header extends Component {
     static propTypes= {
         activeTab:        string.isRequired,
         searchMovie:      func.isRequired,
-        sortByPopularity: func.isRequired
     }
     constructor () {
         super();
         this.searchMovie = ::this._searchMovie;
-        this.sortByPopularity = ::this._sortByPopularity;
         this.toggleTabs = ::this._toggleTabs;
     }
     state = {
@@ -33,12 +31,6 @@ export default class Header extends Component {
             inputValue: query
         }));
         searchMovie(query.trim().toLowerCase(), activeTab);
-    }
-    _sortByPopularity (event) {
-        event.preventDefault();
-        const { sortByPopularity } = this.props;
-
-        sortByPopularity();
     }
     _toggleTabs (event) {
         event.preventDefault();
@@ -71,7 +63,7 @@ export default class Header extends Component {
                     <a
                         className = { activeTab === 'popular' ? Styles.active : '' }
                         href = '/'
-                        onClick = { this.sortByPopularity }>
+                        onClick = { this.toggleTabs }>
                         popular
                     </a>
                     <a

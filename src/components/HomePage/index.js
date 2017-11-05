@@ -56,13 +56,15 @@ export default class HomePage extends Component {
     async _getMovies (pagesNumber) {
         const moviesList = await getMovies(this.context, pagesNumber);
         const latest = this.sortByLatest(moviesList);
+        const popular = this.sortByPopularity(moviesList);
         console.log('---', latest);
 
         this.setState(({ movies }) =>
             Object.assign({}, this.state, {
                 movies: Object.assign({}, movies, {
                     all: [...movies.all, ...moviesList],
-                    latest
+                    latest,
+                    popular
                 })
             })
         );
@@ -89,26 +91,12 @@ export default class HomePage extends Component {
 
         return moviesSorted;
     }
-    _sortByPopularity () {
-        const { activeTab, movies: { all }} = this.state;
-
-        if (activeTab === 'popular') {
-
-            return;
-        }
-        this.setState(() => ({
-            activeTab: 'popular'
-        }));
-
+    _sortByPopularity (movies) {
         const sortByPopularity = (a, b) => b.popularity - a.popularity;
-        const moviesList = [...all];
+        const moviesList = [...movies];
         const moviesSorted = moviesList.sort(sortByPopularity);
-
-        this.setState(({ movies }) => ({
-            movies: Object.assign({}, movies, {
-                popular: moviesSorted
-            })
-        }));
+        
+        return moviesSorted;
     }
     _getFavourites () {
         let favourites = [];
@@ -196,13 +184,12 @@ export default class HomePage extends Component {
         }
         const setOfFavourites = new Set(favourites);
         const favouritesList = all.filter((movie) => setOfFavourites.has(`${movie.id}`));
-        console.log('latest', latest);
+        console.log('popular', popular);
         return (
             <div className = { Styles.homePage }>
                 <Header
                     activeTab = { activeTab }
                     searchMovie = { this.searchMovie }
-                    sortByPopularity = { this.sortByPopularity }
                     toggleTabs = { this.toggleTabs }
                 />
                 <main>
