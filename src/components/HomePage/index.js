@@ -1,13 +1,11 @@
-// Core
 import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 
-// Instruments
-import Header from '../../components/Header';
-import Favourites from '../../components/Favourites';
-import Content from '../../components/Content';
-import Styles from './';
 import { getMovies } from '../../helpers';
+import Content from '../../components/Content';
+import Favourites from '../../components/Favourites';
+import Header from '../../components/Header';
+import Styles from './styles.scss';
 
 
 export default class HomePage extends Component {
@@ -50,7 +48,7 @@ export default class HomePage extends Component {
         };
     }
     componentWillMount () {
-        this.getMovies(40);
+        this.getMovies(4);
         this.getFavourites();
     }
     async _getMovies (pagesNumber) {
@@ -60,7 +58,7 @@ export default class HomePage extends Component {
             Object.assign({}, this.state, {
                 movies: Object.assign({}, movies, {
                     all,
-                    latest: this.sortByLatest(all),
+                    latest:  this.sortByLatest(all),
                     popular: this.sortByPopularity(all)
                 })
             })
@@ -92,14 +90,14 @@ export default class HomePage extends Component {
         return [...movies].sort(sortByPopularity);
     }
     _getFavourites () {
-        let favourites = [];
+        const favourites = [];
         const isLocalStorageEmpty = localStorage.length === 0;
         const isLocalStorageFavouritesEmpty = localStorage.favourites
             ? localStorage.favourites.length === 0
             : false;
 
         if (!isLocalStorageEmpty && !isLocalStorageFavouritesEmpty) {
-            favourites = localStorage.getItem('favourites').split(',');
+            favourites.push(...localStorage.getItem('favourites').split(','));
         }
         this.setState(({ movies }) =>
             Object.assign({}, this.state, {
@@ -180,7 +178,7 @@ export default class HomePage extends Component {
         }
         const setOfFavourites = new Set(favourites);
         const favouritesList = all.filter((movie) => setOfFavourites.has(`${movie.id}`));
-        console.log('all', all);
+
         return (
             <div className = { Styles.homePage }>
                 <Header

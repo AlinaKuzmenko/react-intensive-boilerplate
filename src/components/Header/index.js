@@ -11,8 +11,8 @@ export default class Header extends Component {
         toggleTabs: func.isRequired
     }
     static propTypes= {
-        activeTab:        string.isRequired,
-        searchMovie:      func.isRequired,
+        activeTab:   string.isRequired,
+        searchMovie: func.isRequired
     }
     constructor () {
         super();

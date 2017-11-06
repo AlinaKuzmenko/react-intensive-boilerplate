@@ -25,8 +25,7 @@ export const getMovies = async (context, pagesNumber) => {
     const { api, discoverMovie, key } = context;
     const movies = [];
     const urls = [...new Array(pagesNumber).keys()].map((index) => `${api}/${discoverMovie}page=${index+1}&${key}`);
-    console.log(urls);
-    const pAll = urls.map((url) => {
+    const pages = urls.map((url) => {
         const promise = fetch(url, {
             method: 'GET'
         }).then((response) => response);
@@ -34,14 +33,13 @@ export const getMovies = async (context, pagesNumber) => {
         return promise;
     });
 
-    await Promise.all(pAll).then((responses) => {
+    await Promise.all(pages).then((responses) => {
         responses.map(async (response) => {
             const { results } = await response.json();
 
             movies.push(...results);
         });
     });
-    
-    console.log('movies', movies);
+
     return movies;
 };
