@@ -1,8 +1,6 @@
-// Core
 import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 
-// Instruments
 import Styles from './styles.scss';
 
 
@@ -49,7 +47,11 @@ export default class Header extends Component {
         return (
             <header className = { Styles.header }>
                 <h1>
-                    <a href = '/'>Moviesearcha</a>
+                    <a
+                        href = '/'
+                        onClick = { (event) => event.preventDefault() }>
+                        Moviesearcha
+                    </a>
                 </h1>
                 <form onSubmit = { this.searchMovie } >
                     <input

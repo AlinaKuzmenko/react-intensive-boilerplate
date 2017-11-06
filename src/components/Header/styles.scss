@@ -41,7 +41,7 @@
     .navigation {
         display: flex;
         justify-content: center;
-        background-color: lighten($paletteColor7, 20%);
+        background-color: $paletteColor6;
 
         a {
             padding: 0 20px;
@@ -52,8 +52,8 @@
             text-transform: uppercase;
     
             &.active {
-                background-color: $paletteColor1;
-                color: lighten($paletteColor6, 20%);
+                background-color: $paletteColor7;
+                color: $paletteColor1;
             }
         }
     }
