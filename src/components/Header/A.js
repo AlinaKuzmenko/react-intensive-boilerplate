@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, node, string } from 'prop-types';
+import { func, string } from 'prop-types';
 
 
 export default class A extends Component {
@@ -8,7 +8,7 @@ export default class A extends Component {
     }
     static propTypes = {
         className: string.isRequired,
-        tabName:   string.isRequired,
+        tabName:   string.isRequired
     }
     constructor () {
         super();
