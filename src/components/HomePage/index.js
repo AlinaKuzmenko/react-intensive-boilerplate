@@ -5,6 +5,7 @@ import { getMovies } from '../../helpers';
 import Content from '../../components/Content';
 import Favourites from '../../components/Favourites';
 import Header from '../../components/Header';
+import Loader from '../../components/Loader';
 import Styles from './styles.scss';
 
 
@@ -23,18 +24,21 @@ export default class HomePage extends Component {
     }
     constructor () {
         super();
-        this.getMovies = ::this._getMovies;
-        this.searchMovie = ::this._searchMovie;
-        this.getFavourites = ::this._getFavourites;
         this.addToFavourites = ::this._addToFavourites;
         this.deleteFromFavourites = ::this._deleteFromFavourites;
-        this.toggleTabs = ::this._toggleTabs;
+        this.getFavourites = ::this._getFavourites;
+        this.getMovies = ::this._getMovies;
+        this.searchMovie = ::this._searchMovie;
         this.sortByLatest = ::this._sortByLatest;
         this.sortByPopularity = ::this._sortByPopularity;
+        this.showLoader = ::this._showLoader;
+        this.hideLoader = ::this._hideLoader;
+        this.toggleTabs = ::this._toggleTabs;
     }
     state = {
-        activeTab: 'all',
-        movies:    {
+        activeTab:   'all',
+        loaderShown: false,
+        movies:      {
             all:        [],
             favourites: [],
             filtered:   [],
@@ -52,7 +56,7 @@ export default class HomePage extends Component {
         this.getFavourites();
     }
     async _getMovies (pagesNumber) {
-        const all = await getMovies(this.context, pagesNumber);
+        const all = await getMovies(pagesNumber, this.context);
 
         this.setState(({ movies }) =>
             Object.assign({}, this.state, {
@@ -125,6 +129,16 @@ export default class HomePage extends Component {
         localStorage.setItem('favourites', [...setOfFavourites]);
         this.getFavourites();
     }
+    _showLoader () {
+        this.setState(() => ({
+            loaderShown: true
+        }));
+    }
+    _hideLoader () {
+        this.setState(() => ({
+            loaderShown: false
+        }));
+    }
     _searchMovie (query) {
         const { movies: { all }} = this.state;
         let moviesFiltered = [];
@@ -151,6 +165,7 @@ export default class HomePage extends Component {
         );
     }
     render () {
+        const { loaderShown } = this.state;
         const {
             activeTab,
             movies: {
@@ -161,6 +176,9 @@ export default class HomePage extends Component {
             }
         } = this.state;
         let moviesShown = '';
+        const loader = loaderShown
+            ? <Loader />
+            : null;
 
         switch (activeTab) {
             case 'all':
@@ -181,6 +199,7 @@ export default class HomePage extends Component {
 
         return (
             <div className = { Styles.homePage }>
+                { loader }
                 <Header
                     activeTab = { activeTab }
                     searchMovie = { this.searchMovie }

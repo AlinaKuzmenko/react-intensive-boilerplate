@@ -21,7 +21,7 @@ export const getRandomColor = () => {
     return color;
 };
 
-export const getMovies = async (context, pagesNumber) => {
+export const getMovies = async (pagesNumber, context) => {
     const { api, discoverMovie, key } = context;
     const movies = [];
     const urls = [...new Array(pagesNumber).keys()].map((index) => `${api}/${discoverMovie}page=${index+1}&${key}`);
@@ -33,13 +33,14 @@ export const getMovies = async (context, pagesNumber) => {
         return promise;
     });
 
-    await Promise.all(pages).then((responses) => {
-        responses.map(async (response) => {
-            const { results } = await response.json();
+    await Promise.all(pages)
+        .then((responses) => {
+            responses.map(async (response) => {
+                const { results } = await response.json();
 
-            movies.push(...results);
+                movies.push(...results);
+            });
         });
-    });
 
     return movies;
 };
