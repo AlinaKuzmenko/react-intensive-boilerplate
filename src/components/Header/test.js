@@ -26,7 +26,6 @@ const activeTab = '';
 const header = mount(
     <Header
         activeTab = { activeTab }
-        searchMovie = {() => null}
         sortByLatest = {() => null}
         sortByPopularity = {() => null}
     />
@@ -35,15 +34,6 @@ const header = mount(
 describe('Header component', () => {
     test('Should have a valid initial state', () => {
         expect(header.state()).toEqual(state);
-    });
-    
-    test('Should respond to input change', () => {
-        header.find('input').simulate('change', {
-            target: {
-                value: query
-            }
-        });
-        expect(header.state()).toEqual(mutatedState);
     });
     
     test('Should have one \'header\' element', () => {
@@ -55,15 +45,7 @@ describe('Header component', () => {
     });
 
     test('Should have \'h1\' tag with one \'a\' element', () => {
-        expect(header.find('h1').find('a')).toHaveLength(1);
-    });
-
-    test('Should have one \'form\' element', () => {
-        expect(header.find('form')).toHaveLength(1);
-    });
-
-    test('Should have a \'form\' element with one \'input\' element', () => {
-        expect(header.find('form').find('input')).toHaveLength(1);
+        expect(header.find('h1 a')).toHaveLength(1);
     });
     
     test('Should have one \'nav\' element', () => {

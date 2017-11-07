@@ -8,24 +8,13 @@ import Styles from './styles.scss';
 export default class Header extends Component {
     static propTypes= {
         activeTab:   string.isRequired,
-        searchMovie: func.isRequired
     }
     constructor () {
         super();
-        this.searchMovie = ::this._searchMovie;
     }
     state = {
         inputPlaceholder: 'Search ...',
         inputValue:       ''
-    }
-    _searchMovie (event) {
-        const query = event.target.value;
-        const { activeTab, searchMovie } = this.props;
-
-        this.setState(() => ({
-            inputValue: query
-        }));
-        searchMovie(query.trim().toLowerCase(), activeTab);
     }
     render () {
         const {
@@ -43,14 +32,6 @@ export default class Header extends Component {
                         Moviesearcha
                     </a>
                 </h1>
-                <form onSubmit = { this.searchMovie } >
-                    <input
-                        placeholder = { inputPlaceholder }
-                        type = 'text'
-                        value = { inputValue }
-                        onChange = { this.searchMovie }
-                    />
-                </form>
                 <nav className = { Styles.navigation }>
                     <A
                         className = { activeTab === 'all' ? Styles.active : '' }

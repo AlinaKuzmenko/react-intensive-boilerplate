@@ -24,7 +24,6 @@ export default class HomePage extends Component {
     constructor () {
         super();
         this.getMovies = ::this._getMovies;
-        this.searchMovie = ::this._searchMovie;
         this.getFavourites = ::this._getFavourites;
         this.addToFavourites = ::this._addToFavourites;
         this.deleteFromFavourites = ::this._deleteFromFavourites;
@@ -125,31 +124,6 @@ export default class HomePage extends Component {
         localStorage.setItem('favourites', [...setOfFavourites]);
         this.getFavourites();
     }
-    _searchMovie (query) {
-        const { movies: { all }} = this.state;
-        let moviesFiltered = [];
-
-        if (!query) {
-            moviesFiltered = all;
-            this.setState(({ movies }) => ({
-                activeTab: '',
-                movies:    { ...movies }
-            }));
-        }
-        moviesFiltered = all.filter((movie) => {
-            const title = movie.title.toLowerCase();
-
-            return title.indexOf(query) !== -1;
-        });
-        this.setState(({ movies }) =>
-            Object.assign({}, this.state, {
-                activeTab: '',
-                movies:    Object.assign({}, movies, {
-                    filtered: moviesFiltered
-                })
-            })
-        );
-    }
     render () {
         const {
             activeTab,
@@ -183,7 +157,6 @@ export default class HomePage extends Component {
             <div className = { Styles.homePage }>
                 <Header
                     activeTab = { activeTab }
-                    searchMovie = { this.searchMovie }
                     toggleTabs = { this.toggleTabs }
                 />
                 <main>
