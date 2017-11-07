@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 
+import A from './A';
 import Styles from './styles.scss';
 
 
 export default class Header extends Component {
-    static contextTypes = {
-        toggleTabs: func.isRequired
-    }
     static propTypes= {
         activeTab:   string.isRequired,
         searchMovie: func.isRequired
@@ -15,7 +13,6 @@ export default class Header extends Component {
     constructor () {
         super();
         this.searchMovie = ::this._searchMovie;
-        this.toggleTabs = ::this._toggleTabs;
     }
     state = {
         inputPlaceholder: 'Search ...',
@@ -29,13 +26,6 @@ export default class Header extends Component {
             inputValue: query
         }));
         searchMovie(query.trim().toLowerCase(), activeTab);
-    }
-    _toggleTabs (event) {
-        event.preventDefault();
-        const { toggleTabs } = this.context;
-        const tabName = event.target.innerHTML;
-
-        toggleTabs(tabName);
     }
     render () {
         const {
@@ -62,24 +52,24 @@ export default class Header extends Component {
                     />
                 </form>
                 <nav className = { Styles.navigation }>
-                    <a
+                    <A
                         className = { activeTab === 'all' ? Styles.active : '' }
-                        href = '/'
-                        onClick = { this.toggleTabs }>
+                        tabName = 'all'
+                    >
                         all
-                    </a>
-                    <a
+                    </A>
+                    <A
                         className = { activeTab === 'popular' ? Styles.active : '' }
-                        href = '/'
-                        onClick = { this.toggleTabs }>
+                        tabName = 'popular'
+                    >
                         popular
-                    </a>
-                    <a
+                    </A>
+                    <A
                         className = { activeTab === 'latest' ? Styles.active : '' }
-                        href = '/'
-                        onClick = { this.toggleTabs }>
+                        tabName = 'latest'
+                    >
                         latest
-                    </a>
+                    </A>
                 </nav>
             </header>
         );
