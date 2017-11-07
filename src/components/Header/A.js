@@ -7,10 +7,8 @@ export default class A extends Component {
         toggleTabs: func.isRequired
     }
     static propTypes = {
-        children:  node.isRequired,
         className: string.isRequired,
         tabName:   string.isRequired,
-        href:      string
     }
     constructor () {
         super();
@@ -20,17 +18,18 @@ export default class A extends Component {
         event.preventDefault();
         const { toggleTabs } = this.context;
         const { tabName } = this.props;
+
         toggleTabs(tabName);
     }
     render () {
-        const { children, className, href } = this.props;
+        const { className, tabName } = this.props;
 
         return (
             <a
                 className = { className }
                 href = '/'
                 onClick = { this.toggleTabs }>
-                {children}
+                {tabName}
             </a>
         );
     }

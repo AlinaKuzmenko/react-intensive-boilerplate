@@ -54,22 +54,13 @@ export default class Header extends Component {
                 <nav className = { Styles.navigation }>
                     <A
                         className = { activeTab === 'all' ? Styles.active : '' }
-                        tabName = 'all'
-                    >
-                        all
-                    </A>
+                        tabName = 'all' />
                     <A
                         className = { activeTab === 'popular' ? Styles.active : '' }
-                        tabName = 'popular'
-                    >
-                        popular
-                    </A>
+                        tabName = 'popular'/>
                     <A
                         className = { activeTab === 'latest' ? Styles.active : '' }
-                        tabName = 'latest'
-                    >
-                        latest
-                    </A>
+                        tabName = 'latest' />
                 </nav>
             </header>
         );

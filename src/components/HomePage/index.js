@@ -66,8 +66,7 @@ export default class HomePage extends Component {
     }
     _toggleTabs (tabName) {
         const { activeTab } = this.state;
-        console.log(tabName);
-    
+
         if (tabName !== activeTab) {
             this.setState(({ movies }) => ({
                 activeTab: tabName,
