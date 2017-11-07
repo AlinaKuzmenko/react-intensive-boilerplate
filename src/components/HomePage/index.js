@@ -133,7 +133,7 @@ export default class HomePage extends Component {
             moviesFiltered = all;
             this.setState(({ movies }) => ({
                 activeTab: '',
-                movies:    { ...movies }
+                movies
             }));
         }
         moviesFiltered = all.filter((movie) => {
