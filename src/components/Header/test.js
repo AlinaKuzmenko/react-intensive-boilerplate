@@ -6,12 +6,26 @@ import Header from './';
 
 Enzyme.configure({ adapter: new Adapter() });
 const activeTab = 'all';
+const toggleTabs = (event) => {
+    const text = event.target.innerHTML;
+    header.setProps({
+        activeTab: text
+    })
+};
 const header = mount(
     <Header
         activeTab = { activeTab }
         sortByLatest = {() => null}
         sortByPopularity = {() => null}
     />
+);
+
+const link = mount(
+    <a
+        href = '/'
+        onClick = { toggleTabs }>
+        popular
+    </a>
 );
 
 describe('Header component', () => {
@@ -33,5 +47,11 @@ describe('Header component', () => {
     
     test('Should have three links in \'nav\' element', () => {
         expect(header.find('nav').children()).toHaveLength(3);
+    });
+    
+    test('Should get a correct activeTab', () => {
+        link.simulate('click');
+        const tab = header.find('nav').childAt(1).text();
+        expect(header.props().activeTab).toBe(tab);
     });
 });
