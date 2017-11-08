@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, string } from 'prop-types';
+import { string } from 'prop-types';
 
 import A from './A';
 import Styles from './styles.scss';
@@ -7,20 +7,9 @@ import Styles from './styles.scss';
 
 export default class Header extends Component {
     static propTypes= {
-        activeTab:   string.isRequired,
-    }
-    constructor () {
-        super();
-    }
-    state = {
-        inputPlaceholder: 'Search ...',
-        inputValue:       ''
+        activeTab: string.isRequired
     }
     render () {
-        const {
-            inputPlaceholder,
-            inputValue
-        } = this.state;
         const { activeTab } = this.props;
 
         return (
