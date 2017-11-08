@@ -1,6 +1,7 @@
 // Core
 import React, { Component } from 'react';
 import { array, string } from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 // Instruments
 import { getUniqueID } from '../../helpers';
@@ -24,11 +25,27 @@ export default class Favourites extends Component {
         const { movies } = this.props;
         const moviesList = movies.length > 0
             ? movies.map(
-                ({ poster_path: posterPath, title }) => ( // eslint-disable-line
-                    <li key = { getUniqueID(15) }>
-                        <img alt = '' src = { `${posterURL}/${posterPath}` } />
-                        <span>{ title }</span>
-                    </li>
+                ({ id, poster_path: posterPath, title }) => ( // eslint-disable-line
+                    <CSSTransition
+                        classNames = {{
+                            appear: Styles.liAppear,
+                            appearActive: Styles.liAppearActive,
+                            enter: Styles.liEnter,
+                            enterActive: Styles.liEnterActive,
+                            exit: Styles.liExit,
+                            exitActive: Styles.liExitActive,
+                        }}
+                        key = { id }
+                        timeout = {{
+                            enter: 500,
+                            exit: 500
+                        }}
+                    >
+                        <li key = { getUniqueID(15) }>
+                            <img alt = {`${title} poster`} src = { `${posterURL}/${posterPath}` } />
+                            <span>{ title }</span>
+                        </li>
+                    </CSSTransition>
                 )
             )
             : <li>No movies</li>;
@@ -37,7 +54,9 @@ export default class Favourites extends Component {
             <aside className = { Styles.favourites }>
                 <header>Favourites</header>
                 <ul>
-                    { moviesList }
+                    <TransitionGroup>
+                        { moviesList }
+                    </TransitionGroup>
                 </ul>
             </aside>
         );

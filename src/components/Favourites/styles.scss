@@ -33,5 +33,31 @@
                 margin-right: 10px;
             }
         }
+    
+        .liAppear {
+            opacity: .1;
+        }
+    
+        .liAppearActive {
+            opacity: 1;
+        }
+    
+        .liEnter {
+            opacity: .1;
+        }
+    
+        .liEnterActive {
+            transition: opacity .5s;
+            opacity: 1;
+        }
+    
+        .liExit {
+            opacity: 1;
+        }
+    
+        .liExitActive {
+            transition: opacity .5s;
+            opacity: .1;
+        }
     }
 }
