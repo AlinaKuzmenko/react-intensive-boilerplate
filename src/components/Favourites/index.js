@@ -54,7 +54,7 @@ export default class Favourites extends Component {
                     exitActive:   Styles.noMoviesExitActive
                 } }
                 timeout = { {
-                    enter: 500,
+                    enter: 300,
                     exit:  0
                 } }>
                 <li>No movies</li>
