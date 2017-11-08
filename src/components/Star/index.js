@@ -1,8 +1,6 @@
-// Core
 import React, { Component } from 'react';
 import { bool, func, number, object } from 'prop-types';
 
-// Instruments
 import star from '../../theme/assets/star.png';
 import Styles from './styles.scss';
 
@@ -14,10 +12,10 @@ export default class Star extends Component {
         id:                   number.isRequired,
         isFavourite:          bool.isRequired,
         setOfFavourites:      object.isRequired
-    }
+    };
     static defaultProps = {
         isFavourite: false
-    }
+    };
     constructor (props) {
         super(props);
         this.addToFavourites = :: this._addToFavourites;

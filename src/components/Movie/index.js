@@ -1,8 +1,6 @@
-// Core
 import React, { Component } from 'react';
 import { bool, func, object, string } from 'prop-types';
 
-// Instruments
 import Modal from '../Modal';
 import Star from '../Star';
 import defaultPoster from '../../theme/assets/default-poster.png';
@@ -12,14 +10,14 @@ import Styles from './styles.scss';
 export default class Movie extends Component {
     static contextTypes = {
         posterURL: string.isRequired
-    }
+    };
     static propTypes = {
         addToFavourites:      func.isRequired,
         deleteFromFavourites: func.isRequired,
         isFavourite:          bool.isRequired,
         setOfFavourites:      object.isRequired,
         movie:                object
-    }
+    };
     static defaultProps = {
         isFavourite: false,
         movie:       {
@@ -28,14 +26,14 @@ export default class Movie extends Component {
             release_date:   'unknown', // eslint-disable-line
             popularity:     0
         }
-    }
+    };
     constructor () {
         super();
         this.handleModal = ::this._handleModal;
     }
     state = {
         modalIsOpened: false
-    }
+    };
     _handleModal (event) {
         event.preventDefault();
 

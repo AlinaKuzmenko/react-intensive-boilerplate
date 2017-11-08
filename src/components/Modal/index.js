@@ -1,32 +1,30 @@
-// Core
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 
-// Instruments
 import Styles from './styles.scss';
 
 
 export default class Modal extends Component {
     static contextTypes = {
         posterURL: string.isRequired
-    }
+    };
     static propTypes = {
         handleModal: func.isRequired,
         movie:       object
-    }
+    };
     static defaultProps = {
         movie: {
             original_title: '', // eslint-disable-line
             overview:       'No overview' // eslint-disable-line
         }
-    }
+    };
     constructor () {
         super();
         this.handleModal = ::this._handleModal;
     }
     state = {
         top: 0
-    }
+    };
     componentWillMount () {
         document.body.style.overflow = 'hidden';
         this.setState(() => ({

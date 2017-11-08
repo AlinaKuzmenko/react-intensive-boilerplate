@@ -1,24 +1,22 @@
-// Core
 import React, { Component } from 'react';
 import { array, string } from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-// Instruments
 import Styles from './styles.scss';
 
 
 export default class Favourites extends Component {
     static contextTypes = {
         posterURL: string.isRequired
-    }
+    };
     static propTypes = {
         favourites: array.isRequired,
         movies:     array.isRequired
-    }
+    };
     static defaultProps = {
         favourites: [],
         movies:     []
-    }
+    };
     render () {
         const { posterURL } = this.context;
         const { movies } = this.props;

@@ -1,10 +1,7 @@
-// Core
 import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-
-// Instruments
 import Movie from './';
 import Modal from './';
 import defaultPoster from '../../theme/assets/default-poster.png';
