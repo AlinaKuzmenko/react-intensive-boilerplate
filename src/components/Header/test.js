@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 
 import Header from './';
 
+
 Enzyme.configure({ adapter: new Adapter() });
 const activeTab = 'all';
 const toggleTabs = (event) => {

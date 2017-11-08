@@ -3,8 +3,6 @@ import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import Movie from './';
-import Modal from './';
-import defaultPoster from '../../theme/assets/default-poster.png';
 
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -22,15 +20,12 @@ const props = {
     release_date: '15-10-1999',
     popularity: 777
 };
-
 const state = {
     modalIsOpened: false
 };
-
 const mutatedState = {
     modalIsOpened: true
 };
-
 const movie = mount(
     <Movie movie = {props} />
 );
@@ -76,6 +71,7 @@ describe('Movie component', () => {
     });
     
     test('Should show Modal when Movie is clicked', () => {
+        expect(movie.state()).toEqual(state);
         movie.find('a').simulate('click');
         expect(movie.state()).toEqual(mutatedState);
     })
