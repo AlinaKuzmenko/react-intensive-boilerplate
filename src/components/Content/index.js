@@ -1,8 +1,6 @@
-// Core
 import React, { Component } from 'react';
 import { array, func } from 'prop-types';
 
-// Instruments
 import { getUniqueID } from '../../helpers';
 import Movie from '../Movie';
 import Styles from './styles.scss';
@@ -14,7 +12,7 @@ export default class Content extends Component {
         deleteFromFavourites: func.isRequired,
         favourites:           array,
         movies:               array
-    }
+    };
     render () {
         const {
             addToFavourites,

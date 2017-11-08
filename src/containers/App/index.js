@@ -25,7 +25,7 @@ export default class App extends Component {
         latest:        string,
         popular:       string,
         posterURL:     string
-    }
+    };
     getChildContext () {
         return options;
     }

@@ -5,11 +5,11 @@ import { func, string } from 'prop-types';
 export default class A extends Component {
     static contextTypes = {
         toggleTabs: func.isRequired
-    }
+    };
     static propTypes = {
         className: string.isRequired,
         tabName:   string.isRequired
-    }
+    };
     constructor () {
         super();
         this.toggleTabs = ::this._toggleTabs;

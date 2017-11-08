@@ -8,7 +8,7 @@ import Styles from './styles.scss';
 export default class Header extends Component {
     static propTypes= {
         activeTab: string.isRequired
-    }
+    };
     render () {
         const { activeTab } = this.props;
 

@@ -11,7 +11,7 @@ import Styles from './styles.scss';
 export default class HomePage extends Component {
     static childContextTypes = {
         toggleTabs: func.isRequired
-    }
+    };
     static contextTypes = {
         api:           string.isRequired,
         discoverMovie: string,
@@ -20,7 +20,7 @@ export default class HomePage extends Component {
         latest:        string,
         popular:       string,
         posterURL:     string
-    }
+    };
     constructor () {
         super();
         this.getMovies = ::this._getMovies;
@@ -40,7 +40,7 @@ export default class HomePage extends Component {
             latest:     [],
             popular:    []
         }
-    }
+    };
     getChildContext () {
         return {
             toggleTabs: this.toggleTabs
