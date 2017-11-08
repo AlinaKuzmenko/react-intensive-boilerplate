@@ -1,10 +1,10 @@
-@import "../../theme/palette";
+@import '../../theme/palette';
 
 .content {
-  display: flex;
-  flex-wrap:wrap;
-  justify-content: center;
-  min-width: 480px;
-  margin: 0 270px;
-  padding: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-width: 480px;
+    margin: 0 270px;
+    padding: 50px;
 }
