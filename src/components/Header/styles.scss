@@ -44,6 +44,7 @@
 
         a {
             padding: 0 20px;
+            transition: background-color .5s, color .5s;
             color: $paletteColor1;
             font-size: 12px;
             line-height: 30px;
@@ -52,6 +53,15 @@
 
             &.active {
                 background-color: $paletteColor7;
+                color: $paletteColor1;
+                
+                &:hover {
+                    background-color: $paletteColor7;
+                }
+            }
+
+            &:hover {
+                background-color: lighten($paletteColor6, 5%);
                 color: $paletteColor1;
             }
         }
