@@ -69,9 +69,8 @@ export default class Modal extends Component {
                         exit:         Styles.modalExit,
                         exitActive:   Styles.modalExitActive
                     } }
-                    timeout = { 700 }
-                    key = {id}
-                >
+                    key = { id }
+                    timeout = { 700 }>
                     <section
                         className = { Styles.modal }
                         id = { `modal-${id}` }
