@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { array, func } from 'prop-types';
+import { array, func, number } from 'prop-types';
 
-import { getUniqueID } from '../../helpers';
 import Movie from '../Movie';
 import Styles from './styles.scss';
 
@@ -11,6 +10,7 @@ export default class Content extends Component {
         addToFavourites:      func.isRequired,
         deleteFromFavourites: func.isRequired,
         favourites:           array,
+        id:                   number,
         movies:               array
     };
     render () {
@@ -24,13 +24,12 @@ export default class Content extends Component {
             ? movies.map((movie) => {
                 const setOfFavourites = new Set(favourites);
                 const isFavourite = setOfFavourites.has(`${movie.id}`);
-
-                return (
+            return (
                     <Movie
                         addToFavourites = { addToFavourites }
                         deleteFromFavourites = { deleteFromFavourites }
                         isFavourite = { isFavourite }
-                        key = { getUniqueID(7) }
+                        key = { `movie-${movie.id}` }
                         movie = { movie }
                         setOfFavourites = { setOfFavourites }
                     />

@@ -65,3 +65,12 @@
         }
     }
 }
+
+.movieAppear {
+    opacity: 0;
+}
+
+.movieAppearActive {
+    transition: opacity .7s;
+    opacity: 1;
+}

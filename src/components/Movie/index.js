@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { bool, func, object, string } from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Modal from '../Modal';
 import Star from '../Star';
@@ -69,33 +70,47 @@ export default class Movie extends Component {
             : null;
 
         return (
-            <div
-                className = { Styles.movie }
-                id = { `movie-${id}` }>
-                <Star
-                    addToFavourites = { addToFavourites }
-                    deleteFromFavourites = { deleteFromFavourites }
-                    id = { id }
-                    isFavourite = { isFavourite }
-                    setOfFavourites = { setOfFavourites }
-                />
-                <a
-                    href = '/'
-                    onClick = { this.handleModal }>
-                    <figure>
-                        <img
-                            alt = { `${title} poster` }
-                            src = { src }
+            <TransitionGroup>
+                <CSSTransition
+                    appear
+                    classNames = { {
+                        appear:       Styles.movieAppear,
+                        appearActive: Styles.movieAppearActive,
+                        enter:        Styles.movieEnter,
+                        enterActive:  Styles.movieEnterActive,
+                        exit:         Styles.movieExit,
+                        exitActive:   Styles.movieEitActivee
+                    } }
+                    timeout = { 700 }>
+                    <div
+                        className = { Styles.movie }
+                        id = { `movie-${id}` }>
+                        <Star
+                            addToFavourites = { addToFavourites }
+                            deleteFromFavourites = { deleteFromFavourites }
+                            id = { id }
+                            isFavourite = { isFavourite }
+                            setOfFavourites = { setOfFavourites }
                         />
-                        <figcaption>
-                            <span className = { Styles.popularity }>{ `popularity: ${popularity}` }</span>
-                            <span className = { Styles.date }>{ `Release date: ${date}` }</span>
-                            <h3>{ title }</h3>
-                        </figcaption>
-                    </figure>
-                </a>
-                { modal }
-            </div>
+                        <a
+                            href = '/'
+                            onClick = { this.handleModal }>
+                            <figure>
+                                <img
+                                    alt = { `${title} poster` }
+                                    src = { src }
+                                />
+                                <figcaption>
+                                    <span className = { Styles.popularity }>{ `popularity: ${popularity}` }</span>
+                                    <span className = { Styles.date }>{ `Release date: ${date}` }</span>
+                                    <h3>{ title }</h3>
+                                </figcaption>
+                            </figure>
+                        </a>
+                        { modal }
+                    </div>
+                </CSSTransition>
+            </TransitionGroup>
         );
     }
 }
