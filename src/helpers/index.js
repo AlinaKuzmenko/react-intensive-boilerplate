@@ -43,3 +43,15 @@ export const getMovies = async (context, pagesNumber) => {
 
     return movies;
 };
+
+export const filterFavourites = (movies, favourites) => {
+    const setOfFavourites = new Set(favourites);
+
+    return [...movies.filter((movie) => setOfFavourites.has(`${movie.id}`))];
+};
+
+export const checkIfInFavourites = (favourites, id) => {
+    const setOfFavourites = new Set(favourites);
+
+    return setOfFavourites.has(`${id}`);
+};

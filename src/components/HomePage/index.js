@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 
-import { getMovies } from '../../helpers';
+import { filterFavourites, getMovies } from '../../helpers';
 import Content from '../../components/Content';
 import Favourites from '../../components/Favourites';
 import Header from '../../components/Header';
@@ -150,8 +150,6 @@ export default class HomePage extends Component {
                 moviesShown = all;
                 break;
         }
-        const setOfFavourites = new Set(favourites);
-        const favouritesList = all.filter((movie) => setOfFavourites.has(`${movie.id}`));
 
         return (
             <div className = { Styles.homePage }>
@@ -160,7 +158,7 @@ export default class HomePage extends Component {
                     toggleTabs = { this.toggleTabs }
                 />
                 <main>
-                    <Favourites movies = { favouritesList } />
+                    <Favourites movies = { filterFavourites(all, favourites) } />
                     <Content
                         addToFavourites = { this.addToFavourites }
                         deleteFromFavourites = { this.deleteFromFavourites }
