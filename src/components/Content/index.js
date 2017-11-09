@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { array, func, number } from 'prop-types';
 
+import { checkIfInFavourites } from '../../helpers';
 import Movie from '../Movie';
 import Styles from './styles.scss';
 
@@ -20,22 +21,18 @@ export default class Content extends Component {
             favourites,
             movies
         } = this.props;
+        const setOfFavourites = new Set(favourites);
         const moviesList = movies
-            ? movies.map((movie) => {
-                const setOfFavourites = new Set(favourites);
-                const isFavourite = setOfFavourites.has(`${movie.id}`);
-
-                return (
-                    <Movie
-                        addToFavourites = { addToFavourites }
-                        deleteFromFavourites = { deleteFromFavourites }
-                        isFavourite = { isFavourite }
-                        key = { `movie-${movie.id}` }
-                        movie = { movie }
-                        setOfFavourites = { setOfFavourites }
-                    />
-                );
-            })
+            ? movies.map((movie) =>
+                (<Movie
+                    addToFavourites = { addToFavourites }
+                    deleteFromFavourites = { deleteFromFavourites }
+                    isFavourite = { checkIfInFavourites(favourites, movie.id) }
+                    key = { `movie-${movie.id}` }
+                    movie = { movie }
+                    setOfFavourites = { setOfFavourites }
+                />)
+            )
             : null;
 
         return (
