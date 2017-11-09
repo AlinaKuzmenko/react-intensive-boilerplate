@@ -24,7 +24,8 @@ export default class Content extends Component {
             ? movies.map((movie) => {
                 const setOfFavourites = new Set(favourites);
                 const isFavourite = setOfFavourites.has(`${movie.id}`);
-            return (
+
+                return (
                     <Movie
                         addToFavourites = { addToFavourites }
                         deleteFromFavourites = { deleteFromFavourites }
