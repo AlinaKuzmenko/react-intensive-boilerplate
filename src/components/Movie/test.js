@@ -74,5 +74,5 @@ describe('Movie component', () => {
         expect(movie.state()).toEqual(state);
         movie.find('a').simulate('click');
         expect(movie.state()).toEqual(mutatedState);
-    })
+    });
 });
